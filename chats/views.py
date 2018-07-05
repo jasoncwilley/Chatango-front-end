@@ -26,3 +26,28 @@ def profile(request, pk):
 		"messages": messages,
 		}
     return render(request, 'profile_detail.html', context)
+
+
+def new_message(request):
+	profiles = UserProfile()
+
+	if request.method == "POST":
+		form = SpamForm(request.POST)
+		if form.is_valid():
+			text = form.save(commit=False)
+			text.user = request.user
+			text.profile = profiles.id
+
+			text.save()
+			messages.success(request, "Chat Posted to the Public Board!")
+
+			return redirect("chat/public.html")
+
+	else:
+		form = SpamForm()
+
+	context = {
+		"form": form,
+	}
+
+	return render(request, "chats/new_spam.html", context)
