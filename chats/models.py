@@ -14,17 +14,10 @@ class UserProfile(models.Model):
     follows = models.ManyToManyField('self', null=True, related_name='followed_by', blank=True, symmetrical=False)
 
 
-    def __unicode__():
-        return self.Username
-    def __str__ (self):
-        return self.username
+
 
 class Spam(models.Model):
     username = models.ForeignKey(UserProfile, null=True, blank=True)
-    sender = models.ForeignKey(User)
+    sender = models.CharField(max_length=50, verbose_name="sender")
     content = models.TextField(max_length=140, verbose_name="Content")
     timestamp = models.DateTimeField(verbose_name="SpamTimeStamp")
-    def __unicode__():
-        return self.username
-    def __str__ (self):
-        return self.username

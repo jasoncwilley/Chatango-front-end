@@ -1,0 +1,13 @@
+<h3>{{ profile.username }}'s Profile'</h3>
+<ul>
+  <li>{{ profile.fname }} {{profile.lname}}</li>
+  <li>{{ profile.username }}</li>
+  <li>{{ profile.phone }}</li>
+  <li>{{ profile.dateofbirth }}</li>
+  <li>{{ profile.email }}</li>
+  <li>{{ profile.follows }}</li>
+</ul>
+{% for message in messages %}
+<strong>{{message.timestamp}} {{ message.sender }}</strong>
+  <li> {{message.content}}</li>
+  {%endfor%}

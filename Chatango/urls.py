@@ -14,10 +14,12 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from chats import views
 
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'^$' views.index name='index'),
+    url(r'^$', 'chats.views.index'),
+    url(r'^chats/', include('chats.urls', namespace='chats'))
     #url(r'^chats$' include('chats.urls'))
 ]
