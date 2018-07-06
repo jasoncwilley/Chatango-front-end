@@ -1,0 +1,72 @@
+<body>
+<div class= "containter">
+
+  <div class ="shell">
+ <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+   <h4>SpamMaster3000</h4>
+<div class="login">
+    <form class="form-inline my-2 my-md-0">
+     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+  </form>
+
+  <button href="/users/{{ username }}"class="btn btn-outline-success my-2 my-sm-0" type="submit">Profile</button>
+     <button href="/users/" class="btn btn-outline-success my-2 my-sm-0" type="submit">Friends</button>
+     <button href="/" class="btn btn-outline-success my-2 my-sm-0" type="submit">Home</button>
+     <button href="/ribbits" class="btn btn-outline-success my-2 my-sm-0" type="submit">Messages</button>
+</div>
+   </nav>
+
+
+
+<div class="container">
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-xs-6">
+      <h1>Messages</h1>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
+        nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+      </p>
+      <p>
+        <a class="btn btn-secondary" href="#" role="button">View details &raquo;</a>
+      </p>
+    </div>
+  </div>
+    <div class="container">
+      <div class="signin">
+    <div class="col-xs-6">
+
+       <form class="form-signin bg-dark">
+         <h4 class="form-signin-heading bg-dark">Post a Message</h4>
+         <p>
+         </p><form action="/submit" method="post">
+         <input type="hidden" name="csrfmiddlewaretoken" value="BU1297C6ddHx1nbq2SPxkQ09pAKSJFNj">
+         <textarea class="contenText" cols="20" id="id_content" name="content" rows="10"></textarea>
+
+         <input type="hidden" value="/" name="next_url">
+         <input type="submit" value="Chatango!">
+         </form>
+     <p></p>
+ </div>
+    </div>
+         </div><!-- signin-->
+         </div>
+<!-- /container -->
+   </div>
+
+  <hr>
+
+</div>
+<!-- /container -->
+    </div><!-- shell-->
+<!-- /container -->
+   </div>
+</body>
+</main>
+
+<footer class="container">
+<p>&copy; Company 2017</p>
+</footer>
+
+</html>

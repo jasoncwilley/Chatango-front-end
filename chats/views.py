@@ -1,16 +1,27 @@
-from django.shortcuts import render
+
 from django.contrib.auth.models import User
 from chats.models import Spam, UserProfile
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from chats.forms import SpamForm
+from django.contrib.auth.forms import UserCreationForm
 
-def index(request):
-    new_message = Spam(
+def register(request):
+    if request.method=='POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(request, 'chats/profile.html')
+    else:
+        form = UserCreationForm()
 
-    sender = "admin",
-    content = "this is my first view post",
-    timestamp = "2010-02-02")
-    new_message.save()
-    return render(request, 'index.html', {'action':'Save datas of model'})
+        args = {'form':form }
+        return render(request, 'register.html', args)
+
+
+
+
 
 
 def profiles(request):
@@ -28,26 +39,7 @@ def profile(request, pk):
     return render(request, 'profile_detail.html', context)
 
 
-def new_message(request):
-	profiles = UserProfile()
-
-	if request.method == "POST":
-		form = SpamForm(request.POST)
-		if form.is_valid():
-			text = form.save(commit=False)
-			text.user = request.user
-			text.profile = profiles.id
-
-			text.save()
-			messages.success(request, "Chat Posted to the Public Board!")
-
-			return redirect("chat/public.html")
-
-	else:
-		form = SpamForm()
-
-	context = {
-		"form": form,
-	}
-
-	return render(request, "chats/new_spam.html", context)
+def updateprofile(request):
+    new_user = UserProfile(fname = 'jimbo', lname = 'johnson', username = 'jimbo', phone = '859-873-9577', dateofbirth = '1980-05-20', email = 'jim@bo.com', datecreated = '2010-05-05')
+    new_user.save()
+    return render(request, 'updateprofile.html')

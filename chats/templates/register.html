@@ -66,9 +66,8 @@ height: 750px;
     <!-- Example row of columns -->
     <div class="row">
       <div class="col-xs-6">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
-          nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        <h2>YOu have registerewd</h2>
+        <p>
         </p>
         <p>
           <a class="btn btn-secondary" href="#" role="button">View details &raquo;</a>
@@ -78,23 +77,12 @@ height: 750px;
         <div class="signin">
       <div class="col-xs-6">
 
-         <form class="form-signin bg-dark">
+         <form method='post'>
            <h4 class="form-signin-heading bg-dark">First time here?</h4>
-        <label for="inputEmail" class="sr-only">Email address</label><br>
-    <input type="email" id="inputemail" class="form-control" placeholder="Email address" required autofocus><br>
-    <label for="inputusername" class="sr-only">Username</label>
-    <input type="username" id="inputusername" class="form-control" placeholder="Username" required><br>
-    <label for="inputfname" class="sr-only">First Name</label>
-    <input type="fname" id="inputfname" class="form-control" placeholder="First Name" required autofocus><br>
-    <label for="inputlname" class="sr-only">Last Name</label>
-    <input type="lname" id="inptlname" class="form-control" placeholder="Last Name" required><br>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required autofocus><br>
-    <label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
-    <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm Password" required><br>
-
-     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up Now!</button>
-  </form>
+           {% csrf_token %}
+           {{ form.as_p }}
+           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up Now!</button>
+         </form>
       </div>
            </div><!-- signin-->
            </div>

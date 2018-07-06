@@ -1,3 +1,4 @@
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
 body {
 
 }
@@ -5,9 +6,16 @@ body {
   margin-left: 90px;
 
 }
+.messages{
+ width: 500px;
+  background-color: yellow;
+  margin-left: 25px;
+  margin-top:80px;
+
+}
 .shell {
   color: grey;
-   width: 820px;
+   width: 900px;
 height: 750px;
  margin-left:10px;
   border-color: red;
@@ -16,7 +24,8 @@ height: 750px;
   background-color: blue;
 }
 .signin {
-  margin-left: 400px;
+  margin-left: 500px;
+
   height: 500px;
   width: 350px;
 
