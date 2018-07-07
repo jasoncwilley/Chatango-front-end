@@ -19,7 +19,7 @@ from chats import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    
-    url(r'^chats/', include('chats.urls', namespace='chats'))
-    #url(r'^chats$' include('chats.urls'))
+
+    url(r'^chats/', include('chats.urls', namespace='chats')),
+    url(r'^accounts/', include("accounts.urls"))
 ]

@@ -17,10 +17,14 @@ class UserProfile(models.Model):
 
 
 class Spam(models.Model):
-    username = models.ForeignKey(UserProfile, null=True, blank=True)
-    sender = models.CharField(max_length=50, verbose_name="sender")
+    user = models.ForeignKey(User)
+    subject = models.CharField(max_length=50, verbose_name="sender")
     content = models.TextField(max_length=140, verbose_name="Content")
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name="SpamTimeStamp")
+
+    class Meta:
+        ordering = ['-timestamp']
+
     def gravatar_url(self):
         return "http://www.gravatar.com/avatar/%s?s=50" % hashlib.md5(self.user.email).hexdigest()
 

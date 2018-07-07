@@ -51,8 +51,10 @@ height: 750px;
 
 
       <form action='/chats/latestspam'class="form-inline my-2 my-md-0"method='post'> {%csrf_token %}>
-       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+
+
+        {% csrf_token %}
+        {{ login_form }}
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
 
     </form>
@@ -78,15 +80,9 @@ height: 750px;
         <div class="signin">
       <div class="col-xs-6">
 
-         <form method='post'>
-           <h4 class="form-signin-heading bg-dark">First time here?</h4>
-           {% csrf_token %}
-           {{ form.as_p }}
-           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up Now!</button>
-         </form>
       </div>
            </div><!-- signin-->
-           </div>
+          
   <!-- /container -->
      </div>
 

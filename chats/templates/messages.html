@@ -1,0 +1,140 @@
+<style>
+body {
+  width:850px;
+
+}
+.heading {
+  background-color:grey;
+ min-width: 250px;
+ min-height: 50px;
+ color: green;
+}
+.messages{
+  background-color: red;
+  width:500px;
+  height:500px;
+  margin-top:100px;
+}
+
+
+
+.login {
+  margin-left: 90px;
+
+}
+.shell {
+  color: grey;
+   width: 900px;
+height: 700px;
+ margin-left:10px;
+  border-color: red;
+  border: 5px;
+
+  background-color: blue;
+}
+.signin {
+  margin-left: 500px;
+  height: 500px;
+  width: 350px;
+
+
+  background-color: grey;
+}
+</style>
+
+
+
+  <body>
+  <div class= "containter">
+
+    <div class ="shell">
+   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+     <h4>SpamMaster3000</h4>
+  <div class="login">
+      <form class="form-inline my-2 my-md-0">
+       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+    </form>
+
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+  </div>
+     </nav>
+
+
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class='messages'>
+
+
+      <div class="col-xs-5">
+        <div class='container'>
+        <div class='heading'>
+        <h2>Heading</h2>
+        </div>
+        </div>
+
+        <section>
+  <div class="container">
+
+    <div class="card">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="card-block">{% for message in messages %}
+            <h4 class="card-title"><strong>{{message.timestamp}} {{ message.subject }}</strong></h4>
+            <p class="card-text"><img src="http://www.gravatar.com/avatar/"></p>
+            <p class="card-text">{{message.content}}</p><br>
+            {%endfor%}
+          </div>
+        </div>
+
+
+
+
+</section>
+      </div>
+
+
+
+
+      <div class="container">
+        <div class="signin">
+      <div class="col-xs-6">
+
+
+
+         <form class="form-signin bg-dark">
+           <h4 class="form-signin-heading bg-dark">First time here?</h4>
+        <label for="inputEmail" class="sr-only">Email address</label><br>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus><br>
+    <label for="inputPassword" class="sr-only">Username</label>
+    <input type="password" id="inputUsername" class="form-control" placeholder="Username" required><br>
+    <label for="inputEmail" class="sr-only">First Name</label>
+    <input type="email" id="inputFirstName" class="form-control" placeholder="First Name" required autofocus><br>
+    <label for="inputPassword" class="sr-only">Last Name</label>
+    <input type="password" id="inputLastName" class="form-control" placeholder="Last Name" required><br>
+    <label for="inputEmail" class="sr-only">Password</label>
+    <input type="email" id="inputPassword" class="form-control" placeholder="Password" required autofocus><br>
+    <label for="inputPassword" class="sr-only">Confirm Password</label>
+    <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm Password" required><br>
+
+     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up Now!</button>
+  </form>
+      </div>
+           </div><!-- signin-->
+           </div>
+  <!-- /container -->
+     </div>
+
+    <hr>
+
+  </div>
+  <!-- /container -->
+      </div><!-- shell-->
+  <!-- /container -->
+     </div>
+</body>

@@ -1,0 +1,23 @@
+<p>
+           <form action="/submit" method="post">
+           {% for field in spam_form %}{% csrf_token %}
+           {{ field }}
+           {% endfor %}
+           <input type="hidden" value="{{ next_url }}" name="next_url">
+           <input type="submit" value="Ribbit!">
+           </form>
+       </p>
+
+
+       {% for message in messages %}
+      <div class="ribbitWrapper">
+          <a href="/users/{{ ribbit.user.username }}">
+              <img class="avatar" src="{{ ribbit.user.profile.gravatar_url }}">
+              <span class="name">{{ spam.user.first_name }}</span>
+          </a>
+          @{{ spam.user.username }}
+          <p>
+              {{ spam.content }}
+          </p>
+      </div>
+      {% endfor %}
