@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "accounts/base.html" %}
 
 
 {% block title %}
@@ -6,10 +6,17 @@
  {% endblock %}
  {% block css %}
  {% load staticfiles %}
- <link href=""{% static 'login.css' %}"" rel="stylesheet" type="text/css" />
+ <link href="{% static 'css/login.css' %}" rel="stylesheet"  />
 {% endblock %}
+<header>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</header>
 {% block login %}
 <div class="login">
  <form class="form-inline my-2 my-md-0">

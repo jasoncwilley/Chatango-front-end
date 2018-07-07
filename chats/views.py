@@ -19,22 +19,22 @@ def home(request):
             content =  form.cleaned_data['content']
             subject = form.cleaned_data['subject']
             form.save()
-            return HttpResponseRedirect('chats/lastestspam.html')
+            return HttpResponseRedirect('recent')
     else:
         form = SpamForm()
     args = {'form':form}
     return      render(request, 'home.html', args)
 
-def latestspam(request):
-    spam=spam.objects.all()
-    return render(request, 'latestspam.html')
+def recent(request):
+    messages=Spam.objects.all()
+    return render(request, 'recent', {'messages':messages})
 
 def register(request):
     if request.method=='POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('lastestspam,html')
+            return HttpResponseRedirect('recent')
     else:
         form = RegistrationForm()
 
@@ -58,7 +58,7 @@ def profiles(request):
 
 def get_latest(user):
     try:
-        return user.spamset.order_by('id').reverse()[0]
+        return user.spam.set.order_by('id').reverse()[0]
     except IndexError:
         return ""
 

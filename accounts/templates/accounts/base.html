@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 {% load staticfiles %}
 <html class="no-js" lang="">
 
@@ -31,20 +31,19 @@
       <form class="form-inline my-2 my-md-0">
        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"href="/chats/profiles">Login</button>
+      <a class="btn btn-danger btn-sm" href="{% url 'chats:recent' %}">Login</a>
     </form>
       {% endblock %}
        {% if request.user.is_authenticated %}
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Post a Message</button>
-       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">View Messages</button>
-       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
-    {% else %}
-       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" href="/accounts/register">Create a Account Today!!!</button>
+    <a class="btn btn-danger btn-sm" href="{% url 'chats:home' %}">Post Spam</a>
+       <a class="btn btn-danger btn-sm" href="{% url 'chats:recent' %}">Recent Spam</a>
+       <a class="btn btn-danger btn-sm" href="{% url 'chats:profiles' %}">Profile</a> {%else %}
+      <a class="btn btn-danger btn-sm" href="">Create a Account Today!!!</a>
     {% endif %}
   </div>
      </nav>
 
-
+{% block content1 %}
 
   <div class="container">
     <!-- Example row of columns -->
@@ -54,15 +53,15 @@
       <div class="col-xs-5">
         <div class='container'>
         <div class='heading'>
-          {% block content1 %}
 
-         {% endblock content1 %}
+
+
 
 
           </div>
         </div>
 
-
+{% endblock content1 %}
   <div class="container">
    <section>
     <div class="card">
