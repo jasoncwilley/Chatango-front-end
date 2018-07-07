@@ -101,9 +101,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 MEDIA_ROOT = os.path.join(BASE_DIR, "Chatango", "media")
-STATIC_ROOT = os.path.join(BASE_DIR, "Chatango", "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "Chatango", "staticfiles")
 STATICFILES_DIRS = (
-os.path.join(BASE_DIR, "Chatango", "site_static"),
+os.path.join(BASE_DIR, "Chatango", "static"),
 )
 TEMPLATE_DIRS = (
 os.path.join(BASE_DIR, "Chatango", "templates"),

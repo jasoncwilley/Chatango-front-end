@@ -1,12 +1,13 @@
 
 from django.contrib.auth.models import User
-from chats.models import Spam, UserProfile
+from chats.models import Spam, Profile
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from chats.forms import SpamForm, RegistrationForm
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.db.models import Count
+from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
     if request.method =='POST':
@@ -24,6 +25,10 @@ def home(request):
     args = {'form':form}
     return      render(request, 'home.html', args)
 
+def latestspam(request):
+    spam=spam.objects.all()
+    return render(request, 'latestspam.html')
+
 def register(request):
     if request.method=='POST':
         form = RegistrationForm(request.POST)
@@ -35,43 +40,7 @@ def register(request):
 
     args = {'form':form }
     return render(request, 'register.html', args)
-'''
-def createspam(request):
-    if request.method=='POST':
-        spam_form = SpamForm(request.POST)
-        if spam_form.is_valid():
-            spam = spam_form.save(commit=False)
-            spam.user = request.user
-            spam,save()
-            return HttpResponseRedirect('lastestspam.html')
-        else:
-            spam_form = SpamForm()
-            args = {'spam_form':spam_form}
 
-    return HttpResponseRedirect('createspam.html')
-'''
-def createspam(request):
-    if request.POST:
-        user = request.POST.get('user', '')
-        if 'subject' in request.POST:
-            subject = request.POST.get('login', '')
-        else:
-            error=True
-        if 'content' in request.POST:
-            content = request.POST.get('content', '')
-        else:
-            error=True
-        if not error:
- # We must get the supervisor
-            supervisor = Supervisor.objects.get(id = supervisor_id)
-            new_spam = Spam(subject=subject, content=content, user=user)
-            new_spam.save()
-            return HttpResponse("Developer added")
-        else:
-            return HttpResponse("An error has occured")
-    else:
-        listspam= Spam.objects.all()
-        return render(request, 'listspam', {'listspam':listspam})
 
 
 
@@ -84,27 +53,36 @@ def account_redirect(request):
 
 
 def profiles(request):
-    profiles = UserProfile.objects.all()
-    return render(request, 'profiles.html', {'action': "Display all UserProfiles", 'profiles': profiles})
+    profiles = Profile.objects.all()
+    return render(request, 'profiles.html', {'action': "Display all Profiles", 'profiles': profiles})
 
-def latestspam(request):
-    messages = Spam.objects.all().order_by('-timestamp')
-    user = request.user
-    page = request.GET.get('page', 4)
-    context = {
-		"messages": messages,
-        "user": user,
-		}
-    paginator = Paginator(messages, 4)
+def get_latest(user):
     try:
-        messages = paginator.page(page)
-    except PageNotAnInteger:
-        messages = paginator.page(1)
-    except EmptyPage:
-        messages = paginator.page(paginator.num_pages)
+        return user.spamset.order_by('id').reverse()[0]
+    except IndexError:
+        return ""
 
-
-    return render(request, 'latestspam.html', context)
+def users(request,  username="", spam_form=None):
+    messages = Spam.objects.all().order_by('-timestamp')
+    if username:
+        #show the users profile
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise Http404
+        usermessages = Spam.objects.filter(user=user.id)
+        if username == request.user.username or request.user.profile.follows.filter(username=username):
+            return render(request, 'user.html', {'user': user, 'usermessages': usermessages, })
+        return render(request, 'user.html', {'user': user, 'usermessages': usermessages, 'follow': True, })
+    users = User.objects.all().annotate(spam_count=Count('messages'))
+    usermessages = map(get_latest, users)
+    obj = zip(users, usermessages)
+    spam_form = spam_form or SpamForm()
+    return render(request,
+                  'profiles.html',
+                  {'obj': obj, 'next_url': '/users/',
+                   'spam_form': spam_form,
+                   'username': request.user.username, })
 
 
 

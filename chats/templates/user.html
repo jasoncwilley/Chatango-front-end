@@ -1,0 +1,55 @@
+<div class="panel left">
+       <h1>{{ user.first_name }}'s Profile</h1>
+       <div class="ribbitWrapper">
+           <a href="chats/users/{{ user.username }}">
+               <img class="avatar" src="http://www.gravatar.com/avatar"/>
+               <span class="name">{{ user.username }}</span>
+           </a>
+               @{{ user.username }}
+           <p>
+               {{ usermessages.count }} Messages
+               <span class="spacing">{{ user.profile.follows.all.count }} Following</span>
+               <span class="spacing">{{ user.profile.followed_by.all.count }} Followers</span>
+           </p>
+           {% if follow %}
+           <form action="/follow" method="post">
+               {% csrf_token %}
+               <input type="hidden" name="follow" value="{{ user.id }}">
+               <input type="submit" value="Follow">
+           </form>
+           {% endif %}
+       </div>
+   </div>
+
+
+    <div class="panel left">
+        <h1>Public Profiles</h1>
+        {% for message in usermessages %}
+        <div class="ribbitWrapper">
+            <a href="/users/{{ user.username }}">
+                <img class="avatar" src="{{ user.profile.gravatar_url }}">
+                <span class="name">{{ user.profile.username }}</span>
+            </a>
+            @{{ user }}
+            <p>
+                {{ user.message_count}} Ribbits
+                <span class="spacing">{{ user.profile.followed_by.count }} Followers</span>
+                <span class="spacing">{{ user.profile.follows.count }} Following</span>
+            </p>
+            <p>{{ spam.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container">
+     <section>
+      <div class="card">
+        <div class="col-xs-5">
+            <div class="card-block">{% for message in usermessages %}
+              <div class="card-text">  <img src="http://www.gravatar.com/avatar/">{{user}}
+              <h4 class="card-title">{{message.timestamp}}<br> <strong>{{ message.subject }}</strong></h4>
+
+              <p class="card-text">{{message.content}}</p><br>
+
+  {%endfor%}
+
+  </div>

@@ -2,9 +2,7 @@
 Profile List
 </title>
 
-<h1>
-Projects list
-</h1>
+
 <h3>{{ action }}</h3>
 {% if profiles|length > 0 %}
 <table>
@@ -23,7 +21,7 @@ Projects list
 {% for profile in profiles %}
 <tr>
   <td>{{ profile.fname }} {{profile.lname}}</td>
-  <td>{{ profile.username }}</td>
+  <td><a href="/chats/users/{{ profile.username }}"> {{profile.username}}</a></td>
   <td>{{ profile.phone }}</td>
   <td>{{ profile.dateofbirth }}</td>
 <td>{{ profile.email }}</td>

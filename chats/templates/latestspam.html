@@ -1,59 +1,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 
-
-<style>
-body {
-  width:850px;
-
-}
-
-.card-text{
-  max-height: 75px;
-}
-.card {
-
- background-color: yellow;
-  max-height:100px;
-}
-.heading {
-  background-color:grey;
- max-width: 250px;
- min-height: 50px;
- color: green;
-}
-.messages{
-  background-color: red;
-  width:500px;
-  height:500px;
-
-}
-
-
-
-.login {
-  margin-left: 90px;
-
-}
-.shell {
-  color: grey;
-   width: 900px;
-height: 700px;
- margin-left:10px;
-  border-color: red;
-  border: 5px;
-
-  background-color: blue;
-}
-.signin {
-  margin-left: 500px;
-  height: 500px;
-  width: 350px;
-
-
-  background-color: grey;
-}
-</style>
   <body>
   <div class= "containter">
 
@@ -105,29 +52,7 @@ height: 700px;
 
 
 </section>
-{% if messages.has_other_pages %}
-  <ul class="pagination">
-    {% if messages.has_previous %}
-      <li><a href="?page={{ messages.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in messages.paginator.page_range %}
-      {% if messages.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if messages.has_next %}
-      <li><a href="?page={{ messages.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}
-
-</div>
+{</div>
 
 
       <div class="container">

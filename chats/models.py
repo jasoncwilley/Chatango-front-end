@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 import hashlib
-class UserProfile(models.Model):
+class Profile(models.Model):
     fname = models.CharField(max_length=50, verbose_name="FirstName")
     lname = models.CharField(max_length=50, verbose_name="LastName")
     username = models.CharField(max_length=50, verbose_name="Username")
@@ -31,4 +31,4 @@ class Spam(models.Model):
         return "http://www.gravatar.com/avatar/%s?s=50" % hashlib.md5(self.user.email).hexdigest()
 
 
-User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])

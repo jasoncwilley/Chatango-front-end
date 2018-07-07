@@ -12,9 +12,11 @@ Class-based views
 Including another URLconf
     1. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from chats import views
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -23,3 +25,5 @@ urlpatterns = [
     url(r'^chats/', include('chats.urls', namespace='chats')),
     url(r'^accounts/', include("accounts.urls"))
 ]
+if settings.DEBUG:
+    urlpatterns +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
