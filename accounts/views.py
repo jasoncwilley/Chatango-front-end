@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from  accounts.forms import RegistrationForm, AuthenticationForm
 from django.http import HttpResponseRedirect
-
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 
 def register(request):
-
     if request.method=='POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -17,6 +16,16 @@ def register(request):
     args = {'form':form }
     return render(request, 'register.html', args)
 
+
+@login_required
+def profile(request, profile_id):
+    if profile_id == "0":
+        if request.user.is_authenticated:
+            userProfile = UserProfile.objects.get(pk=profile_id)
+    else:
+        userProfile = UserProfile.objects.get(pk=profile_id)
+
+    return render_to_response('blog/profile.html', {'userProfile':userProfile}, RequestContext(request))
 
 
 def login_view(request):
@@ -31,25 +40,3 @@ def login_view(request):
             # Failure
         login_form = AuthenticationForm()
     return render(request, 'accounts/login.html', {'login_form':login_form})
-def createspam(request):
-    if request.POST:
-        user = request.POST.get('user', '')
-        if 'subject' in request.POST:
-            subject = request.POST.get('login', '')
-        else:
-            error=True
-        if 'content' in request.POST:
-            content = request.POST.get('content', '')
-        else:
-            error=True
-        if not error:
- # We must get the supervisor
-            supervisor = Supervisor.objects.get(id = supervisor_id)
-            new_spam = Spam(subject=subject, content=content, user=user)
-            new_spam.save()
-            return HttpResponse("Developer added")
-        else:
-            return HttpResponse("An error has occured")
-    else:
-        listspam= Spam.objects.all()
-        return render(request, 'listspam.html', {'listspam':listspam})

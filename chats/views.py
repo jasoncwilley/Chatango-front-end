@@ -89,9 +89,11 @@ def profiles(request):
 
 def latestspam(request):
     messages = Spam.objects.all().order_by('-timestamp')
+    user = request.user
     page = request.GET.get('page', 4)
     context = {
 		"messages": messages,
+        "user": user,
 		}
     paginator = Paginator(messages, 4)
     try:

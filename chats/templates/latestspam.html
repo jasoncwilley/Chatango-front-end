@@ -94,8 +94,8 @@ height: 700px;
     <div class="card">
       <div class="col-xs-5">
           <div class="card-block">{% for message in messages %}
-            <div class="card-text"> <img src="http://www.gravatar.com/avatar/">
-            <h4 class="card-title"><strong>{{message.timestamp}} {{ message.subject }}</strong></h4>
+            <div class="card-text">  <img src="http://www.gravatar.com/avatar/">{{user}}
+            <h4 class="card-title">{{message.timestamp}}<br> <strong>{{ message.subject }}</strong></h4>
 
             <p class="card-text">{{message.content}}</p><br>
 

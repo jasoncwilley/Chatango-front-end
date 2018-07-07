@@ -12,9 +12,11 @@ class UserProfile(models.Model):
     email = models.EmailField(null=True, verbose_name="Email")
     datecreated = models.DateTimeField(verbose_name="datecreated",auto_now_add=True)
     follows = models.ManyToManyField('self', null=True, related_name='followed_by', blank=True, symmetrical=False)
+    user = models.ForeignKey(User)
+    image = models.FileField(null=True, blank=True, default=None)
 
-
-
+    def __unicode__(self):
+       return self.user.username
 
 class Spam(models.Model):
     user = models.ForeignKey(User)
