@@ -6,26 +6,15 @@ from django.contrib.auth import login
 
 def register(request):
     if request.method=='POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        reg_form = RegistrationForm(request.POST)
+        if reg_form.is_valid():
+            reg_form.save()
             return HttpResponseRedirect('chats/latestspam.html')
     else:
-        form = RegistrationForm()
+        reg_form = RegistrationForm()
 
-    args = {'form':form }
+    args = {'reg_form':reg_form }
     return render(request, 'register.html', args)
-
-
-@login_required
-def profile(request, profile_id):
-    if profile_id == "0":
-        if request.user.is_authenticated:
-            userProfile = UserProfile.objects.get(pk=profile_id)
-    else:
-        userProfile = UserProfile.objects.get(pk=profile_id)
-
-    return render_to_response('blog/profile.html', {'userProfile':userProfile}, RequestContext(request))
 
 
 def login_view(request):
