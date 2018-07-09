@@ -1,0 +1,50 @@
+ody {
+  width:850px;
+
+}
+
+.card-text{
+  max-height: 75px;
+}
+.card {
+
+ background-color: yellow;
+  max-height:100px;
+}
+.heading {
+  background-color:grey;
+ max-width: 250px;
+ min-height: 50px;
+ color: green;
+}
+.messages{
+  background-color: red;
+  width:500px;
+  height:500px;
+
+}
+
+
+
+.login {
+  margin-left: 90px;
+
+}
+.shell {
+  color: grey;
+   width: 900px;
+height: 700px;
+ margin-left:10px;
+  border-color: red;
+  border: 5px;
+
+  background-color: blue;
+}
+.signin {
+  margin-left: 500px;
+  height: 500px;
+  width: 350px;
+
+
+  background-color: grey;
+}

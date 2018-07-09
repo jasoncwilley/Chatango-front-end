@@ -19,22 +19,22 @@ def home(request):
             content =  form.cleaned_data['content']
             subject = form.cleaned_data['subject']
             form.save()
-            return HttpResponseRedirect('recent')
+            return HttpResponseRedirect('latestspam')
     else:
         form = SpamForm()
     args = {'form':form}
     return      render(request, 'home.html', args)
 
-def recent(request):
+def latestspam(request):
     messages=Spam.objects.all()
-    return render(request, 'recent', {'messages':messages})
+    return render(request, 'latestspam.html', {'messages':messages})
 
 def register(request):
     if request.method=='POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('recent')
+            return HttpResponseRedirect('latestspam.html')
     else:
         form = RegistrationForm()
 

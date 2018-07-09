@@ -9,7 +9,7 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('chats/lastestspam.html')
+            return HttpResponseRedirect('chats/latestspam.html')
     else:
         form = RegistrationForm()
 
@@ -35,7 +35,7 @@ def login_view(request):
                         # Success
             user = login_form.get()
             login(request, user)
-            return HttpResponseRedirect('chats/lastestspam.html')
+            return HttpResponseRedirect('chats/latestspam.html')
     else:
             # Failure
         login_form = AuthenticationForm()
