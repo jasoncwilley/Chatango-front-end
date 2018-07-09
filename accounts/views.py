@@ -16,6 +16,9 @@ def register(request):
     args = {'reg_form':reg_form }
     return render(request, 'register.html', args)
 
+def logout_view(request):
+    
+    return redirect('/')
 
 def login_view(request):
     if request.method == 'POST':

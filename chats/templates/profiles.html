@@ -1,66 +1,33 @@
-{% extends "accounts/base.html" %}
+{% extends "base.html" %}
 
-{% load staticfiles %}
-<html class="no-js" lang="">
+{% block content %}
+<div class="panel right">
+    <h1>Start a Chat</h1>
+    <p>
+      <form method="post">
+          <input type='text'>
+          {%csrf_token%}
+          {{ form }}
+        <button type='submit' value="{{next_url}}" name="next_url">Submit</button>
+      </form>
+    </p>
+</div>
+    <div class="panel left">
+        <h1>Public Profiles</h1>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title></title>
-  <meta name="JustAnotherTwitterClone" content="SpamMaster3000">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <div class="textWrapper">
+            <a href="/users/{{ user.username }}">
+                <img class="avatar" src="http://www.robohash.org/chatango?size=75x75">
+                <span class="name">{{ user.first_name }}</span>
+            </a>
+            @{{ user.username }}
+            <p>
+                {{ user.spam_count}} Chats
+                <span class="spacing">{{ user.username.followed_by.count }} Followers</span>
+                <span class="spacing">{{ user.username.follows.count }} Following</span>
+            </p>
+            <p>{{ message.content }}</p>
+        </div>
 
-</head>
-<header>
-{% block title %}
- <title>Profiles</title>
- {% endblock %}
- {% block css %}
- <link href="{% static "login.css" %}" rel="stylesheet" type="text/css" />
+    </div>
 {% endblock %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  </header>
-
-  <body>
-  <style>
-      body {
-     background-image: url("spamcans.png");
-
-  }
-  </style>
-
-<title>
-Profile List
-</title>
-
-
-<h3>{{ action }}</h3>
-{% if profiles|length > 0 %}
-<table>
-<thead>
-<tr>
-<td>User's Name</td>
-<td>Username</td>
-<td>Phone</td>
-<td>Username</td>
-<td>DOB</td>
-<td>Email</td>
-<td>Friends</td>
-</tr>
-</thead>
-<tbody>
-{% for profile in profiles %}
-<tr>
-  <td>{{ profile.fname }} {{profile.lname}}</td>
-  <td><a href="/chats/users/{{ profile.username }}"> {{profile.username}}</a></td>
-  <td>{{ profile.phone }}</td>
-  <td>{{ profile.dateofbirth }}</td>
-<td>{{ profile.email }}</td>
-<td>{{ profile.follows }}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-{% else %}
-<span>No profile.</span>
-{% endif %}

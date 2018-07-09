@@ -11,19 +11,19 @@
         <h1>{{ user.first_name }}'s Profile</h1>
         <div class="textWrapper">
             <a href="/users/{{ user.username }}">
-                <img class="avatar" src="{{ user.profile.gravatar_url }}">
+                <img class="avatar" src="http://www.robohash.org/chatango?size=75x75">
                 <span class="name">{{ user.first_name }}</span>
             </a>
                 @{{ user.username }}
             <p>
-                {{ messages.count }} Ribbits
+                {{ messages.count }} Chatango's
                 <span class="spacing">{{ user.profile.follows.all.count }} Following</span>
                 <span class="spacing">{{ user.profile.followed_by.all.count }} Followers</span>
             </p>
             {% if follow %}
             <form action="/follow" method="post">
                 {% csrf_token %}
-                <input type="hidden" name="follow" value="{{ user.id }}">
+                <input type="hidden" name="follow" value="{{ user.username }}">
                 <input type="submit" value="Follow">
             </form>
             {% endif %}

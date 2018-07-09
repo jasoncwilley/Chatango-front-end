@@ -115,12 +115,11 @@ def profiles(request):
 
 def get_latest(user):
     try:
-        return user.spam.set.order_by('id').reverse()[0]
+        return user.messages.set.order_by('id').reverse()[0]
     except IndexError:
         return ""
 
 def users(request,  username="", spam_form=None):
-    messages = Spam.objects.all().order_by('-timestamp')
     if username:
         #show the users profile
         try:
@@ -131,7 +130,7 @@ def users(request,  username="", spam_form=None):
         if username == request.user.username or request.user.profile.follows.filter(username=username):
             return render(request, 'user.html', {'user': user, 'messages': messages, })
         return render(request, 'user.html', {'user': user, 'messages': messages, 'follow': True, })
-    users = User.objects.all().annotate(spam_count=Count('messages'))
+    users = User.objects.all().annotate(spam_count=Count('spam'))
     messages = map(get_latest, users)
     obj = zip(users, messages)
     spam_form = spam_form or SpamForm()

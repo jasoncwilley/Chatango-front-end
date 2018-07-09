@@ -26,6 +26,10 @@ urlpatterns = [
     url(r'^accounts/', include("accounts.urls")),
     url(r'^users/(?P<username>\w{0,30})/$', 'chats.views.users'),
     url(r'^$', 'chats.views.index'),
+    url(r'^users/$', 'chats.views.users'),
+    url(r'^logout/$', 'accounts.views.logout_view'),
+
+
 
 ]
 if settings.DEBUG:
