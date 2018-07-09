@@ -3,11 +3,47 @@ from django.contrib.auth.models import User
 from chats.models import Spam, Profile
 from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.contrib import messages
+from accounts.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from chats.forms import SpamForm, RegistrationForm, ProfileForm
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
+
+def index(request, login_form=None, reg_form=None):
+    # User is logged in
+    if request.user.is_authenticated():
+        spam_form = SpamForm(request.POST)
+        form = login_form or spam_form or reg_form
+        if form.is_valid():
+            home = spam_form.save(commit=False)
+            home.user = request.user
+            home.save()
+            content =  form.cleaned_data['content']
+            subject = form.cleaned_data['subject']
+            spam_form.save()
+            my_spam = Spam.objects.filter(user=user.id)
+            friends_spam = Spam.objects.filter(user__userprofile__in=user.profile.follows.all)
+            spam = my_spam| friends_spam
+
+            return render(request,
+
+                      {'spam_form': spam_form, 'user': user,
+                       'spam': spam,
+                       'next_url': '/', })
+        else:
+        # User is not logged in
+            login_form = login_form or AuthenticationForm()
+            reg_form = reg_form or RegistrationForm()
+
+        return render(request,
+            'home.html',
+            {'login_form': login_form, 'reg_form': reg_form, })
+
+
+
+
+
 
 def update(request):
     if request.method =='POST':
@@ -27,7 +63,6 @@ def update(request):
         form = ProfileForm()
     args = {'form':form}
     return      render(request, 'update.html', args)
-
 
 
 

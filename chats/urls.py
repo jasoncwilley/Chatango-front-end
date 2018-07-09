@@ -7,7 +7,7 @@ urlpatterns = [
 
     url(r'^update/$', views.update, name='update'),
     url(r'profiles', views.profiles, name='profiles'),
-    url(r'^public$', views.public),
+    url(r'^public$', views.public, name='public'),
     url(r'^register$', views.register, name='register'),
     url(r'^latestspam$', views.latestspam, name='latestspam'),
     url(r'^home$', views.home, name='home'),

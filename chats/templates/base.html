@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="{{ % static 'base.css' %}}">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 </head>
@@ -13,7 +13,7 @@
   color: #3F3E3D;
 }
 body {
-  background: white url(gfx/bg.png);
+  background: white url(spamcans.png);
   margin: 0;
   padding: 0;
 }
@@ -84,7 +84,7 @@ a:hover {
   margin: auto;
 }
 header {
-  background: url(images/spamcans.png);
+  background: url('images/spamcans.jpg');
   height: 85px;
   width: 100%;
 }
@@ -119,7 +119,7 @@ header div.wrapper #btnLogOut {
 }
 #content div.wrapper img {
   border-radius: 6px;
-  float: left;
+  float: right;
 }
 #content div.wrapper div.panel {
   border: 1px solid #D2D2D2;
@@ -198,7 +198,7 @@ header div.wrapper #btnLogOut {
   margin: 18px 0;
 }
 footer {
-  background: url(images/footer.png);
+  background: url('images/spamcans.jpg');
   height: 251px;
   font-size: 14px;
   clear: both;
@@ -215,7 +215,7 @@ footer div.wrapper img {
     <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="wrapper">
-            <img src="{{ STATIC_URL }}images/spamcans.png">
+            <img src='http://www.robohash.org/chatango?size=75x75'>
             <span>Chatango!</span><br>
             <span>JustAnotherTwitterClone
             {% block login %}
@@ -259,7 +259,7 @@ footer div.wrapper img {
         <div class="wrapper">
             Chatango - JustAnotherTwitterClone
             <a href="#">
-                <img src="{{ STATIC_URL }}images/spamcan.png">
+                <img src='http://www.robohash.org/chatango?size=75x75'>
             </a>
             <a href="">
                 <img src="#" border="0" alt="Made with Django." title="Made with Django.">
