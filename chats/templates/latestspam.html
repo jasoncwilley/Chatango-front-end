@@ -3,7 +3,7 @@
  <title>Recent Chats</title>
 
  {% load staticfiles %}
- <link href="{% static "latestspam.css" %}" rel="stylesheet" type="text/css" />
+ <link href="{% static "login.css" %}" rel="stylesheet" type="text/css" />
 
 <header>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -23,58 +23,42 @@
 
   <div class="login">
        {% if request.user.is_authenticated %}
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Post a Message</button>
-       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">View Messages</button>
-       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
-    {% else %}
+       <a class="btn btn-danger btn-sm" href="{% url 'chats:home' %}">Post Spam</a>
+          <a class="btn btn-danger btn-sm" href="{% url 'chats:latestspam' %}">Recent Spam</a>
+          <a class="btn btn-danger btn-sm" href="#">Profile</a>    {% else %}
        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" href="/accounts/register">Create a Account Today!!!</button>
     {% endif %}
   </div>
      </nav>
 
- {% block content1 %}
 
+<div class="col-xs-6">
+ <div class="container">
 
-{% endblock content1 %}
+   <div class="card">
+     <div class="col-xs-5">
+         <div class="card-block">{% for message in messages %}
+           <div class="card-text">  <img src="http://www.gravatar.com/avatar/"><a href="/chats/users/{{ profile.username }}">{{profile.username}}</a>{{user}}
+           <h4 class="card-title">{{message.timestamp}}<br>Subject:&nbsp&nbsp{{ message.subject }}</h4>
 
+           <p class="card-text">{{message.content}}</p><br>
 
-</div>
-
-
-</section>
-</div>
-
-
-      <div class="container">
-        <div class="signin">
-      <div class="col-xs-6">
-        <div class="container">
-
-          <div class="card">
-            <div class="col-xs-5">
-                <div class="card-block">{% for message in messages %}
-                  <div class="card-text">  <img src="http://www.gravatar.com/avatar/"><a href="/chats/users/{{ profile.username }}"> {{profile.username}}</a>{{user}}
-                  <h4 class="card-title">{{message.timestamp}}<br> <strong>{{ message.subject }}</strong></h4>
-
-                  <p class="card-text">{{message.content}}</p><br>
-
-      {%endfor%}
+{%endfor%}
 
 </div>
 </div>
-      </div>
-           </div><!-- signin-->
-           </div>
-         </div>
-       </div>
-  <!-- /container -->
-     </div>
-
-    <hr>
-
+</div>
+    </div><!-- signin-->
+    </div>
   </div>
-  <!-- /container -->
-      </div><!-- shell-->
-  <!-- /container -->
-     </div>
+</div>
+
+
+
+
+</div>
+
+
+
 </body>
+</html>

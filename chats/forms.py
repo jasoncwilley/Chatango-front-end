@@ -1,7 +1,7 @@
 
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import User
 from django import forms
-from chats.models import Spam
+from chats.models import Spam, Profile
 from django.contrib.auth.forms import UserCreationForm
 
 class RegistrationForm(UserCreationForm):
@@ -35,4 +35,22 @@ class SpamForm(forms.ModelForm):
 
     class Meta:
         model = Spam
-        fields = ('subject', 'content',)
+        exclude = ('user','timestamp',)
+
+
+class ProfileForm(forms.ModelForm):
+    fname = forms.CharField(max_length=50, required=False)
+    lname = forms.CharField(max_length=50, required=False)
+    username = forms.CharField(max_length=50, required=False)
+    phone = forms.CharField(max_length=20, required=False)
+    email = forms.EmailField(required=False)
+
+    class Meta:
+        model = Profile
+        fields = (
+            'fname',
+            'lname',
+            'username',
+            'phone',
+            'email'
+        )

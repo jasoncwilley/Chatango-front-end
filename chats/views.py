@@ -4,10 +4,32 @@ from chats.models import Spam, Profile
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from chats.forms import SpamForm, RegistrationForm
+from chats.forms import SpamForm, RegistrationForm, ProfileForm
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
+
+def update(request):
+    if request.method =='POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            update = form.save(commit=False)
+            update.user = request.user
+            update.save()
+            fname = form.cleaned_data['fname']
+            lname = form.cleaned_data['lname']
+            username = form.cleaned_data['username']
+            phone = form.cleaned_data['phone']
+            email = form.cleaned_data['email']
+            form.save()
+            return HttpResponseRedirect('latestspam')
+    else:
+        form = ProfileForm()
+    args = {'form':form}
+    return      render(request, 'update.html', args)
+
+
+
 
 def home(request):
     if request.method =='POST':
@@ -84,7 +106,9 @@ def users(request,  username="", spam_form=None):
                    'spam_form': spam_form,
                    'username': request.user.username, })
 
-
+def get_user_profile(request, username):
+    user = User.objects.get(username=username)
+    return render(request, 'user_profile.html', {"user":user})
 
 def profile(request, pk):
     profile = User.objects.get(id=pk)

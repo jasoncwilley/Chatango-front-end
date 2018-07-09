@@ -23,7 +23,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^chats/', include('chats.urls', namespace='chats')),
-    url(r'^accounts/', include("accounts.urls"))
+    url(r'^accounts/', include("accounts.urls")),
+    url(r'^profile/', include('chats.urls')),
 ]
 if settings.DEBUG:
     urlpatterns +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
