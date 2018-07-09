@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block login %}
-    <form action="/login" method="post">{% csrf_token %}
-        {% for field in login_form %}
-        {{ field }}
-        {% endfor %}
+    <form action="/login" method="post">
+
+      {% csrf_token %}
+      {{ login_form }}
+
         <input type="submit" id="btnLogIn" value="Log In">
     </form>
 {% endblock %}
@@ -12,15 +13,14 @@
 
 {% block content %}
 
-<img src="{{ STATIC_URL}}gfx/frog.jpg">
+<img src="http://www.robohash.org/chatango?size=75x75">
 <div class="panel right">
     <h1>First Time Here?</h1>
     <p>
-        <form action="/accounts/register" method="post">{% csrf_token %}
-            {% for field in reg_form %}
-            {{ field }}
-            {% endfor %}
-            <input type="submit" value="Create Account">
+        <form action="/accounts/register" method="post">
+            {% csrf_token %}
+            {{ reg_form }}
+  <input class="btn btn-danger btn-sm"  type="submit" href="">Create an Account Today!!!</a>
         </form>
     </p>
 </div>

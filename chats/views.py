@@ -127,19 +127,31 @@ def users(request,  username="", spam_form=None):
             user = User.objects.filter(username=username)
         except User.DoesNotExist:
             raise Http404
-        usermessages = Spam.objects.filter(user=user)
+        messages = Spam.objects.filter(user=user.id)
         if username == request.user.username or request.user.profile.follows.filter(username=username):
-            return render(request, 'user.html', {'user': user, 'usermessages': usermessages, })
-        return render(request, 'user.html', {'user': user, 'usermessages': usermessages, 'follow': True, })
+            return render(request, 'user.html', {'user': user, 'messages': messages, })
+        return render(request, 'user.html', {'user': user, 'messages': messages, 'follow': True, })
     users = User.objects.all().annotate(spam_count=Count('messages'))
-    usermessages = map(get_latest, users)
-    obj = zip(users, usermessages)
+    messages = map(get_latest, users)
+    obj = zip(users, messages)
     spam_form = spam_form or SpamForm()
     return render(request,
                   'profiles.html',
                   {'obj': obj, 'next_url': '/users/',
                    'spam_form': spam_form,
                    'username': request.user.username, })
+
+def follow(request):
+    if request.method == "POST":
+        follow_id = request.POST.get('follow', False)
+        if follow_id:
+            try:
+                user = User.objects.get(id=follow_id)
+                request.user.profile.follows.add(user.profile)
+            except ObjectDoesNotExist:
+                return redirect('/users/')
+    return redirect('/users/')
+
 
 def public(request, form=None):
     messages = Spam.objects.order_by('-timestamp')[:10]

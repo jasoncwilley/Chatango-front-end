@@ -4,13 +4,12 @@
     <div class="panel right">
         <h1>Start a Chat</h1>
         <p>
-            <form action="/submit" method="post">
-            {% for field in spam_form %}{% csrf_token %}
-            {{ field }}
-            {% endfor %}
-            <input type="hidden" value="{{ next_url }}" name="next_url">
-            <input type="submit" value="Chatago!">
-            </form>
+          <form method="post">
+              <input type='text'>
+              {%csrf_token%}
+              {{ form }}
+            <button type='submit' value="{{next_url}}" name="next_url">Submit</button>
+          </form>
         </p>
     </div>
     <div class="panel left">
