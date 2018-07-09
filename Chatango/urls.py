@@ -24,7 +24,8 @@ urlpatterns = [
 
     url(r'^chats/', include('chats.urls', namespace='chats')),
     url(r'^accounts/', include("accounts.urls")),
-    url(r'^profile/', include('chats.urls')),
+    url(r'^users/(?P<username>\w{0,30})/$', 'chats.views.users'),
+
 ]
 if settings.DEBUG:
     urlpatterns +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

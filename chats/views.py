@@ -1,7 +1,7 @@
 
 from django.contrib.auth.models import User
 from chats.models import Spam, Profile
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from chats.forms import SpamForm, RegistrationForm, ProfileForm
@@ -89,10 +89,10 @@ def users(request,  username="", spam_form=None):
     if username:
         #show the users profile
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.filter(username=username)
         except User.DoesNotExist:
             raise Http404
-        usermessages = Spam.objects.filter(user=user.id)
+        usermessages = Spam.objects.filter(user=user)
         if username == request.user.username or request.user.profile.follows.filter(username=username):
             return render(request, 'user.html', {'user': user, 'usermessages': usermessages, })
         return render(request, 'user.html', {'user': user, 'usermessages': usermessages, 'follow': True, })
@@ -106,22 +106,49 @@ def users(request,  username="", spam_form=None):
                    'spam_form': spam_form,
                    'username': request.user.username, })
 
-def get_user_profile(request, username):
-    user = User.objects.get(username=username)
-    return render(request, 'user_profile.html', {"user":user})
+def public(request, form=None):
+    messages = Spam.objects.order_by('-timestamp')[:10]
 
-def profile(request, pk):
-    profile = User.objects.get(id=pk)
-    messages = Spam.objects.all()
+    if request.method =='POST':
+        form = SpamForm(request.POST)
+        if form.is_valid():
+            home = form.save(commit=False)
+            home.user = request.user
+            home.save()
+            content =  form.cleaned_data['content']
+            subject = form.cleaned_data['subject']
+            form.save()
+            return render(request,
+                          'public.html',
+                          {'form': form, 'next_url': '/public',
+                           'messages': messages, 'username': request.user.username})
+    else:
+        form = SpamForm()
 
-    context = {
-		"profile": profile,
-		"messages": messages,
-		}
-    return render(request, 'profile_detail.html', context)
+    return render(request, 'public.html', {'form': form, 'next_url': '/public',
+                    'messages': messages, 'username': request.user.username})
+
+'''
+def profile(request, username=""):
+    if username:
+        # Show a profile
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise Http404
+        messages = Spam.objects.filter(user=user.id)
+        if username == request.user.username:
+            # Self Profile
+            return render(request, 'user.html', {'user': user, 'ribbits': ribbits, })
+        return render(request, 'user.html', {'user': user, 'messages': messages})
+    users = User.objects.all().annotate(ribbit_count=Count('spam'))
+    return render(request, 'username': request.user.username, })
+'''
 
 
-def updateprofile(request):
-    new_user = UserProfile(fname = 'jimbo', lname = 'johnson', username = 'jimbo', phone = '859-873-9577', dateofbirth = '1980-05-20', email = 'jim@bo.com', datecreated = '2010-05-05')
-    new_user.save()
-    return render(request, 'updateprofile.html')
+@login_required
+def viewprofile(request, profile_id):
+    profile_id == "0"
+    userProfile = Profile.objects.get(pk=profile_id)
+
+    return render_to_response('viewprofile.html', {'userProfile':userProfile}, RequestContext(request))
