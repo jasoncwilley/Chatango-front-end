@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="panel right">
+    <h1>  @{{ profile.username }}'s Profile</h1>
+    <p>
+      <form method="post">
+          <input type='text'>
+          {%csrf_token%}
+          {{ form }}
+        <button type='submit' value="{{next_url}}" name="next_url">Submit</button>
+      </form>
+    </p>
+</div>
+    <div class="panel left">
+        <h1>Public Profiles</h1>
+
+        <div class="textWrapper">
+            <a href="/users/{{ user.username }}">
+                <img class="avatar" src="http://www.robohash.org/chatango?size=75x75">
+                <span class="name">{{ user.first_name }}</span>
+            </a>
+
+            <p>
+                {{ user.spam_count}} Chats
+                <span class="spacing">{{ user.username.followed_by.count }} Followers</span>
+                <span class="spacing">{{ user.username.follows.count }} Following</span>
+            </p>
+            <p>{{ message.content }}</p>
+        </div>
+
+    </div>
+{% endblock %}

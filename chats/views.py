@@ -31,10 +31,10 @@ def index(request, login_form=None, reg_form=None):
                       {'spam_form': spam_form, 'user': user,
                        'spam': spam,
                        'next_url': '/', })
-        else:
+    else:
         # User is not logged in
-            login_form = login_form or AuthenticationForm()
-            reg_form = reg_form or RegistrationForm()
+        login_form = login_form or AuthenticationForm()
+        reg_form = reg_form or RegistrationForm()
 
         return render(request,
             'home.html',
@@ -58,11 +58,11 @@ def update(request):
             phone = form.cleaned_data['phone']
             email = form.cleaned_data['email']
             form.save()
-            return HttpResponseRedirect('latestspam')
+            return HttpResponseRedirect('/')
     else:
         form = ProfileForm()
-    args = {'form':form}
-    return      render(request, 'update.html', args)
+        args = {'form':form}
+    return      render(request, 'profileform.html', args)
 
 
 
@@ -82,9 +82,7 @@ def home(request):
     args = {'form':form}
     return      render(request, 'home.html', args)
 
-def latestspam(request):
-    messages=Spam.objects.all()
-    return render(request, 'latestspam.html', {'messages':messages})
+
 
 def register(request):
     if request.method=='POST':
@@ -123,7 +121,7 @@ def users(request,  username="", spam_form=None):
     if username:
         #show the users profile
         try:
-            user = User.objects.filter(username=username)
+            user = User.objects.get(username=username)
         except User.DoesNotExist:
             raise Http404
         messages = Spam.objects.filter(user=user.id)
@@ -138,7 +136,7 @@ def users(request,  username="", spam_form=None):
                   'profiles.html',
                   {'obj': obj, 'next_url': '/users/',
                    'spam_form': spam_form,
-                   'username': request.user.username, })
+                   'username': username })
 
 def follow(request):
     if request.method == "POST":

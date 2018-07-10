@@ -21,13 +21,14 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-
+    url(r'^login$', 'accounts.views.login_view'),
     url(r'^chats/', include('chats.urls', namespace='chats')),
     url(r'^accounts/', include("accounts.urls")),
     url(r'^users/(?P<username>\w{0,30})/$', 'chats.views.users'),
     url(r'^$', 'chats.views.index'),
     url(r'^users/$', 'chats.views.users'),
     url(r'^logout/$', 'accounts.views.logout_view'),
+    url(r'^register$', 'accounts.views.register'),
 
 
 

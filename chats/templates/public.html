@@ -16,8 +16,12 @@
         <h1>Current Messages</h1>
         {% for message in messages %}
         <div class="textWrapper">
+          <a href="/users/{{ user.username }}">
             <img class="avatar" src='http://www.robohash.org/chatango?size=75x75'>
-            <span class="name">{{ message.user.first_name }}</span>@{{ message.user.username }}
+            <span class="name">{{ message.user.first_name }}</span>
+
+          </a>
+          <span class ="name">"@{{ message.user.username }}</span>
             <span class="time">{{ message.timestamp|timesince }}</span>
             <p>Subject: &nbsp &nbsp{{ message.subject }}</p>
             <p>Message: &nbsp &nbsp{{ message.content }}</p>

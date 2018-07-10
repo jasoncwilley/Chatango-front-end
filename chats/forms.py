@@ -38,6 +38,7 @@ class SpamForm(forms.ModelForm):
         exclude = ('user','timestamp',)
 
 
+
 class ProfileForm(forms.ModelForm):
     fname = forms.CharField(max_length=50, required=False)
     lname = forms.CharField(max_length=50, required=False)

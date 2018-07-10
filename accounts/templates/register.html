@@ -1,43 +1,98 @@
+
 {% extends "base.html" %}
-<!doctype html>
-{% load staticfiles %}
-<html class="no-js" lang="">
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title></title>
-  <meta name="JustAnotherTwitterClone" content="SpamMaster3000">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{% block title %}
- <title>Registration</title>
- {% endblock %}
- {% block css %}
- <link href="{% static "register.css" %}" rel="stylesheet" type="text/css" />
+{% block login %}
+    <form action="/users/" method="post">
+
+      {% csrf_token %}
+      {{ login_form }}
+
+        <input type="submit" id="btnLogIn" value="Log In">
+    </form>
 {% endblock %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  </head>
 
-  <body>
-  <div class= "containter">
 
-    <div class ="shell">
-   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-     <h4>SpamMaster3000</h4>
+{% block content %}
 
+
+<div class="panel right">
+    <h1>First Time Here?</h1>
+    <p>
 
 
 
-       {% block content3 %}
-           <img src="/home/minty/Pictures/spamcans.png">
-           <div class="panel right">
-               <h5>First Time Here??</h5>
-               <p>
-                   <form action="/chats/latestspam" method="post">{% csrf_token %}
-                           {{form.as_p}}
-                    <input type="submit" value="Create Account">
-                   </form>
-               </p>
-           </div>
+<form action="/register" method="post">
+  {% csrf_token %}
+  {{ reg_form.non_field_errors }}
 
-{% endblock content3 %}
+  {{ reg_form.source.errors }}
+  {{ reg_form.source }}
+
+  <table border="1">
+
+
+    <tr>
+      <th>{{ reg_form.first_name.label_tag }}</th>
+
+      <tr>
+        <td>
+        {{ reg_form.first_name.errors }}
+        {{ reg_form.first_name }}
+      </td>
+      </tr>
+      <tr>
+        <th>{{ reg_form.last_name.label_tag }}</th>
+
+        <tr>
+          <td>
+          {{ reg_form.last_name.errors }}
+          {{ reg_form.last_name }}
+        </td>
+        </tr>
+
+          <th>{{ reg_form.username.label_tag }}</th>
+
+          <tr>
+            <td>
+            {{ reg_form.username.errors }}
+            {{ reg_form.username }}
+          </td>
+          </tr>
+
+      <tr>
+        <th>{{ reg_form.email.label_tag }}</th>
+
+        <tr>
+          <td>
+          {{ reg_form.email.errors }}
+          {{ reg_form.email }}
+        </td>
+        </tr>
+
+      <th>{{ reg_form.password1.label_tag }}</th>
+
+      <tr>
+        <td>
+        {{ reg_form.password1.errors }}
+        {{ reg_form.password1 }}
+      </td>
+      </tr>
+      <tr>
+        <th>{{ reg_form.password2.label_tag }}</th>
+
+        <tr>
+          <td>
+          {{ reg_form.password2.errors }}
+          {{ reg_form.password2 }}
+        </td>
+        </tr>
+
+  </table>
+
+
+
+  <input class="btn btn-danger btn-sm"  type="submit" href="">Create an Account Today!!!</a>
+        </form>
+    </p>
+</div>
+{% endblock %}

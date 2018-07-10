@@ -11,15 +11,14 @@
         <h1>{{ user.first_name }}'s Profile</h1>
         <div class="textWrapper">
             <a href="/users/{{ user.username }}">
-                <img class="avatar" src="http://www.robohash.org/chatango?size=75x75">
+                <img class="avatar" src="http://www.robohash.org/shakyjzy?size=75x75">
                 <span class="name">{{ user.first_name }}</span>
             </a>
+
                 @{{ user.username }}
-            <p>
+              <p>
                 {{ messages.count }} Chatango's
-                <span class="spacing">{{ user.profile.follows.all.count }} Following</span>
-                <span class="spacing">{{ user.profile.followed_by.all.count }} Followers</span>
-            </p>
+
             {% if follow %}
             <form action="/follow" method="post">
                 {% csrf_token %}
@@ -35,9 +34,10 @@
         {% for message in messages %}
         <div class="textWrapper">
             <a href="/users/{{ user.username }}">
-                <img class="avatar" src="{{ user.profile.gravatar_url }}">
+                <img class="avatar" src="http://www.robohash.org/shakyjzy?size=75x75">
+</a>
                 <span class="name">{{ message.user.first_name }}</span>
-            </a>
+
             @{{ message.user.username }}
             <span class="time">{{ message.timestamp|timesince }}</span>
             <p>{{ message.content }}</p>

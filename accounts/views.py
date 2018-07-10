@@ -9,15 +9,16 @@ def register(request):
         reg_form = RegistrationForm(request.POST)
         if reg_form.is_valid():
             reg_form.save()
-            return HttpResponseRedirect('chats/latestspam.html')
+            return HttpResponseRedirect('/user/')
     else:
         reg_form = RegistrationForm()
 
     args = {'reg_form':reg_form }
     return render(request, 'register.html', args)
 
+
 def logout_view(request):
-    
+    logout(request)
     return redirect('/')
 
 def login_view(request):
@@ -27,7 +28,7 @@ def login_view(request):
                         # Success
             user = login_form.get()
             login(request, user)
-            return HttpResponseRedirect('chats/latestspam.html')
+            return HttpResponseRedirect('/users/')
     else:
             # Failure
         login_form = AuthenticationForm()

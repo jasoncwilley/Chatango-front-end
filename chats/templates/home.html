@@ -13,13 +13,82 @@
 
 {% block content %}
 
-<img src="http://www.robohash.org/chatango?size=75x75">
 <div class="panel right">
     <h1>First Time Here?</h1>
     <p>
-        <form action="/accounts/register" method="post">
-            {% csrf_token %}
-            {{ reg_form }}
+
+
+
+<form action="/register" method="post">
+{% csrf_token %}
+  {{ reg_form.non_field_errors }}
+
+  {{ reg_form.source.errors }}
+  {{ reg_form.source }}
+
+  <table border="1">
+
+
+    <tr>
+      <th>{{ reg_form.first_name.label_tag }}</th>
+
+      <tr>
+        <td>
+        {{ reg_form.first_name.errors }}
+        {{ reg_form.first_name }}
+      </td>
+      </tr>
+      <tr>
+        <th>{{ reg_form.last_name.label_tag }}</th>
+
+        <tr>
+          <td>
+          {{ reg_form.last_name.errors }}
+          {{ reg_form.last_name }}
+        </td>
+        </tr>
+
+          <th>{{ reg_form.username.label_tag }}</th>
+
+          <tr>
+            <td>
+            {{ reg_form.username.errors }}
+            {{ reg_form.username }}
+          </td>
+          </tr>
+
+      <tr>
+        <th>{{ reg_form.email.label_tag }}</th>
+
+        <tr>
+          <td>
+          {{ reg_form.email.errors }}
+          {{ reg_form.email }}
+        </td>
+        </tr>
+
+      <th>{{ reg_form.password1.label_tag }}</th>
+
+      <tr>
+        <td>
+        {{ reg_form.password1.errors }}
+        {{ reg_form.password1 }}
+      </td>
+      </tr>
+      <tr>
+        <th>{{ reg_form.password2.label_tag }}</th>
+
+        <tr>
+          <td>
+          {{ reg_form.password2.errors }}
+          {{ reg_form.password2 }}
+        </td>
+        </tr>
+
+  </table>
+
+
+
   <input class="btn btn-danger btn-sm"  type="submit" href="">Create an Account Today!!!</a>
         </form>
     </p>
