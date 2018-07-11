@@ -38,15 +38,16 @@ body {
   border: 1px solid #007bff;
 }
 input {
-  width: 189px;
+  width: 125x;
   height: 38px;
   border: 1px solid #3F729B;
   padding: 0 10px;
   outline: none;
   font-size: 17px;
+  color:red;
 }
 input:focus {
-  background: #dee2e6;
+  background: red;
 }
 input.error {
   background: #dee2e6;
@@ -58,7 +59,7 @@ input[type="submit"] {
   width: auto;
   border: 1px solid #3F729B;
   border-radius: 2px;
-  color: black;
+  color: red;
   font-size: 12px;
   font-weight: bold;
   padding: 0 20px;
@@ -81,7 +82,7 @@ a:hover {
   text-decoration: underline;
 }
 .wrapper {
-  width: 860px;
+  width: 875px;
   margin: auto;
   background-color: #3F3E3D;
 }
@@ -117,14 +118,15 @@ header div.wrapper #btnLogOut {
   margin-bottom: 15px;
   min-height: 560px;
   background-color: #2E2E2E;
-  color: white;
+  color: red;
+  padding-top: 50px;
 }
 #content div.wrapper {
   margin: 38px auto;
 }
 #content div.wrapper img {
   border-radius: 6px;
-  float: right;
+  float: left;
 }
 #content div.wrapper div.panel {
   border: 1px solid #D2D2D2;
@@ -135,29 +137,33 @@ header div.wrapper #btnLogOut {
   font-size: 14px;
 }
 #content div.wrapper div.panel.right {
-  width: 353px;
-  height: 575px;
+  width: 370px;
+  min-height: 450px;
   float: right;
-  color: white;
+  margin-right: 50px;
+  color: red;
+  margin-left:5px;
 }
 #content div.wrapper div.panel.right textarea.messageText {
-  width: 300px;
-  height: 60px;
+  width: 200px!important;
+  height: 40px;
   border: 1px solid #D2D2D2;
+
 }
 #content div.wrapper div.panel.right textarea.messageText.error {
   border: 1px solid #6610f2;
 }
 #content div.wrapper div.panel.left {
-  width: 400px;
+  width: 350px;
   float: left;
+  max-height: 500px;
 }
 #content div.wrapper div.panel.left div.messageWrapper {
   padding: 15px 0;
   border-bottom: 1px solid #D2D2D2;
 }
 #content div.wrapper div.panel.left div.messageWrapper:last-child {
-  border: none;
+border: 1px solid #D2D2D2;
 }
 #content div.wrapper div.panel.left div.messageWrapper span.name {
   font-size: 18px;
@@ -225,17 +231,15 @@ footer div.wrapper img {
             <img src='http://www.robohash.org/chatango?size=75x75'>
             <span>Chatango!</span><br>
             <span>JustAnotherTwitterClone
-
-      <a class="btn btn-danger btn-sm" href="{% url 'chats:home' %}">Home</a>
-      <a class="btn btn-danger btn-sm" href="{% url 'chats:public' %}">Chatbox</a>
-      <a class="btn btn-danger btn-sm" href="#">Recent Spam</a>
-      <a class="btn btn-danger btn-sm" href="{% url 'chats:profiles' %}">Profiles</a>
-      <a class="btn btn-danger btn-sm" href="">Create a Account Today!!!</a>
-
+{% block login %}
+      <a  href="/">Home</a>
+      <a href="/users/">Profiles</a>
+      <a href="/users/{{ username }}">My Profile</a>
+      <a href="/public">Chatangos</a>
               <form action="/logout">
-                <input type="submit" id="btnLogOut" value="Log Out">
-            </form>
-          
+                <input class="btn btn-danger btn-sm"  type="submit" href="">Logout</a>
+              </form>
+{% endblock %}
         </div>
           </nav>
     </header>

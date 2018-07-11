@@ -10,26 +10,35 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 
+@login_required
+def submit(request):
+    if request.method == "POST":
+        spam_form = SpamForm(data=request.POST)
+        next_url = request.POST.get("next_url", "/")
+        if spam_form.is_valid():
+            submit = spam_form.save(commit=False)
+            spam.user = request.user
+            spam.save()
+            return redirect(next_url)
+        else:
+            return public(request, spam_form)
+    return redirect('/')
+
+
 def index(request, login_form=None, reg_form=None):
     # User is logged in
     if request.user.is_authenticated():
-        spam_form = SpamForm(request.POST)
-        form = login_form or spam_form or reg_form
-        if form.is_valid():
-            home = spam_form.save(commit=False)
-            home.user = request.user
-            home.save()
-            content =  form.cleaned_data['content']
-            subject = form.cleaned_data['subject']
-            spam_form.save()
-            my_spam = Spam.objects.filter(user=user.id)
-            friends_spam = Spam.objects.filter(user__userprofile__in=user.profile.follows.all)
-            spam = my_spam| friends_spam
+        spam_form = SpamForm()
+        user = request.user
+        my_spam = Spam.objects.filter(user=user.id)
+        friends_spam = Spam.objects.filter(user__profile__in=user.profile.follows.all)
+        spam = my_spam | friends_spam
 
-            return render(request,
 
-                      {'spam_form': spam_form, 'user': user,
-                       'spam': spam,
+
+        return render(request, 'buddies.html',
+                  {'spam_form': spam_form, 'user': user,
+                   'spam': spam,
                        'next_url': '/', })
     else:
         # User is not logged in
@@ -113,10 +122,10 @@ def profiles(request):
 
 def get_latest(user):
     try:
-        return user.messages.set.order_by('id').reverse()[0]
+        return Spam.objects.all()
     except IndexError:
         return ""
-
+@login_required
 def users(request,  username="", spam_form=None):
     if username:
         #show the users profile
@@ -136,8 +145,8 @@ def users(request,  username="", spam_form=None):
                   'profiles.html',
                   {'obj': obj, 'next_url': '/users/',
                    'spam_form': spam_form,
-                   'username': username })
-
+                   'username': request.user.username, })
+@login_required
 def follow(request):
     if request.method == "POST":
         follow_id = request.POST.get('follow', False)
@@ -149,28 +158,33 @@ def follow(request):
                 return redirect('/users/')
     return redirect('/users/')
 
-
+@login_required
 def public(request, form=None):
-    messages = Spam.objects.order_by('-timestamp')[:10]
-
+    messages = Spam.objects.all()
     if request.method =='POST':
         form = SpamForm(request.POST)
         if form.is_valid():
-            home = form.save(commit=False)
-            home.user = request.user
-            home.save()
-            content =  form.cleaned_data['content']
+            update = form.save(commit=False)
+            update.user = request.user
+            content = form.cleaned_data['content']
             subject = form.cleaned_data['subject']
             form.save()
-            return render(request,
-                          'public.html',
-                          {'form': form, 'next_url': '/public',
-                           'messages': messages, 'username': request.user.username})
+            return render(request, 'public.html',
+                    {'form':form, 'next_url': '/public',
+                    'messages':messages, 'username': request.user.username})
     else:
-        form = SpamForm()
+        messages = Spam.objects.all()
+        form = form or SpamForm()
+        messages = Spam.objects.all()
+        return render(request, 'public.html',
+                     {'form':form, 'next_url': '/public',
+                     'messages':messages, 'username': request.user.username})
 
-    return render(request, 'public.html', {'form': form, 'next_url': '/public',
-                    'messages': messages, 'username': request.user.username})
+
+
+
+
+
 
 '''
 def profile(request, username=""):

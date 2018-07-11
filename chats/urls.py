@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^buddies$', views.users, name='buddies'),
     url(r'^viewprofile/(?P<profile_id>\d+)/$', views.viewprofile, name='viewprofile'),
     url(r'^profileform$', views.update),
+    url(r'^follow$', views.follow),
 
 ]
