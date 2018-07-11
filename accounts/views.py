@@ -3,7 +3,7 @@ from  accounts.forms import RegistrationForm, AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-
+from django.contrib.auth.forms import AuthenticationForm
 def register(request):
     if request.method=='POST':
         reg_form = RegistrationForm(request.POST)
@@ -21,10 +21,12 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
+
+
 def login_view(request):
     if request.method == 'POST':
         login_form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
+        if login_form.is_valid():
                         # Success
             user = login_form.get()
             login(request, user)

@@ -7,7 +7,7 @@
       <form method="post">
           <input type='text'>
           {%csrf_token%}
-          {{ form }}
+          {{ spam_form }}
         <button type='submit' value="{{next_url}}" name="next_url">Submit</button>
       </form>
     </p>

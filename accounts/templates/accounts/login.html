@@ -1,35 +1,98 @@
+
 {% extends "base.html" %}
 
-
-{% block title %}
- <title>Login Chatango</title>
- {% endblock %}
- {% block css %}
- {% load staticfiles %}
- <link href="{% static 'css/login.css' %}" rel="stylesheet"  />
-{% endblock %}
-<header>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-</header>
 {% block login %}
-<div class="login">
- <form class="form-inline my-2 my-md-0">
-  <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-  <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-</form>
- {% endblock %}
-  {% if request.user.is_authenticated %}
-<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Post a Message</button>
-  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">View Messages</button>
-  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
-{% else %}
-<a href="accounts/register" class="button--style-red">Click!</a>
-  <button class="btn btn-outline-success my-2 my-sm-0" type="submit"href="accounts/register">Create a Account Today!!!</button>
-{% endif %}
+    <form action="/users/" method="post">
+
+      {% csrf_token %}
+      {{ login_form }}
+
+        <input type="submit" id="btnLogIn" value="Log In">
+    </form>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="panel right">
+    <h1>First Time Here?</h1>
+    <p>
+
+
+
+<form action="/register" method="post">
+  {% csrf_token %}
+  {{ reg_form.non_field_errors }}
+
+  {{ reg_form.source.errors }}
+  {{ reg_form.source }}
+
+  <table border="1">
+
+
+    <tr>
+      <th>{{ reg_form.first_name.label_tag }}</th>
+
+      <tr>
+        <td>
+        {{ reg_form.first_name.errors }}
+        {{ reg_form.first_name }}
+      </td>
+      </tr>
+      <tr>
+        <th>{{ reg_form.last_name.label_tag }}</th>
+
+        <tr>
+          <td>
+          {{ reg_form.last_name.errors }}
+          {{ reg_form.last_name }}
+        </td>
+        </tr>
+
+          <th>{{ reg_form.username.label_tag }}</th>
+
+          <tr>
+            <td>
+            {{ reg_form.username.errors }}
+            {{ reg_form.username }}
+          </td>
+          </tr>
+
+      <tr>
+        <th>{{ reg_form.email.label_tag }}</th>
+
+        <tr>
+          <td>
+          {{ reg_form.email.errors }}
+          {{ reg_form.email }}
+        </td>
+        </tr>
+
+      <th>{{ reg_form.password1.label_tag }}</th>
+
+      <tr>
+        <td>
+        {{ reg_form.password1.errors }}
+        {{ reg_form.password1 }}
+      </td>
+      </tr>
+      <tr>
+        <th>{{ reg_form.password2.label_tag }}</th>
+
+        <tr>
+          <td>
+          {{ reg_form.password2.errors }}
+          {{ reg_form.password2 }}
+        </td>
+        </tr>
+
+  </table>
+
+
+
+  <input class="btn btn-danger btn-sm"  type="submit" href="">Create an Account Today!!!</a>
+        </form>
+    </p>
+</div>
+{% endblock %}

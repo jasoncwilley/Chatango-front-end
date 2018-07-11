@@ -35,9 +35,9 @@
         <div class="textWrapper">
             <a href="/users/{{ user.username }}">
                 <img class="avatar" src="http://www.robohash.org/shakyjzy?size=75x75">
-</a>
-                <span class="name">{{ message.user.first_name }}</span>
 
+                <span class="name">{{ message.user.first_name }}</span>
+</a>
             @{{ message.user.username }}
             <span class="time">{{ message.timestamp|timesince }}</span>
             <p>{{ message.content }}</p>
