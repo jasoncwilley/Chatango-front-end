@@ -9,12 +9,13 @@
 <div class="panel right">
     <h1>Start a Chat</h1>
     <p>
-      <form method="post">
-          <input type='text'>
+      <form action="/public" method="post">
+
           {%csrf_token%}
           {{ spam_form }}
-        <button type='submit' value="{{next_url}}" name="next_url">Submit</button>
-      </form>
+          <input type="hidden" value="{{ next_url }}" name="next_url">
+          <input type="submit" value="Submit!">
+          </form>
     </p>
 </div>
     <div class="panel left">

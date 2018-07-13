@@ -6,7 +6,7 @@
     <p>
           <form action="/public" method="post">
         {% csrf_token %}
-          {{ form }}
+          {{ spam_form }}
 
           <input type="hidden" value="{{ next_url }}" name="next_url">
           <input type="submit" value="Submit!">

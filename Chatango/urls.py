@@ -32,7 +32,9 @@ urlpatterns = [
     url(r'^profiles$', 'chats.views.profiles', name='profiles'),
     url(r'^follow$', 'chats.views.follow'),
     url(r'^public$', 'chats.views.public'),
-
+    url(r'^submit$', 'chats.views.submit'),
+    url(r'^follow$', 'chats.views.follow'),
+    url(r'^userprofile$', 'chats.views.userprofile', name='userprofile'),
 ]
 if settings.DEBUG:
     urlpatterns +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

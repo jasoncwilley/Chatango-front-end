@@ -33,8 +33,8 @@ class AuthenticateForm(AuthenticationForm):
     password = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password'}))
 
     def is_valid(self):
-        form = super(AuthenticateForm, self).is_valid()
+        login_form = super(AuthenticateForm, self).is_valid()
         for f, error in self.errors.iteritems():
             if f != '__all__':
                 self.fields[f].widget.attrs.update({'class': 'error', 'value': strip_tags(error)})
-        return form
+        return login_form

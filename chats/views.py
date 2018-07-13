@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect, render_to_resp
 from django.contrib import messages
 from accounts.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from chats.forms import SpamForm, RegistrationForm, ProfileForm
+from chats.forms import SpamForm, RegistrationForm, ProfileForm, AuthenticateForm
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
@@ -125,6 +125,22 @@ def get_latest(user):
         return Spam.objects.all()
     except IndexError:
         return ""
+
+def userprofile(request):
+    user = request.user
+    profile = Profile.objects.filter(user=user.id)
+    if request.method=='POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            form = ProfileForm()
+
+        args = {'form':form }
+                return render(request, 'userprofile.html', { 'profile':profile, 'form':form })
+        return render(request, 'userprofile.html', { 'profile':profile, 'form':form })
+
+
 @login_required
 def users(request,  username="", spam_form=None):
     if username:
@@ -152,33 +168,46 @@ def follow(request):
         follow_id = request.POST.get('follow', False)
         if follow_id:
             try:
-                user = User.objects.get(id=follow_id)
+                user = User.objects.get(username=follow_id)
                 request.user.profile.follows.add(user.profile)
             except ObjectDoesNotExist:
                 return redirect('/users/')
     return redirect('/users/')
 
 @login_required
-def public(request, form=None):
+def public(request, spam_form=None):
     messages = Spam.objects.all()
+    spam_form = spam_form or SpamForm()
     if request.method =='POST':
-        form = SpamForm(request.POST)
-        if form.is_valid():
-            update = form.save(commit=False)
-            update.user = request.user
-            content = form.cleaned_data['content']
-            subject = form.cleaned_data['subject']
-            form.save()
+        spam_form =SpamForm(data=request.POST)
+        if spam_form.is_valid():
+            spam = spam_form.save(commit=False)
+            spam.user = request.user
+            spam.save()
+            return render(request, 'public.html',
+                    {'spam_form':spam_form, 'next_url': '/public',
+                    'messages':messages, 'username':request.user.username})
+    return render(request, 'public.html',
+                  {'spam_form':spam_form, 'next_url':'/public', 'messages':messages, 'username': request.user.username})
+    '''
+    if request.method =='POST':
+        spam_form = SpamForm(data=request.POST)
+        if spam_form.is_valid():
+
+(commit=False)
+            spam.user = request.user
+            spam.save()
             return render(request, 'public.html',
                     {'form':form, 'next_url': '/public',
                     'messages':messages, 'username': request.user.username})
-    else:
-        messages = Spam.objects.all()
-        form = form or SpamForm()
-        messages = Spam.objects.all()
-        return render(request, 'public.html',
+        else:
+            messages = Spam.objects.all()
+            form = form or SpamForm()
+            messages = Spam.objects.all()
+            return render(request, 'public.html',
                      {'form':form, 'next_url': '/public',
                      'messages':messages, 'username': request.user.username})
+'''
 
 
 

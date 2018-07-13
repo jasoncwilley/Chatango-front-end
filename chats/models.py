@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 import hashlib
+from django.db.models.signals import post_save
 class Profile(models.Model):
     fname = models.CharField(max_length=50, verbose_name="FirstName")
     lname = models.CharField(max_length=50, verbose_name="LastName")
@@ -11,19 +12,21 @@ class Profile(models.Model):
     last_connection = models.DateTimeField(verbose_name="DateofLastConnection", null=True, default=None, blank=True)
     email = models.EmailField(null=True, verbose_name="Email")
     datecreated = models.DateTimeField(verbose_name="datecreated",auto_now_add=True)
-    follows = models.ManyToManyField('self', null=True, related_name='followed_by', blank=True, symmetrical=False)
+    follows = models.ManyToManyField('self', blank=True, related_name='followed_by', symmetrical=False)
     user = models.OneToOneField(User)
     image = models.FileField(null=True, blank=True, default=None)
-
-
-    def __unicode__(self):
-       return self.user.username
+'''
+    def create_profile(sender, **kwargs):
+        if kwargs['created']:
+            user_profile = UserProfile.objects.create(user=kwargs['instance'])
+    post_save.connect(create_profile, sender=User)
+'''
 
 class Spam(models.Model):
     user = models.ForeignKey(User)
-    subject = models.CharField(max_length=50, verbose_name="sender")
-    content = models.TextField(max_length=140, verbose_name="Content")
-    timestamp = models.DateTimeField(auto_now_add=True, verbose_name="SpamTimeStamp")
+    subject = models.CharField(max_length=50)
+    content = models.CharField(max_length=140, verbose_name="Message")
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-timestamp']

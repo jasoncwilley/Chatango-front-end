@@ -8,14 +8,14 @@
           <input type='text'>
           {%csrf_token%}
           {{ spam_form }}
-        <button type='submit' value="{{next_url}}" name="next_url">Submit</button>
+        <input type='submit' value="{{next_url}}" name="next_url">Submit</input>
       </form>
     </p>
 </div>
     <div class="panel left">
         <h1>Public Profiles</h1>
 {% for user, spam in obj %}
-<div class="panel left">
+
         <div class="textWrapper">
             <a href="/users/{{ user.username }}">
                 <img class="avatar" src="http://www.robohash.org/{{ user.username }}?size=75x75">

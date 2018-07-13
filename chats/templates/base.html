@@ -10,13 +10,15 @@
 <style>
 {
   font-family: Helvetica, Arial, sans-serif;
-  background-color: #212121;
-  color: blue;
+  background-color: #002B36;
+  color: #2AA198;;
 }
 body {
-  background-color: #2E2E2E;
+  background-color: #002B36;
   margin: 0;
   padding: 0;
+  border-color: #B58900
+  color: white;
 }
 .flash {
   padding: 10px;
@@ -38,16 +40,17 @@ body {
   border: 1px solid #007bff;
 }
 input {
-  width: 125x;
+  width: 150px;
   height: 38px;
   border: 1px solid #3F729B;
   padding: 0 10px;
   outline: none;
   font-size: 17px;
-  color:red;
+  color:#2AA198;
+  background-color:  #002B36;
 }
 input:focus {
-  background: red;
+  background: #073642;
 }
 input.error {
   background: #dee2e6;
@@ -57,25 +60,19 @@ input.error {
 input[type="submit"] {
   height: 36px;
   width: auto;
-  border: 1px solid #3F729B;
+  border: 1px solid #B58900;
   border-radius: 2px;
-  color: red;
+  color: white;
   font-size: 12px;
   font-weight: bold;
   padding: 0 20px;
   cursor: pointer;
-  background: #3F729B;
-  background: -moz-linear-gradient(top,#8CD585 0%,#82CD7A 23%,#55AD4C 86%,#4FA945 100%);
-  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#8CD585),color-stop(23%,#82CD7A),color-stop(86%,#55AD4C),color-stop(100%,#4FA945));
-  background: -webkit-linear-gradient(top,#8CD585 0%,#82CD7A 23%,#55AD4C 86%,#4FA945 100%);
-  background: -o-linear-gradient(top,#8CD585 0%,#82CD7A 23%,#55AD4C 86%,#4FA945 100%);
-  background: -ms-linear-gradient(top,#8CD585 0%,#82CD7A 23%,#55AD4C 86%,#4FA945 100%);
-  background: linear-gradient(to bottom,#8CD585 0%,#82CD7A 23%,#55AD4C 86%,#4FA945 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@c1',endColorstr='@c4',GradientType=0);
+  background: #2AA198;
+
 }
 a {
   text-decoration: none;
-  color: #6610f2;
+  color: white;
   text-shadow: #6610f2 0 0 1px;
 }
 a:hover {
@@ -83,16 +80,19 @@ a:hover {
 }
 .wrapper {
   width: 875px;
-  margin: auto;
-  background-color: #3F3E3D;
+  color: white;
+
+  background-color: #073642;
 }
 header {
-  background-color: #2E2E2E;
+  color: white;
+  background-color: #073642;
   height: 85px;
   width: 100%;
 }
 header div.wrapper {
   padding: 11px 0;
+  padding-left: 10px;
 }
 header div.wrapper img {
   position: relative;
@@ -100,11 +100,12 @@ header div.wrapper img {
   margin: 0 15px 0 0;
 }
 header div.wrapper span {
-  font-size: 18px;
-  margin: 0 42px 0 0;
+  font-size: 25px;
+  margin: 0 0px 0 0;
+  padding-right: 50px;
 }
 header div.wrapper form {
-  background-color: #2E2E2E;
+  background-color: #073642;
   display: inline;
 }
 header div.wrapper form input {
@@ -113,12 +114,13 @@ header div.wrapper form input {
 header div.wrapper #btnLogOut {
   float: right;
   margin: 14px 0 0 0;
+  background-color: #073642;
 }
 #content {
   margin-bottom: 15px;
   min-height: 560px;
-  background-color: #2E2E2E;
-  color: red;
+  background-color: #002B36;
+  color: white;
   padding-top: 50px;
 }
 #content div.wrapper {
@@ -129,38 +131,40 @@ header div.wrapper #btnLogOut {
   float: left;
 }
 #content div.wrapper div.panel {
-  border: 1px solid #D2D2D2;
-  background-color: #2E2E2E;
+  border: 2px solid #B58900;
+  background-color: #073642;
   margin: 0;
   margin-bottom: 29px;
   border-radius: 6px;
   font-size: 14px;
+
 }
 #content div.wrapper div.panel.right {
-  width: 370px;
+  width: 300px;
   min-height: 450px;
   float: right;
   margin-right: 50px;
-  color: red;
+
   margin-left:5px;
+  color: white;
 }
-#content div.wrapper div.panel.right textarea.messageText {
-  width: 200px!important;
+#content div.wrapper div.panel.right Textarea.messageText {
+  width: 100px!important;
   height: 40px;
-  border: 1px solid #D2D2D2;
+  border: 5px solid #073642;
 
 }
-#content div.wrapper div.panel.right textarea.messageText.error {
-  border: 1px solid #6610f2;
+#content div.wrapper div.panel.right Textarea.messageText.error {
+  border: 1px solid #073642;
 }
 #content div.wrapper div.panel.left {
   width: 350px;
-  float: left;
+
   max-height: 500px;
 }
 #content div.wrapper div.panel.left div.messageWrapper {
   padding: 15px 0;
-  border-bottom: 1px solid #D2D2D2;
+  border-bottom: 1px solid #B58900;
 }
 #content div.wrapper div.panel.left div.messageWrapper:last-child {
 border: 1px solid #D2D2D2;
@@ -199,8 +203,8 @@ border: 1px solid #D2D2D2;
 
 }
 #content div.wrapper div.panel h1 {
-  border: 1px solid #D2D2D2;
-  margin: 5px 0;
+  border: 2px solid #B58900;
+  margin: 0px 0;
   font-weight: normal;
   font-size: 18px;
   padding: 13px 23px;
@@ -226,31 +230,35 @@ footer div.wrapper img {
 </style>
 <body>
     <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="wrapper">
-            <img src='http://www.robohash.org/chatango?size=75x75'>
-            <span>Chatango!</span><br>
-            <span>JustAnotherTwitterClone
+
+            <span>Chatango!</span>
+
 {% block login %}
+ {% if request.user.is_authenticated %}
       <a  href="/">Home</a>
-      <a href="/users/">Profiles</a>
-      <a href="/users/{{ username }}">My Profile</a>
+      <a  href="/userprofile">Personal Profile</a>
+      <a href="/users/">Other Users</a>
+      <a href="/users/{{ username }}">Public Profile</a>
       <a href="/public">Chatangos</a>
+      {% else %}
               <form action="/logout">
                 <input class="btn btn-danger btn-sm"  type="submit" href="">Logout</a>
               </form>
+      {% endif %}
 {% endblock %}
         </div>
-          </nav>
+<span>JustAnotherTwitterClone</span>
     </header>
     <div id="content">
         <div class="wrapper">
             {% block flash %}
-            {% if login_form.non_field_errors or reg_form.non_field_errors or spam_form.errors %}
+            {% if form.non_field_errors or login_form.non_field_errors or reg_form.non_field_errors or spam_form.errors %}
             <div class="flash error">
                 {{ login_form.non_field_errors }}
                 {{ reg_form.non_field_errors }}
                 {{ spam_form.content.errors }}
+                {{ form.content.errors }}
             </div>
             {% endif %}
             {% if notice %}

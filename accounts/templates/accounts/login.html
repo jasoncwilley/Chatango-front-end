@@ -2,7 +2,7 @@
 {% extends "base.html" %}
 
 {% block login %}
-    <form action="/users/" method="post">
+    <form action="/login" method="post">
 
       {% csrf_token %}
       {{ login_form }}
