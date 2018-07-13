@@ -61,7 +61,7 @@ input[type="submit"] {
   height: 36px;
   width: auto;
   border: 1px solid #B58900;
-  border-radius: 2px;
+  border-radius: 1px;
   color: white;
   font-size: 12px;
   font-weight: bold;
@@ -69,6 +69,33 @@ input[type="submit"] {
   cursor: pointer;
   background: #2AA198;
 
+}
+input[type="button"] {
+  height: 36px;
+  width: auto;
+  border: 1px solid #B58900;
+  border-radius: 1px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 20px;
+  padding: 0 20px;
+  cursor: pointer;
+  background: #2AA198;
+
+}
+
+input:focus[type="button"] {
+  height: 36px;
+  width: auto;
+  border: 1px solid #002B36;
+  border-radius: 1px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: #B58900;
 }
 a {
   text-decoration: none;
@@ -82,7 +109,8 @@ a:hover {
   width: 875px;
   color: white;
 
-  background-color: #073642;
+
+  background-color: #002B36;
 }
 header {
   color: white;
@@ -127,18 +155,20 @@ header div.wrapper #btnLogOut {
   margin: 38px auto;
 }
 #content div.wrapper img {
-  border-radius: 6px;
+  border-radius: 1px;
   float: left;
 }
 #content div.wrapper div.panel {
-  border: 2px solid #B58900;
+  border: 1px solid #B58900;
   background-color: #073642;
   margin: 0;
   margin-bottom: 29px;
-  border-radius: 6px;
+  border-radius: 1px;
   font-size: 14px;
 
 }
+
+
 #content div.wrapper div.panel.right {
   width: 300px;
   min-height: 450px;
@@ -151,16 +181,17 @@ header div.wrapper #btnLogOut {
 #content div.wrapper div.panel.right Textarea.messageText {
   width: 100px!important;
   height: 40px;
-  border: 5px solid #073642;
+  border: 1px solid #073642;
 
 }
 #content div.wrapper div.panel.right Textarea.messageText.error {
   border: 1px solid #073642;
 }
 #content div.wrapper div.panel.left {
-  width: 350px;
-
+  width: 450px;
+  border: 1px solid #B58900;
   max-height: 500px;
+  min-height: 150px;
 }
 #content div.wrapper div.panel.left div.messageWrapper {
   padding: 15px 0;
@@ -203,7 +234,7 @@ border: 1px solid #D2D2D2;
 
 }
 #content div.wrapper div.panel h1 {
-  border: 2px solid #B58900;
+  border: 1px solid #B58900;
   margin: 0px 0;
   font-weight: normal;
   font-size: 18px;
@@ -214,6 +245,7 @@ border: 1px solid #D2D2D2;
   padding: 0 24px;
   margin: 18px 0;
 }
+
 footer {
   background: url('images/spamcans.jpg');
   height: 251px;
@@ -236,11 +268,12 @@ footer div.wrapper img {
 
 {% block login %}
  {% if request.user.is_authenticated %}
-      <a  href="/">Home</a>
-      <a  href="/userprofile">Personal Profile</a>
-      <a href="/users/">Other Users</a>
-      <a href="/users/{{ username }}">Public Profile</a>
-      <a href="/public">Chatangos</a>
+  <input type="button" class="btn" value="Home" onclick="location.href = '/';">
+  <input type="button" class="btn" value="MyInfo" onclick="location.href = '/userprofile';">
+  <input type="button" class="btn" value="MyProfile" onclick="location.href = '/users/{{ username }}';">
+  <input type="button" class="btn" value="UserProfiles" onclick="location.href = '/users/';">
+  <input type="button" class="btn" value="Messages" onclick="location.href = '/public';">
+
       {% else %}
               <form action="/logout">
                 <input class="btn btn-danger btn-sm"  type="submit" href="">Logout</a>

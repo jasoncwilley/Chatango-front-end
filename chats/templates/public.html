@@ -9,26 +9,32 @@
           {{ spam_form }}
 
           <input type="hidden" value="{{ next_url }}" name="next_url">
-          <input type="submit" value="Submit!">
+          <input type="submit" value="Post It!">
           </form>
       </p>
-</div>
+</div>{% for message in messages %}
     <div class="panel left">
-        <h1>Current Messages</h1>
-{% for message in messages %}
-<div class="panel left">
+        <h1>Subject: &nbsp{{ message.subject }}</h1>
+
+
         <div class="textWrapper">
 
-          <a href="/users/{{ message.user.username }}">
-            <img class="avatar" src='http://www.robohash.org/{{ message.user.username }}?size=75x75'>
-            <span class="name">{{ message.user.first_name }}</span>
+          <div class="card flex-row flex-wrap">
+               <div class="card-header border">
+                     <img class="avatar" src='http://www.robohash.org/{{ message.user.username }}?size=65x65'>
+               </div>
+               <div class="card-block px-2">
+                   <h4 class="card-title" "name"></h4>
 
-          </a>
-          <span class ="name">"@{{ message.user.username }}</span>
-            <span class="time">{{ message.timestamp|timesince }}</span>
-            <p>Subject: &nbsp &nbsp{{ message.subject }}</p>
-            <p>Message: &nbsp &nbsp{{ message.content }}</p>
+      <p class="card-text">@{{ message.user.username }} &nbsp wrote: &nbsp{{ message.content }}</p>
+
+               </div>
+               <div class="w-100"></div>
+               <div class="card-footer w-100 text-muted"><br>
+                  <p> sent &nbsp{{ message.timestamp|timesince }}&nbsp ago
+               </div>
+           </div>
         </div>
-        {% endfor %}
     </div>
+{% endfor %}
 {% endblock %}

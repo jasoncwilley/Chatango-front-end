@@ -122,11 +122,12 @@ def profiles(request):
 
 def get_latest(user):
     try:
-        return Spam.objects.all()
+        return Spam.objects.all()[:3]
     except IndexError:
         return ""
 
 def userprofile(request):
+    form = ProfileForm()
     user = request.user
     profile = Profile.objects.filter(user=user.id)
     if request.method=='POST':
@@ -135,10 +136,10 @@ def userprofile(request):
             form.save()
         else:
             form = ProfileForm()
+            return render(request, 'userprofile.html', { 'profile':profile, 'form':form })
+    args = {'form':form }
 
-        args = {'form':form }
-                return render(request, 'userprofile.html', { 'profile':profile, 'form':form })
-        return render(request, 'userprofile.html', { 'profile':profile, 'form':form })
+    return render(request, 'userprofile.html', { 'profile':profile, 'form':form })
 
 
 @login_required
@@ -176,7 +177,7 @@ def follow(request):
 
 @login_required
 def public(request, spam_form=None):
-    messages = Spam.objects.all()
+    messages = Spam.objects.reverse()[:5]
     spam_form = spam_form or SpamForm()
     if request.method =='POST':
         spam_form =SpamForm(data=request.POST)
