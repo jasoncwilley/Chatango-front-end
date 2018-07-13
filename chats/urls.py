@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^viewprofile/(?P<profile_id>\d+)/$', views.viewprofile, name='viewprofile'),
     url(r'^profileform$', views.update),
     url(r'^follow$', views.follow),
+    url(r'^login$', views.login_view),
 
 ]

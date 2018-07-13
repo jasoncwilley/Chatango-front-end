@@ -10,6 +10,22 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 
+
+def login_view(request):
+    if request.method == 'POST':
+        login_form = AuthenticateForm(data=request.POST)
+        if login_form.is_valid():
+                        # Success
+            login(request, login_form.get_user())
+            return redirect('/')
+        else:
+            # Failure
+            login_form = AuthenticateForm()
+            return render(request, '/users/', {'login_form':login_form})
+    return redirect('/')
+
+
+
 @login_required
 def submit(request):
     if request.method == "POST":
@@ -127,19 +143,26 @@ def get_latest(user):
         return ""
 
 def userprofile(request):
-    form = ProfileForm()
-    user = request.user
-    profile = Profile.objects.filter(user=user.id)
-    if request.method=='POST':
+    if request.method =='POST':
         form = ProfileForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            form = ProfileForm()
-            return render(request, 'userprofile.html', { 'profile':profile, 'form':form })
-    args = {'form':form }
+        try:
+            userprofile = request.user.profile
+        except Profile.DoesNotExist:
+            userprofile = Profile(user=request.user)
+            if request.method == 'POST':
+                form = ProfileForm(request.POST, instance=userprofile)
+                if form.is_valid():
+                    form.save()
+                    return HttpResponseRedirect('/')
+            else:
+                form = ProfileForm(instance=userprofile)
+            return HttpResponseRedirect('/userprofile')
 
-    return render(request, 'userprofile.html', { 'profile':profile, 'form':form })
+    return HttpResponseRedirect('/userprofile')
+
+
+
+
 
 
 @login_required

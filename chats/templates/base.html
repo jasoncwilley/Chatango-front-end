@@ -11,7 +11,7 @@
 {
   font-family: Helvetica, Arial, sans-serif;
   background-color: #002B36;
-  color: #2AA198;;
+  color: #2AA198;
 }
 body {
   background-color: #002B36;
@@ -273,10 +273,12 @@ footer div.wrapper img {
   <input type="button" class="btn" value="MyProfile" onclick="location.href = '/users/{{ username }}';">
   <input type="button" class="btn" value="UserProfiles" onclick="location.href = '/users/';">
   <input type="button" class="btn" value="Messages" onclick="location.href = '/public';">
-
+  <form action="/logout">
+    <input class="btn btn-danger btn-sm"  type="submit" href="/logout">Logout</a>
+  </form>
       {% else %}
               <form action="/logout">
-                <input class="btn btn-danger btn-sm"  type="submit" href="">Logout</a>
+                <input class="btn btn-danger btn-sm"  value="Logout" type="submit" href="">Logout</a>
               </form>
       {% endif %}
 {% endblock %}
@@ -286,7 +288,7 @@ footer div.wrapper img {
     <div id="content">
         <div class="wrapper">
             {% block flash %}
-            {% if form.non_field_errors or login_form.non_field_errors or reg_form.non_field_errors or spam_form.errors %}
+            {% if form_errors or login_form.non_field_errors or reg_form.non_field_errors or spam_form.errors %}
             <div class="flash error">
                 {{ login_form.non_field_errors }}
                 {{ reg_form.non_field_errors }}

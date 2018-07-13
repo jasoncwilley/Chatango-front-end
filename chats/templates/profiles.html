@@ -4,13 +4,14 @@
 <div class="panel right">
     <h1>Start a Chat</h1>
     <p>
-      <form method="post">
-          <input type='text'>
-          {%csrf_token%}
-          {{ spam_form }}
-        <input type='submit' value="{{next_url}}" name="next_url">Submit</input>
-      </form>
-    </p>
+          <form action="/public" method="post">
+        {% csrf_token %}
+          {{ spam_form.as_p}}
+
+          <input type="hidden" value="{{ next_url }}" name="next_url">
+          <input type="submit" value="Post It!">
+          </form>
+      </p>
 </div>
 {% for user, Spam in obj %}
 <div class="panel left">

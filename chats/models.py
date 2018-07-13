@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from datetime import datetime
 import hashlib
 from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.conf import settings
+
 class Profile(models.Model):
     fname = models.CharField(max_length=50, verbose_name="FirstName")
     lname = models.CharField(max_length=50, verbose_name="LastName")
@@ -13,14 +16,14 @@ class Profile(models.Model):
     email = models.EmailField(null=True, verbose_name="Email")
     datecreated = models.DateTimeField(verbose_name="datecreated",auto_now_add=True)
     follows = models.ManyToManyField('self', blank=True, related_name='followed_by', symmetrical=False)
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,related_name="profile", verbose_name="user")
     image = models.FileField(null=True, blank=True, default=None)
-'''
-    def create_profile(sender, **kwargs):
-        if kwargs['created']:
-            user_profile = UserProfile.objects.create(user=kwargs['instance'])
-    post_save.connect(create_profile, sender=User)
-'''
+
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+    def create_profile_for_new_user(sender, created, instance, **kwargs):
+        if created:
+            profile = Profile(user=instance)
+            profile.save()
 
 class Spam(models.Model):
     user = models.ForeignKey(User)
