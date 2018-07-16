@@ -281,7 +281,6 @@ footer div.wrapper img {
 {% block login %}
  {% if request.user.is_authenticated %}
   <input type="button" class="btn" value="Home" onclick="location.href = '/';">
-  <input type="button" class="btn" value="MyInfo" onclick="location.href = '/userprofile';">
   <input type="button" class="btn" value="MyProfile" onclick="location.href = '/users/{{ username }}';">
   <input type="button" class="btn" value="UserProfiles" onclick="location.href = '/users/';">
   <input type="button" class="btn" value="Messages" onclick="location.href = '/public';">
@@ -331,6 +330,6 @@ footer div.wrapper img {
             </a>
         </div>
     </footer>
-  
+
 </body>
 </html>
