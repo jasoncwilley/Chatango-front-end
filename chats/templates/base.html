@@ -18,7 +18,7 @@ body {
   margin: 0;
   padding: 0;
   border-color: #B58900
-  color: white;
+  color: #002B36;
 }
 .flash {
   padding: 10px;
@@ -40,9 +40,9 @@ body {
   border: 1px solid #007bff;
 }
 input {
-  width: 150px;
+  width: 325px;
   height: 38px;
-  border: 1px solid #3F729B;
+  border: 1px solid #B58900;
   padding: 0 10px;
   outline: none;
   font-size: 17px;
@@ -51,6 +51,7 @@ input {
 }
 input:focus {
   background: #073642;
+  color: #2AA198;
 }
 input.error {
   background: #dee2e6;
@@ -68,6 +69,7 @@ input[type="submit"] {
   padding: 0 20px;
   cursor: pointer;
   background: #2AA198;
+  float:right;
 
 }
 input[type="button"] {
@@ -82,9 +84,7 @@ input[type="button"] {
   padding: 0 20px;
   cursor: pointer;
   background: #2AA198;
-
 }
-
 input:focus[type="button"] {
   height: 36px;
   width: auto;
@@ -106,15 +106,13 @@ a:hover {
   text-decoration: underline;
 }
 .wrapper {
-  width: 875px;
+  width: 1000px;
   color: white;
-
-
   background-color: #002B36;
 }
 header {
   color: white;
-  background-color: #073642;
+  background-color: #002B36;
   height: 85px;
   width: 100%;
 }
@@ -133,7 +131,7 @@ header div.wrapper span {
   padding-right: 50px;
 }
 header div.wrapper form {
-  background-color: #073642;
+  background-color:#002B36;
   display: inline;
 }
 header div.wrapper form input {
@@ -141,14 +139,14 @@ header div.wrapper form input {
 }
 header div.wrapper #btnLogOut {
   float: right;
-  margin: 14px 0 0 0;
+  margin: 20px 0 0 0;
   background-color: #073642;
 }
 #content {
   margin-bottom: 15px;
   min-height: 560px;
   background-color: #002B36;
-  color: white;
+  color: #2AA198;
   padding-top: 50px;
 }
 #content div.wrapper {
@@ -160,29 +158,35 @@ header div.wrapper #btnLogOut {
 }
 #content div.wrapper div.panel {
   border: 1px solid #B58900;
-  background-color: #073642;
+  background-color:#002B36;
   margin: 0;
   margin-bottom: 29px;
   border-radius: 1px;
   font-size: 14px;
-
 }
-
 
 #content div.wrapper div.panel.right {
-  width: 300px;
-  min-height: 450px;
+  width: 400px;
+  min-height: 350px;
   float: right;
   margin-right: 50px;
-
   margin-left:5px;
   color: white;
+  background-color: #002B36;
 }
-#content div.wrapper div.panel.right Textarea.messageText {
+#content div.wrapper div.panel.right label {
+color:  #002B36;
+}
+#content div.wrapper div.panel.right h1 {
+font-size: 23px;
+background-color: #002B36;
+text-align: center;
+color: #2AA198;
+}
+#content div.wrapper div.panel.right messageText {
   width: 100px!important;
   height: 40px;
   border: 1px solid #073642;
-
 }
 #content div.wrapper div.panel.right Textarea.messageText.error {
   border: 1px solid #073642;
@@ -193,6 +197,11 @@ header div.wrapper #btnLogOut {
   max-height: 500px;
   min-height: 150px;
 }
+#content div.wrapper div.panel.left h1 {
+  color: #2AA198;
+  background-color: #002B36;
+}
+
 #content div.wrapper div.panel.left div.messageWrapper {
   padding: 15px 0;
   border-bottom: 1px solid #B58900;
@@ -202,6 +211,7 @@ border: 1px solid #D2D2D2;
 }
 #content div.wrapper div.panel.left div.messageWrapper span.name {
   font-size: 18px;
+background-color: #002B36;
   color: #6610f2;
 }
 #content div.wrapper div.panel.left div.messageWrapper span.time {
@@ -211,6 +221,7 @@ border: 1px solid #D2D2D2;
 #content div.wrapper div.panel.left div.messageWrapper img.avatar {
   margin: 0 19px 0 20px;
   float: left;
+  background-color: #002B36;
 }
 #content div.wrapper div.panel.left div.messageWrapper p {
   margin: 5px 50px 0 90px;
@@ -231,7 +242,6 @@ border: 1px solid #D2D2D2;
 }
 #content div.wrapper div.panel form {
   padding: 0 23px;
-
 }
 #content div.wrapper div.panel h1 {
   border: 1px solid #B58900;
@@ -245,7 +255,6 @@ border: 1px solid #D2D2D2;
   padding: 0 24px;
   margin: 18px 0;
 }
-
 footer {
   background: url('images/spamcans.jpg');
   height: 251px;
@@ -274,7 +283,7 @@ footer div.wrapper img {
   <input type="button" class="btn" value="UserProfiles" onclick="location.href = '/users/';">
   <input type="button" class="btn" value="Messages" onclick="location.href = '/public';">
   <form action="/logout">
-    <input class="btn btn-danger btn-sm"  type="submit" href="/logout">Logout</a>
+    <input class="btn btn-danger btn-sm"  value="Logout" type="submit" href="/logout">
   </form>
       {% else %}
               <form action="/logout">

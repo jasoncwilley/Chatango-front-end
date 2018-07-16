@@ -4,15 +4,19 @@
 <div class="panel right">
     <h1>Start a Chat</h1>
     <p>
-          <form action="/public" method="post">
-        {% csrf_token %}
-          {{ spam_form.as_p}}
-
-          <input type="hidden" value="{{ next_url }}" name="next_url">
-          <input type="submit" value="Post It!">
-          </form>
+      <form method="get">
+      {{ filter.form.as_p }}
+      <button type="submit">Search</button>
+    </form>
+    <ul>
+    {% for user in filter.qs %}
+      <li>{{ user.username }} - {{ user.get_full_name }}</li>
+    {% endfor %}
+    </ul>
       </p>
 </div>
+
+<h3>Click the button to view the Users Profile and add them as a friend</h3>
 {% for user, Spam in obj %}
 <div class="panel left">
   <a>
@@ -28,7 +32,7 @@
                  </a>
                </div>
                <div class="card-block px-2">
-                   <h4 class="card-title" "name"></h4>
+                   <h4> {{user.username}}</h4>
 <p>
 {{ user.spam_count}} &nbsp Chats&nbsp&nbsp&nbsp
 {{ user.profile.followed_by.count }}&nbsp Followers&nbsp&nbsp&nbsp
@@ -42,5 +46,15 @@
            </div>
         </div>
     </div>
+
 {% endfor %}
+<script>
+$('#search').keyup(function (){
+    $('.card').removeClass('d-none');
+    var filter = $(this).val(); // get the value of the input, which we filter on
+    $('.card-deck').find('.card .card-block h4:not(:contains("'+filter+'"))').parent().parent().addClass('d-none');
+})
+</script>
+
+
 {% endblock %}

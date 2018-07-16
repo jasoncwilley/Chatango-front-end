@@ -61,8 +61,9 @@ class RegistrationForm(UserCreationForm):
 
 
 class SpamForm(forms.ModelForm):
-    content = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'class': 'messageText', 'size':'40',})),
-    subject = forms.CharField(max_length=50)
+    content = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Enter Messege 140 Characters Max ','class': 'messageText', 'size':'50'}))
+    subject = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Insert Subject Here'}))
+
     class Meta:
         model = Spam
         exclude = ('user','timestamp',)

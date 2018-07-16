@@ -9,7 +9,7 @@
         {{ spam_form.as_p}}
 
           <input type="hidden" value="{{ next_url }}" name="next_url">
-          <input type="submit" value="Post It!">
+          <input type="submit" id="btnPostIT" value="Post It!">
           </form>
       </p>
 </div>{% for message in messages %}

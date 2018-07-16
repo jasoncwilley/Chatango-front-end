@@ -5,10 +5,13 @@ from django.shortcuts import render, get_object_or_404, redirect, render_to_resp
 from django.contrib import messages
 from accounts.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from chats.forms import SpamForm, RegistrationForm, ProfileForm, AuthenticateForm
+from chats.forms import SpamForm, RegistrationForm, ProfileForm, AuthenticateForm, UserCreateForm
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
+
+
+
 
 
 def login_view(request):
@@ -44,6 +47,7 @@ def submit(request):
 def index(request, login_form=None, reg_form=None):
     # User is logged in
     if request.user.is_authenticated():
+        messages = Spam.objects.reverse()[:4]
         spam_form = SpamForm()
         user = request.user
         my_spam = Spam.objects.filter(user=user.id)
@@ -53,13 +57,13 @@ def index(request, login_form=None, reg_form=None):
 
 
         return render(request, 'buddies.html',
-                  {'spam_form': spam_form, 'user': user,
+                  {'spam_form': spam_form, 'user': user, 'messages':messages,
                    'spam': spam,
                        'next_url': '/', })
     else:
         # User is not logged in
         login_form = login_form or AuthenticationForm()
-        reg_form = reg_form or RegistrationForm()
+        reg_form = reg_form or UserCreateForm()
 
         return render(request,
             'home.html',
@@ -200,7 +204,7 @@ def follow(request):
 
 @login_required
 def public(request, spam_form=None):
-    messages = Spam.objects.reverse()[:5]
+    messages = Spam.objects.order_by('-timestamp')
     spam_form = spam_form or SpamForm()
     if request.method =='POST':
         spam_form =SpamForm(data=request.POST)
@@ -212,7 +216,7 @@ def public(request, spam_form=None):
                     {'spam_form':spam_form, 'next_url': '/public',
                     'messages':messages, 'username':request.user.username})
     return render(request, 'public.html',
-                  {'spam_form':spam_form, 'next_url':'/public', 'messages':messages, 'username': request.user.username})
+{'spam_form':spam_form, 'next_url':'/public', 'messages':messages, 'username': request.user.username})
     '''
     if request.method =='POST':
         spam_form = SpamForm(data=request.POST)

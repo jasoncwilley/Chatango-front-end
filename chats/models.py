@@ -16,7 +16,7 @@ class Profile(models.Model):
     email = models.EmailField(null=True, verbose_name="Email")
     datecreated = models.DateTimeField(verbose_name="datecreated",auto_now_add=True)
     follows = models.ManyToManyField('self', blank=True, related_name='followed_by', symmetrical=False)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,related_name="profile", verbose_name="user")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,related_name="profile", verbose_name="user", on_delete=models.CASCADE)
     image = models.FileField(null=True, blank=True, default=None)
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -26,7 +26,7 @@ class Profile(models.Model):
             profile.save()
 
 class Spam(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50)
     content = models.CharField(max_length=140, verbose_name="Message")
     timestamp = models.DateTimeField(auto_now_add=True)
