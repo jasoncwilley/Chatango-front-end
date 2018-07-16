@@ -11,9 +11,6 @@ from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 
 
-
-
-
 def login_view(request):
     if request.method == 'POST':
         login_form = AuthenticateForm(data=request.POST)
@@ -47,7 +44,7 @@ def submit(request):
 def index(request, login_form=None, reg_form=None):
     # User is logged in
     if request.user.is_authenticated():
-        messages = Spam.objects.reverse()[:4]
+        messages = Spam.objects.order_by('-timestamp')
         spam_form = SpamForm()
         user = request.user
         my_spam = Spam.objects.filter(user=user.id)
@@ -70,31 +67,6 @@ def index(request, login_form=None, reg_form=None):
             {'login_form': login_form, 'reg_form': reg_form, })
 
 
-
-
-
-
-def update(request):
-    if request.method =='POST':
-        form = ProfileForm(request.POST)
-        if form.is_valid():
-            update = form.save(commit=False)
-            update.user = request.user
-            update.save()
-            fname = form.cleaned_data['fname']
-            lname = form.cleaned_data['lname']
-            username = form.cleaned_data['username']
-            phone = form.cleaned_data['phone']
-            email = form.cleaned_data['email']
-            form.save()
-            return HttpResponseRedirect('/')
-    else:
-        form = ProfileForm()
-        args = {'form':form}
-    return      render(request, 'profileform.html', args)
-
-
-
 def home(request):
     if request.method =='POST':
         form = SpamForm(request.POST)
@@ -112,7 +84,6 @@ def home(request):
     return      render(request, 'home.html', args)
 
 
-
 def register(request):
     if request.method=='POST':
         form = RegistrationForm(request.POST)
@@ -126,14 +97,9 @@ def register(request):
     return render(request, 'register.html', args)
 
 
-
-
-
 @login_required
 def account_redirect(request):
     return redirect('account-landing', pk=request.user.pk, name=request.user.username)
-
-
 
 
 def profiles(request):
@@ -146,28 +112,6 @@ def get_latest(user):
     except IndexError:
         return ""
 
-def userprofile(request):
-    if request.method =='POST':
-        form = ProfileForm(request.POST)
-        try:
-            userprofile = request.user.profile
-        except Profile.DoesNotExist:
-            userprofile = Profile(user=request.user)
-            if request.method == 'POST':
-                form = ProfileForm(request.POST, instance=userprofile)
-                if form.is_valid():
-                    form.save()
-                    return HttpResponseRedirect('/')
-            else:
-                form = ProfileForm(instance=userprofile)
-            return HttpResponseRedirect('/userprofile')
-
-    return HttpResponseRedirect('/userprofile')
-
-
-
-
-
 
 @login_required
 def users(request,  username="", spam_form=None):
@@ -178,9 +122,12 @@ def users(request,  username="", spam_form=None):
         except User.DoesNotExist:
             raise Http404
         messages = Spam.objects.filter(user=user.id)
+
         if username == request.user.username or request.user.profile.follows.filter(username=username):
             return render(request, 'user.html', {'user': user, 'messages': messages, })
         return render(request, 'user.html', {'user': user, 'messages': messages, 'follow': True, })
+
+
     users = User.objects.all().annotate(spam_count=Count('spam'))
     messages = map(get_latest, users)
     obj = zip(users, messages)
@@ -190,6 +137,7 @@ def users(request,  username="", spam_form=None):
                   {'obj': obj, 'next_url': '/users/',
                    'spam_form': spam_form,
                    'username': request.user.username, })
+
 @login_required
 def follow(request):
     if request.method == "POST":
@@ -217,48 +165,6 @@ def public(request, spam_form=None):
                     'messages':messages, 'username':request.user.username})
     return render(request, 'public.html',
 {'spam_form':spam_form, 'next_url':'/public', 'messages':messages, 'username': request.user.username})
-    '''
-    if request.method =='POST':
-        spam_form = SpamForm(data=request.POST)
-        if spam_form.is_valid():
-
-(commit=False)
-            spam.user = request.user
-            spam.save()
-            return render(request, 'public.html',
-                    {'form':form, 'next_url': '/public',
-                    'messages':messages, 'username': request.user.username})
-        else:
-            messages = Spam.objects.all()
-            form = form or SpamForm()
-            messages = Spam.objects.all()
-            return render(request, 'public.html',
-                     {'form':form, 'next_url': '/public',
-                     'messages':messages, 'username': request.user.username})
-'''
-
-
-
-
-
-
-
-'''
-def profile(request, username=""):
-    if username:
-        # Show a profile
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            raise Http404
-        messages = Spam.objects.filter(user=user.id)
-        if username == request.user.username:
-            # Self Profile
-            return render(request, 'user.html', {'user': user, 'ribbits': ribbits, })
-        return render(request, 'user.html', {'user': user, 'messages': messages})
-    users = User.objects.all().annotate(ribbit_count=Count('spam'))
-    return render(request, 'username': request.user.username, })
-'''
 
 
 @login_required

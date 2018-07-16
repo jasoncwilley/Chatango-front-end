@@ -1,26 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="panel right">
-    <h1>Start a Chat</h1>
-    <p>
-      <form method="get">
-      {{ filter.form.as_p }}
-      <button type="submit">Search</button>
-    </form>
-    <ul>
-    {% for user in filter.qs %}
-      <li>{{ user.username }} - {{ user.get_full_name }}</li>
-    {% endfor %}
-    </ul>
-      </p>
-</div>
 
-<h3>Click the button to view the Users Profile and add them as a friend</h3>
+<h4>Click to view user's profile and Add Friend option</h4>
 {% for user, Spam in obj %}
 <div class="panel left">
   <a>
-  <input type="button" class="btn" value="{{ user.username }}'s Profile" onclick="location.href ='/users/{{ user.username }}';">
+  <input type="button" class="btn" value="View {{ user.username }}'s Profile" onclick="location.href ='/users/{{ user.username }}';">
 </a>
         <div class="textWrapper">
 
@@ -34,9 +20,9 @@
                <div class="card-block px-2">
                    <h4> {{user.username}}</h4>
 <p>
-{{ user.spam_count}} &nbsp Chats&nbsp&nbsp&nbsp
-{{ user.profile.followed_by.count }}&nbsp Followers&nbsp&nbsp&nbsp
-{{ user.profile.follows.count }} &nbsp Following&nbsp
+{{ user.spam_count}} &nbsp Messages &nbsp
+&nbsp &nbsp{{ user.profile.followed_by.count }}&nbsp Followers&nbsp&nbsp&nbsp
+&nbsp &nbsp{{ user.profile.follows.count }} &nbsp Following&nbsp
 </p>
                </div>
                <div class="w-100"></div>
@@ -48,13 +34,6 @@
     </div>
 
 {% endfor %}
-<script>
-$('#search').keyup(function (){
-    $('.card').removeClass('d-none');
-    var filter = $(this).val(); // get the value of the input, which we filter on
-    $('.card-deck').find('.card .card-block h4:not(:contains("'+filter+'"))').parent().parent().addClass('d-none');
-})
-</script>
 
 
 {% endblock %}

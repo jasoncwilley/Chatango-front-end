@@ -6,30 +6,47 @@
     {% endwith %}
 {% endblock %}
 
+
+
 {% block content %}
     <div class="panel left">
-        <h1>{{ user.first_name }}'s Profile</h1>
-        <div class="textWrapper">
-            <a href="/users/{{ user.username }}">
-                <img class="avatar" src="http://www.robohash.org/{{ user.username }}?size=75x75">
-                <span class="name">{{ user.first_name }}</span>
-            </a>
+      <h1>{{ user.username }}'s Profile</h1>
 
-                @{{ user.username }}
-              <p>
-                {{ messages.count }} Chatango's
-                <span class="spacing">{{ user.profile.follows.all.count }} Following</span>
-                <span class="spacing">{{ user.profile.followed_by.all.count }} Followers</span>
-              </p>
-            {% if follow %}
-            <form action="/follow" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="follow" value="{{ user.username }}">
-                <input type="submit" value="Follow">
-            </form>
-            {% endif %}
+
+        <div class="textWrapper">
+
+          <div class="card flex-row flex-wrap">
+               <div class="card-header border">
+                 <a href="/users/{{ user.username }}">
+                       <img class="avatar" src="http://www.robohash.org/{{ user.username }}?size=75x75">
+                 
+               </a>
+             </div>
+               <div class="card-block px-2">
+                   <h4 class="card-title" "name"></h4>
+
+      <p>
+        <span class="card-text">{{ messages.count }}  &nbsp Messages &nbsp &nbsp</span>
+          <span class="card-text"> &nbsp{{ user.profile.follows.all.count }}   &nbsp Following &nbsp &nbsp</span>
+          <span class="card-text">&nbsp{{ user.profile.followed_by.all.count }} &nbsp Followers</span>
+</p>
+               </div>
+               <div class="w-100"></div>
+               <div class="card-footer w-100 text-muted"><br>
+                 {% if follow %}
+                 <form action="/follow" method="post">
+                     {% csrf_token %}
+                     <input type="hidden" name="follow" value="{{ user.username }}">
+                     <input type="submit" value="Follow">
+                 </form>
+                 {% endif %}
+               </div>
+           </div>
         </div>
     </div>
+
+
+
     <div class="recentmessages">
       <h3>Recent Messages</h3>
     </div>
