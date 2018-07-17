@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="panel right">
-    <h1>Start a Chat</h1>
+    <h1>Post a New Message</h1>
     <p>
       <form action="/public" method="post">
 
@@ -20,28 +20,28 @@
 </div>
 
     {% for message in messages %}
-        <div class="panel left">
-            <h1>Subject: &nbsp{{ message.subject }}</h1>
+
+
 
 
             <div class="textWrapper">
 
               <div class="card flex-row flex-wrap">
-                   <div class="card-header border">
+                   <div class="card-header">
+                     <h5>Subject: &nbsp{{ message.subject }}</h5>
                          <img class="avatar" src='http://www.robohash.org/{{ message.user.username }}?size=65x65'>
-                   </div>
-                   <div class="card-block px-2">
-                       <h4 class="card-title" "name"></h4>
 
-          <p class="card-text">@{{ message.user.username }} &nbsp wrote: &nbsp{{ message.content }}</p>
+                          <div class="card-block px-2">
 
+
+
+          <p class="card-text">@{{ message.user.username }} &nbsp wrote: &nbsp{{ message.content }}<br><br>
+          sent &nbsp{{ message.timestamp|timesince }}&nbsp ago
+    </p>
                    </div>
-                   <div class="w-100"></div>
-                   <div class="card-footer w-100 text-muted"><br>
-                      <p> sent &nbsp{{ message.timestamp|timesince }}&nbsp ago
                    </div>
                </div>
             </div>
-        </div>
+
     {% endfor %}
     {% endblock %}

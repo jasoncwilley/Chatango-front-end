@@ -28,11 +28,11 @@ def login_view(request):
     if request.method == 'POST':
         login_form = AuthenticationForm(data=request.POST)
         if login_form.is_valid():
-                        # Success
+            # Success
             login(request, login_form.get_user())
             return redirect('/')
         else:
             # Failure
             login_form = AuthenticationForm()
-            return render(request, '/', {'login_form':login_form})
-    return redirect('/login')
+            return render(request, 'user.html', {'login_form':login_form})
+    return redirect('/')

@@ -4,9 +4,9 @@
     <form action="/login" method="post">
 
       {% csrf_token %}
-      {{ login_form }}
+      {{ login_form.as_p }}
 
-      <input class="btn btn-danger btn-sm"  type="submit" value="Login" href="">
+      <input class="btn" id="btnLogIn" type="submit" value="Login">
             </form>
 {% endblock %}
 

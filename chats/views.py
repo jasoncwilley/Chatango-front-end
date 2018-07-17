@@ -11,18 +11,7 @@ from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 
 
-def login_view(request):
-    if request.method == 'POST':
-        login_form = AuthenticateForm(data=request.POST)
-        if login_form.is_valid():
-                        # Success
-            login(request, login_form.get_user())
-            return redirect('/')
-        else:
-            # Failure
-            login_form = AuthenticateForm()
-            return render(request, '/users/', {'login_form':login_form})
-    return redirect('/')
+
 
 
 
@@ -59,7 +48,7 @@ def index(request, login_form=None, reg_form=None):
                        'next_url': '/', })
     else:
         # User is not logged in
-        login_form = login_form or AuthenticationForm()
+        login_form = login_form or AuthenticateForm()
         reg_form = reg_form or UserCreateForm()
 
         return render(request,
@@ -89,7 +78,7 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('latestspam.html')
+            return HttpResponseRedirect('user.html')
     else:
         form = RegistrationForm()
 
@@ -165,11 +154,3 @@ def public(request, spam_form=None):
                     'messages':messages, 'username':request.user.username})
     return render(request, 'public.html',
 {'spam_form':spam_form, 'next_url':'/public', 'messages':messages, 'username': request.user.username})
-
-
-@login_required
-def viewprofile(request, profile_id):
-    profile_id == "0"
-    userProfile = Profile.objects.get(pk=profile_id)
-
-    return render_to_response('viewprofile.html', {'userProfile':userProfile}, RequestContext(request))

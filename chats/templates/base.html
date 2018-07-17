@@ -3,8 +3,8 @@
 
 <html>
 <head>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet"integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <style>
@@ -12,6 +12,7 @@
   font-family: Helvetica, Arial, sans-serif;
   background-color: #002B36;
   color: #2AA198;
+  max-width: 800px;
 }
 body {
   background-color: #002B36;
@@ -58,6 +59,31 @@ input.error {
   color: #79420d;
   border: 1px solid #79420d;
 }
+input[type="login"] {
+  height: 36px;
+  width: auto;
+  border: 1px solid #B58900;
+  border-radius: 1px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 20px;
+  padding: 0 20px;
+  cursor: pointer;
+  background: #2AA198;
+}
+input:focus[type="login"] {
+  height: 36px;
+  width: auto;
+  border: 1px solid #002B36;
+  border-radius: 1px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: #B58900;
+}
 input[type="submit"] {
   height: 36px;
   width: auto;
@@ -70,7 +96,18 @@ input[type="submit"] {
   cursor: pointer;
   background: #2AA198;
   float:right;
-
+}
+input:focus[type="login"] {
+  height: 36px;
+  width: auto;
+  border: 1px solid #002B36;
+  border-radius: 1px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  background: #B58900;
 }
 input[type="button"] {
   height: 36px;
@@ -142,6 +179,18 @@ header div.wrapper #btnLogOut {
   margin: 20px 0 0 0;
   background-color: #073642;
 }
+header div.wrapper #btnLogIn {
+  float: left;
+  margin-left: 200px;
+  width: 95px;
+
+}
+header div.wrapper #id_username {
+  width: 150px;
+}
+header div.wrapper #id_password {
+  width: 153px;
+}
 #content {
   margin-bottom: 15px;
   min-height: 560px;
@@ -150,10 +199,10 @@ header div.wrapper #btnLogOut {
   padding-top: 50px;
 }
 #content div.wrapper {
-  margin: 38px auto;
+
 }
 #content div.wrapper img {
-  border-radius: <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>1px;
+  border-radius: 1px;
   float: left;
 }
 #content div.wrapper div.panel {
@@ -186,25 +235,46 @@ background-color: #002B36;
 text-align: center;
 color: #2AA198;
 }
-#content div.wrapper div.panel.right messageText {
-  width: 100px!important;
+#content div.wrapper div.panel.right textarea.messageText {
+  width: 100px!;
   height: 40px;
   border: 1px solid #073642;
 }
-#content div.wrapper div.panel.right Textarea.messageText.error {
+#content div.wrapper div.panel.right textarea.messageText.error {
   border: 1px solid #073642;
 }
 #content div.wrapper div.panel.left {
-  width: 450px;
+  margin-left: 50px;
+
   border: 1px solid #B58900;
-  max-height: 500px;
-  min-height: 225px;
+
+  min-width: 400px;
 }
 #content div.wrapper div.panel.left h1 {
   color: #2AA198;
   background-color: #002B36;
 }
+#content div.wrapper div.card {
+background-color: #002B36;
+color: #2AA198;
+margin-left: 50px;
+margin-bottom: 20px;
+margin-right: 25px;
 
+min-height: 125px;
+width: 475px;
+}
+#content div.wrapper div.card-header {
+  max-width: 550px;
+  background-color:  #002B36;
+  border: 1px solid #B58900;
+  min-width: 450px;
+}
+#content div.wrapper div.card-header img.avatar {
+  background-color: #2AA198;
+  margin-right: 25px;
+  border: 1px solid #B58900;
+}
 #content div.wrapper div.panel.left div.messageWrapper {
   padding: 15px 0;
   border-bottom: 1px solid #B58900;
@@ -280,16 +350,16 @@ footer div.wrapper img {
 
 {% block login %}
  {% if request.user.is_authenticated %}
-  <input type="button" class="btn" value="Home" onclick="location.href = '/';">
-  <input type="button" class="btn" value="MyProfile" onclick="location.href = '/users/{{ username }}';">
-  <input type="button" class="btn" value="UserProfiles" onclick="location.href = '/users/';">
-  <input type="button" class="btn" value="Messages" onclick="location.href = '/public';">
+  <input type="button" class="btn btn-rounded" value="Home" onclick="location.href = '/';">
+  <input type="button" class="btn btn-rounded" value="MyProfile" onclick="location.href = '/users/{{ username }}';">
+  <input type="button" class="btn btn-rounded" value="UserProfiles" onclick="location.href = '/users/';">
+  <input type="button" class="btn btn-rounded" value="Messages" onclick="location.href = '/public';">
   <form action="/logout">
-    <input class="btn btn-danger btn-sm"  value="Logout" type="submit" href="/logout">
+    <input class="btn btn-rounded" value="Logout" type="submit" href="/logout">
   </form>
       {% else %}
               <form action="/logout">
-                <input class="btn btn-danger btn-sm"  value="Logout" type="submit" href="">Logout</a>
+                <input class="btn btn-rounded"  value="Logout" type="submit" href="">Logout</a>
               </form>
       {% endif %}
 {% endblock %}
@@ -319,17 +389,63 @@ footer div.wrapper img {
             {% endblock %}
         </div>
     </div>
-    <footer>
-        <div class="wrapper">
-            Chatango - JustAnotherTwitterClone
-            <a href="#">
-                <img src='http://www.robohash.org/chatango?size=75x75'>
+    <footer class="page-footer font-small cyan darken-3">
+
+    <!-- Footer Elements -->
+    <div class="container">
+
+      <!-- Grid row-->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-12 py-5">
+          <div class="mb-5 flex-center">
+
+            <!-- Facebook -->
+            <a class="fb-ic">
+              <i class="fa fa-facebook fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
             </a>
-            <a href="">
+            <!-- Twitter -->
+            <a class="tw-ic">
+              <i class="fa fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <!-- Google +-->
+            <a class="gplus-ic">
+              <i class="fa fa-google-plus fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <!--Linkedin -->
+            <a class="li-ic">
+              <i class="fa fa-linkedin fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <!--Instagram-->
+            <a class="ins-ic">
+              <i class="fa fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <!--Pinterest-->
+            <a class="pin-ic">
+              <i class="fa fa-pinterest fa-lg white-text fa-2x"> </i>
+            </a>
+          </div>
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row-->
+
+    </div>
+    <!-- Footer Elements -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2018 Copyright:
+      <a href=""> Chatango - JustAnotherTwitterClone</a>
+       <a href="">
                 <img src="#" border="0" alt="Made with Django." title="Made with Django.">
             </a>
-        </div>
-    </footer>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+
 
 </body>
 </html>

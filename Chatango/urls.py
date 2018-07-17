@@ -34,7 +34,10 @@ urlpatterns = [
     url(r'^public$', 'chats.views.public'),
     url(r'^submit$', 'chats.views.submit'),
     url(r'^follow$', 'chats.views.follow'),
-    
+
 ]
 if settings.DEBUG:
-    urlpatterns +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+   urlpatterns +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#urlpatterns += patterns('django.contrib.staticfiles.views',
+#        url(r'^static/(?P<path>.*)$', 'serve'),
+#    )
