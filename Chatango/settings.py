@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'Chatango.wsgi.application'
 DDATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'Chatango',                      # Or path to database file if using sqlite3.
+        'NAME': 'db.sqlite3',                      # Or path to database file if using sqlite3.
         'USER': 'username',                      # Not used with sqlite3.
         'PASSWORD': 'password',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -124,4 +124,4 @@ LOGIN_REDIRECT_URL = 'account-redirect'
 
 import dj_database_url
 
-DATABASES['default'] = dj_database_url.config()
+DATABASES = { 'default': dj_database_url.config() }
