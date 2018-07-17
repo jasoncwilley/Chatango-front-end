@@ -34,7 +34,7 @@ class AuthenticateForm(AuthenticationForm):
 
     def is_valid(self):
         login_form = super(AuthenticateForm, self).is_valid()
-        for f, error in self.errors.iteritems():
+        for f, error in self.errors.items():
             if f != '__all__':
                 self.fields[f].widget.attrs.update({'class': 'error', 'value': strip_tags(error)})
         return login_form

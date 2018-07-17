@@ -11,18 +11,7 @@ from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 
 
-def login_view(request):
-    if request.method == 'POST':
-        login_form = AuthenticateForm(data=request.POST)
-        if login_form.is_valid():
-            # Success
-            login(request, login_form.get_user())
-            return redirect('/')
-        else:
-            # Failure
-            login_form = AuthenticateForm()
-            return render(request, 'index', {'login_form':login_form})
-    return redirect('/')
+
 
 
 
