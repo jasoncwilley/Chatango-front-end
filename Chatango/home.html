@@ -2,7 +2,7 @@
 
 {% block login %}
     <form action="/" method="post">{% csrf_token %}
-        {{ login_form }}
+        {{ login_form.as_p }}
     </form>
 {% endblock %}
 
