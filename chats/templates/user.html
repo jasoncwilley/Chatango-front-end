@@ -10,69 +10,47 @@
 
 {% block content %}
     <div class="panel left">
-      <h1>{{ user.username }}'s Profile</h1>
-
-
         <div class="textWrapper">
-
           <div class="card flex-row flex-wrap">
-              <h1>{{ user.username }}'s Profile</h1>
                <div class="card-header">
-                 <a href="/users/{{ user.username }}">
+                 <a>
+                   <h3>{{ user.username }}'s Profile</h3>
                        <img class="avatar" src="http://www.robohash.org/{{ user.username }}?size=75x75">
-
                </a>
-            
-                 <span class="card-text">{{ messages.count }}  &nbsp Messages &nbsp &nbsp</span>
+                 <span class="card-text">{{ user.spam_count}}  &nbsp Messages &nbsp &nbsp</span>
                    <span class="card-text"> &nbsp{{ user.profile.follows.all.count }}   &nbsp Following &nbsp &nbsp</span>
                    <span class="card-text">&nbsp{{ user.profile.followed_by.all.count }} &nbsp Followers</span>
-
-
-
+ {% if follow %}
+                   <form action="/follow" method="post">
+                       {% csrf_token %}<br>
+                       <input type="hidden" name="follow" value="{{ user.username }}">
+                       <input type="submit" value="Follow">
+                   </form>
+{% endif %}
              </div>
-
-
-               <div class="card-footer w-100 text-muted"><br>
-                 {% if follow %}
-                 <form action="/follow" method="post">
-                     {% csrf_token %}
-                     <input type="hidden" name="follow" value="{{ user.username }}">
-                     <input type="submit" value="Follow">
-                 </form>
-                 {% endif %}
-               </div>
            </div>
         </div>
     </div>
-
-
 
     <div class="recentmessages">
       <h3>Recent Messages</h3>
     </div>
     {% for message in messages %}
-
-
-
-
             <div class="textWrapper">
-
               <div class="card flex-row flex-wrap">
                    <div class="card-header">
                      <h5>Subject: &nbsp{{ message.subject }}</h5>
                          <img class="avatar" src='http://www.robohash.org/{{ message.user.username }}?size=65x65'>
-
                           <div class="card-block px-2">
-
-
-
           <p class="card-text">@{{ message.user.username }} &nbsp wrote: &nbsp{{ message.content }}<br><br>
-          sent &nbsp{{ message.timestamp|timesince }}&nbsp ago
+          posted &nbsp{{ message.timestamp|timesince }}&nbsp ago
     </p>
                    </div>
                    </div>
                </div>
             </div>
 
+
     {% endfor %}
+
 {% endblock %}

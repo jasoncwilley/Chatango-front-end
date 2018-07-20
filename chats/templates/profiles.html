@@ -11,27 +11,20 @@
         <div class="textWrapper">
 
           <div class="card flex-row flex-wrap">
-               <div class="card-header border">
-              <a>
-                     <img class="avatar" src="http://www.robohash.org/{{ user.username }}?size=75x75">
-                     <h2 class="name"></h2>
+              <div class="card-header">
+                   <a>
+                     <h3>{{ user.username }}'s Profile</h3>
+                         <img class="avatar" src="http://www.robohash.org/{{ user.username }}?size=75x75">
                  </a>
-               </div>
-               <div class="card-block px-2">
-                   <h4> {{user.username}}</h4>
-<p>
-{{ user.spam_count}} &nbsp Messages &nbsp
-&nbsp &nbsp{{ user.profile.followed_by.count }}&nbsp Followers&nbsp&nbsp&nbsp
-&nbsp &nbsp{{ user.profile.follows.count }} &nbsp Following&nbsp
-</p>
-               </div>
-               <div class="w-100"></div>
-               <div class="card-footer w-100 text-muted"><br>
+                   <span class="card-text">{{ user.spam_count}}  &nbsp Messages &nbsp &nbsp</span>
+                     <span class="card-text"> &nbsp{{ user.profile.follows.all.count }}   &nbsp Following &nbsp &nbsp</span>
+                     <span class="card-text">&nbsp{{ user.profile.followed_by.all.count }} &nbsp Followers</span>         </div>
 
+ </div>
                </div>
            </div>
-        </div>
-    </div>
+
+
 
 {% endfor %}
 
