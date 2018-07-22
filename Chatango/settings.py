@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['0.0.0.0']
 INSTALLED_APPS = (
 'chats',
 'accounts',
+'locator',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

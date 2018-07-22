@@ -34,6 +34,9 @@ urlpatterns = [
     url(r'^public$', 'chats.views.public'),
     url(r'^submit$', 'chats.views.submit'),
     url(r'^follow$', 'chats.views.follow'),
+    url(r'^userloc$', 'locator.views.userloc'),
+    url(r'^savelocation$', 'locator.views.savelocation'),
+    url(r'^usermap$', 'locator.views.usermap'),
 
 ]
 if settings.DEBUG:

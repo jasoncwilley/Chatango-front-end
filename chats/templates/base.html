@@ -6,6 +6,7 @@
  <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet"integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 </head>
 <style>
 {
@@ -353,8 +354,10 @@ background-color: white;
  {% if request.user.is_authenticated %}
   <input type="button" class="btn btn-rounded" value="Home" onclick="location.href = '/';">
   <input type="button" class="btn btn-rounded" value="MyProfile" onclick="location.href = '/users/{{ username }}';">
+  <input type="button" class="btn btn-rounded" value="MyLocation" onclick="location.href = '/userloc';">
   <input type="button" class="btn btn-rounded" value="UserProfiles" onclick="location.href = '/users/';">
   <input type="button" class="btn btn-rounded" value="Messages" onclick="location.href = '/public';">
+  <input type="button" class="btn btn-rounded" value="UserMap" onclick="location.href = '/usermap';">
   <form action="/logout">
     <input class="btn btn-rounded" value="Logout" type="submit" href="/logout">
   </form>

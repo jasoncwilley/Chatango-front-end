@@ -1,0 +1,80 @@
+
+{% extends "base.html" %}
+{% block login %}
+    {% with user.username as username %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="panel left">
+
+
+
+<div id="map" style="width: 400px; height: 300px;"></div>
+</div>
+<input type="button" class="btn btn-rounded" value="Update {{user.username}}'s Location" onclick="location.href = '/userloc';"><br>
+{% for point in points %}
+
+
+
+
+          <div class="textWrapper">
+<br>
+            <div class="card flex-row flex-wrap">
+                 <div class="card-header">
+                   <h5>{{ point.user.username }}</h5>
+                       <img class="avatar" src='http://www.robohash.org/{{ point.user.username }}?size=65x65'>
+
+                        <div class="card-block px-2">
+
+
+
+        <p class="card-text">City:&nbsp{{point.city}}<br>
+          Longitude:&nbsp{{point.longitude}}<br>
+          Latitude:&nbsp{{point.latitude}}
+</p>
+                 </div>
+                 </div>
+             </div>
+          </div>
+
+  {% endfor %}
+
+  <script type="text/javascript">
+  var locations = [
+{% for point in points %}
+{% if point.latitude = None %}
+    {% else %}
+    ['{{ point.user }}', {{ point.latitude }}, {{ point.longitude }}, {{point.id}}],
+{% endif %}
+{% endfor%}
+];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 3,
+      center: new google.maps.LatLng(43.0159, -94.4847),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+  {% endblock  %}
