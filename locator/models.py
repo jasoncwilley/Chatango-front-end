@@ -11,7 +11,7 @@ class Location(models.Model):
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
 
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+    @receiver(post_save, sender=User)
     def create_location_for_new_user(sender, created, instance, **kwargs):
         if created:
             location = Location(user=instance)

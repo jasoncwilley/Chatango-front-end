@@ -19,7 +19,7 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,related_name="profile", verbose_name="user", on_delete=models.CASCADE)
     image = models.FileField(null=True, blank=True, default=None)
 
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+    @receiver(post_save, sender=User)
     def create_profile_for_new_user(sender, created, instance, **kwargs):
         if created:
             profile = Profile(user=instance)
