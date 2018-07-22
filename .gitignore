@@ -1,5 +1,5 @@
 *.pyc
 Chatango/databases.db
 Chatango/settings.py
-GeoLite2-City.mmdb
-Chatango/GeoLite2-City.mmdb
+/GeoLite2-City.mmdb
+/Chatango/GeoLite2-City.mmdb
