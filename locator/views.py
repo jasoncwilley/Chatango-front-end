@@ -12,14 +12,21 @@ def userloc(request):
     user = request.user
     instance  = Location.objects.get(user=user.id)
     locator_form = LocatorForm()
+    ip = '74.136.205.106'
+    print(ip)
+    reader = geoip2.database.Reader('/home/minty/Documents/Chatango-front-end/GeoLite2-City.mmdb')
+    response = reader.city(str(ip))
+    city = response.city.name
+    latitude = response.location.latitude
+    longitude = response.location.longitude
     if request.method =='POST':
         locator_form =LocatorForm(data=request.POST or None, instance=instance)
         if locator_form.is_valid():
             locator_form.save()
             return render(request, 'userloc.html',
-                    {'locator_form':locator_form, 'next_url': '/userloc',
+                    {'city':city, 'latitude':latitude, 'longitude':longitude, 'ip':ip, 'locator_form':locator_form, 'next_url': '/userloc',
                     'instance':instance, 'username':request.user.username})
-    return render(request, 'userloc.html', {'locator_form':locator_form, 'next_url':'/userloc', 'instance':instance, 'username': request.user.username})
+    return render(request, 'userloc.html', {'city':city, 'latitude':latitude, 'longitude':longitude, 'ip':ip, 'locator_form':locator_form, 'next_url':'/userloc', 'instance':instance, 'username': request.user.username})
 
 '''
 def get_client_ip(request):
@@ -68,6 +75,13 @@ def userloc(request):
 def savelocation(request):
     user = request.user
     location = Location.objects.get(user=user.id)
+    ip = '74.136.205.106'
+    print(ip)
+    reader = geoip2.database.Reader('/home/minty/Documents/Chatango-front-end/GeoLite2-City.mmdb')
+    response = reader.city(str(ip))
+    city = response.city.name
+    latitude = response.location.latitude
+    longitude = response.location.longitude
     if request.method == "POST":
         locator_form = Locator_Form(data=request.POST)
         next_url = request.POST.get("next_url", "userloc")
@@ -77,7 +91,7 @@ def savelocation(request):
             location.save()
             return redirect(next_url)
         else:
-            return userloc(request, locator_form)
+            return userloc(request, locator_form, {'city':city, 'latitude':latitude, 'longitude':longitude, 'ip':ip, })
     return redirect('savelocation')
 
 def usermap(request):

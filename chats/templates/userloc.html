@@ -12,19 +12,42 @@
       {%csrf_token%}
       {{ locator_form.as_p }}
       <input type="hidden" value="{{ next_url }}" name="next_url">
-      <input type="submit" value="Post It!">
+      <input type="submit" value="Update Location!">
    </form>
    </p>
 </div>
 <div class="panel left">
-   <h1>Previous Saved Location Information</h1>
-   <p>
-   <ul>
-      <li>City-{{instance.city}}</li>
-      <li>IP Address-{{instance.ip_address}}</li>
-      <li>longitude-{{instance.longitude}}</li>
-      <li>Latitude-{{instance.latitude}}</li>
-   </ul>
-   </p>
+  <div class="card flex-row flex-wrap">
+     <div class="card-header">
+        <a>
+           <h3>{{ user.username }}'s Location Information</h3>
+           <img class="avatar" src="http://www.robohash.org/{{ user.username }}?size=125x125">
+        </a>
+<p class="card-text">
+
+     <h5>Current Location </h5>
+<ul>
+  <li class="card-text">   City:&nbsp&nbsp{{city}}</li>
+     <li class="card-text"> IP Address:&nbsp&nbsp{{ip}}</li>
+     <li class="card-text"> Longitude:&nbsp&nbsp{{longitude}}</li>
+     <li class="card-text"> Latitude:&nbsp&nbsp{{latitude}}</li>
+  </ul>
+</p>
 </div>
+</div>
+
+<div class="card flex-row flex-wrap">
+   <div class="card-header">
+
+   <p>
+     <h5>Previous Location Information</h5>
+     <ul>
+       <li class="card-text">   City:&nbsp&nbsp{{instance.city}}</li>
+          <li class="card-text"> IP Address:&nbsp&nbsp{{instance.ip_address}}</li>
+          <li class="card-text"> Longitude:&nbsp&nbsp{{instance.longitude}}</li>
+          <li class="card-text"> Latitude:&nbsp&nbsp{{instance.latitude}}</li>
+       </ul>
+     </p>
+     </div>
+     </div>
 {% endblock %}
