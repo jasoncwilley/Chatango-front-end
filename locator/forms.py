@@ -1,4 +1,4 @@
-from models import Location
+from locator.models import Location
 from django import forms
 
 

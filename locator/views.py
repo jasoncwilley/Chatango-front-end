@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader, Context
 from locator.forms import LocatorForm
 from locator.models import Location
-
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 
 def userloc(request):
@@ -14,7 +14,8 @@ def userloc(request):
     locator_form = LocatorForm()
     ip = '74.136.205.106'
     print(ip)
-    reader = geoip2.database.Reader('/home/minty/Documents/Chatango-front-end/GeoLite2-City.mmdb')
+    p = staticfiles_storage.path('GeoLite2-City.mmdb')
+    reader = geoip2.database.Reader(p)
     response = reader.city(str(ip))
     city = response.city.name
     latitude = response.location.latitude
@@ -28,7 +29,7 @@ def userloc(request):
                     'instance':instance, 'username':request.user.username})
     return render(request, 'userloc.html', {'city':city, 'latitude':latitude, 'longitude':longitude, 'ip':ip, 'locator_form':locator_form, 'next_url':'/userloc', 'instance':instance, 'username': request.user.username})
 
-'''
+
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -36,11 +37,11 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
-'''
+
 def get_client_city(request):
-    '''ip = get_client_ip(request)'''
-    ip = '74.136.205.106'
-    reader = geoip2.database.Reader('/home/minty/Documents/Chatango-front-end/GeoLite2-City.mmdb')
+    ip = get_client_ip(request)
+    p = staticfiles_storage.path('GeoLite2-City.mmdb')
+    reader = geoip2.database.Reader(p)
     response = reader.city(str(ip))
     city = response.city.name
     return str(city)
@@ -48,15 +49,16 @@ def get_client_city(request):
 def get_client_latitude(request):
     '''ip = get_client_ip(request)'''
     ip = '74.136.205.106'
-    reader = geoip2.database.Reader('/home/minty/Documents/Chatango-front-end/GeoLite2-City.mmdb')
+    p = staticfiles_storage.path('GeoLite2-City.mmdb')
+    reader = geoip2.database.Reader(p)
     response = reader.city(str(ip))
     latitude = response.location.latitude
     return str(latitude)
 
 def get_client_longitude(request):
-    '''ip = get_client_ip(request)'''
-    ip = '74.136.205.106'
-    reader = geoip2.database.Reader('/home/minty/Documents/Chatango-front-end/GeoLite2-City.mmdb')
+    ip = get_client_ip(request)
+    p = staticfiles_storage.path('GeoLite2-City.mmdb')
+    reader = geoip2.database.Reader(p)
     response = reader.city(str(ip))
     longitude = response.location.longitude
     return str(longitude)
@@ -77,7 +79,8 @@ def savelocation(request):
     location = Location.objects.get(user=user.id)
     ip = '74.136.205.106'
     print(ip)
-    reader = geoip2.database.Reader('/home/minty/Documents/Chatango-front-end/GeoLite2-City.mmdb')
+    p = staticfiles_storage.path('GeoLite2-City.mmdb')
+    reader = geoip2.database.Reader(p)
     response = reader.city(str(ip))
     city = response.city.name
     latitude = response.location.latitude
