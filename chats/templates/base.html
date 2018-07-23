@@ -150,17 +150,29 @@
       header {
       color: white;
       background-color: #002B36;
-      height: 85px;
+      height: 200px;
       width: 100%;
+      }
+      header div.chatango {
+      font-size: 60px;
+      padding-left: 40px;
+      }
+      header div.chatango span {
+        flot: right;
+        font-size: 10px;
+
+
+      }
+      header div.chatango div.bottomheader {
+        padding-left: 50px;
+        font-size: 20px;
+      }
+      header div.chatango div.bottomheader span {
+        backgrond-color: blue;
       }
       header div.wrapper {
       padding: 11px 0;
       padding-left: 10px;
-      }
-      header div.wrapper img {
-      position: relative;
-      top: 10px;
-      margin: 0 15px 0 0;
       }
       header div.wrapper span {
       font-size: 25px;
@@ -175,8 +187,8 @@
       margin: 0 0 0 14px;
       }
       header div.wrapper #btnLogOut {
-      margin-top: 5px;
-      margin-right: 200px;
+      margin-top: 0px;
+      margin-right: 100px;
       background-color: #2AA198;
       }
       header div.wrapper #btnLogIn {
@@ -190,6 +202,7 @@
       header div.wrapper #id_password {
       width: 153px;
       }
+
       #content {
       margin-bottom: 15px;
       min-height: 560px;
@@ -322,7 +335,6 @@
       margin: 18px 0;
       }
       footer {
-      background: url('images/spamcans.jpg');
       height: 251px;
       font-size: 14px;
       clear: both;
@@ -340,8 +352,17 @@
    </style>
    <body>
       <header>
+        <div class="chatango">
+           <a href=""> Chatango</a><img class="robohash"  src='http://www.robohash.org/3.14422222224144414411444134233443433331331222111121?size=75x60'>
+
+
+           <div class="bottomheader">
+          <p>JustAnotherTwitterClone <span>Made with Django</span></p>
+
+        </div>
+         </div>
          <div class="wrapper">
-            <span>Chatango!</span>
+
             {% block login %}
             {% if request.user.is_authenticated %}
             <input type="button" class="btn btn-rounded" value="Home" onclick="location.href = '/';">
@@ -351,16 +372,16 @@
             <input type="button" class="btn btn-rounded" value="Messages" onclick="location.href = '/public';">
             <input type="button" class="btn btn-rounded" value="UserMap" onclick="location.href = '/usermap';">
             <form action="/logout">
-               <input class="btn btn-rounded" value="Logout" type="submit" href="/logout">
+               <input id="btnLogOut"class="btn btn-rounded" value="Logout" type="submit" href="/logout">
             </form>
             {% else %}
             <form action="/logout">
-               <input class="btn btn-rounded"  value="Logout" type="submit" href="">Logout</a>
+               <input id="btnLogOut" class="btn btn-rounded"  value="Logout" type="submit" href="">Logout</a>
             </form>
             {% endif %}
             {% endblock %}
-         </div>
-         <span>JustAnotherTwitterClone</span>
+
+          </div>
       </header>
       <div id="content">
          <div class="wrapper">
@@ -413,8 +434,10 @@
                      </a>
                      <!--Pinterest-->
                      <a class="pin-ic">
-                     <i class="fa fa-pinterest fa-lg white-text fa-2x"> </i>
-                     </a>
+                     <a
+                        <img class="robohash"  src='http://www.robohash.org/set_set1/1337?size=75x60'>
+                      </a>
+
                   </div>
                </div>
                <!-- Grid column -->
@@ -423,12 +446,12 @@
          </div>
          <!-- Footer Elements -->
          <!-- Copyright -->
-         <div class="footer-copyright text-center py-3">© 2018 Copyright:
-            <a href=""> Chatango - JustAnotherTwitterClone</a>
-            <a href="">
-            <img src="#" border="0" alt="Made with Django." title="Made with Django.">
-            </a>
-         </div>
+         <div class="footer-copyright text-center py-3">
+            <a href=""> **Chatango - JustAnotherTwitterClone was  </a><a href="https://www.djangoproject.com/">Made with Django 1.8.14**</a>
+         <br><a href="https://www.robohash.org"> ***Ingredients include: RoboHash,  </a><a href="https://www.maxmind.com/en/geoip2-databases">GeoIP2, </a><a href="https://cloud.google.com/maps-platform/"> and GoogleMapsApi***</a>
+          <br>  <a href=""> ****Created by Jason Willey****</a><br>
+<a><img class="robohash"  src='http://www.robohash.org/set_set4/1337?size=75x60'></a>
+</div>
          <!-- Copyright -->
       </footer>
    </body>
