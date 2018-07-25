@@ -111,7 +111,7 @@ def users(request,  username="", spam_form=None):
         except User.DoesNotExist:
             raise Http404
         messages = Spam.objects.filter(user=user.id)
-
+        users = User.objects.all().annotate(spam_count=Count('spam'))
         if username == request.user.username or request.user.profile.follows.filter(username=username):
             return render(request, 'user.html', {'user': user, 'messages': messages, })
         return render(request, 'user.html', {'user': user, 'messages': messages, 'follow': True, })
@@ -125,7 +125,7 @@ def users(request,  username="", spam_form=None):
                   'profiles.html',
                   {'obj': obj, 'next_url': '/users/',
                    'spam_form': spam_form,
-                   'username': request.user.username, })
+                   'username': request.user.username })
 
 @login_required
 def follow(request):
@@ -154,3 +154,20 @@ def public(request, spam_form=None):
                     'messages':messages, 'username':request.user.username})
     return render(request, 'public.html',
 {'spam_form':spam_form, 'next_url':'/public', 'messages':messages, 'username': request.user.username})
+
+@login_required
+def friends(request, username='', spam_form=None):
+    spam_form = spam_form or SpamForm()
+    followings = request.user.profile.follows.all
+    followers = request.user.profile.followed_by.all
+    if request.method =='POST':
+        spam_form =SpamForm(data=request.POST)
+        if spam_form.is_valid():
+            spam = spam_form.save(commit=False)
+            spam.user = request.user
+            spam.save()
+            return render(request, 'followers.html',
+                    {'spam_form':spam_form, 'next_url': '/followers',
+                    'followings':followings, 'followers':followers, 'username':request.user.username})
+    return render(request, 'followers.html',
+    {'spam_form':spam_form, 'next_url':'/followers', 'followings':followings, 'followers':followers, 'username': request.user.username})

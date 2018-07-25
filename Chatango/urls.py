@@ -15,7 +15,6 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from chats import views
 from django.conf.urls.static import static
 
 
@@ -37,6 +36,7 @@ urlpatterns = [
     url(r'^userloc$', 'locator.views.userloc'),
     url(r'^savelocation$', 'locator.views.savelocation'),
     url(r'^usermap$', 'locator.views.usermap'),
+    url(r'^friends$', 'chats.views.friends'),
 
 ]
 if settings.DEBUG:

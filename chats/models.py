@@ -16,7 +16,7 @@ class Profile(models.Model):
     email = models.EmailField(null=True, verbose_name="Email")
     datecreated = models.DateTimeField(verbose_name="datecreated",auto_now_add=True)
     follows = models.ManyToManyField('self', blank=True, related_name='followed_by', symmetrical=False)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,related_name="profile", verbose_name="user", on_delete=models.CASCADE)
+    user = models.OneToOneField(User,related_name="profile", verbose_name="User", on_delete=models.CASCADE)
     image = models.FileField(null=True, blank=True, default=None)
 
     @receiver(post_save, sender=User)
