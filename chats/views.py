@@ -1,11 +1,11 @@
 
 from django.contrib.auth.models import User
-from chats.models import Spam, Profile
+from chats.models import Spam, Profile, PrivateSpam
 from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.contrib import messages
 from accounts.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from chats.forms import SpamForm, RegistrationForm, ProfileForm, AuthenticateForm, UserCreateForm
+from chats.forms import PrivateSpamForm, SpamForm, RegistrationForm, ProfileForm, AuthenticateForm, UserCreateForm
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
@@ -156,18 +156,37 @@ def public(request, spam_form=None):
 {'spam_form':spam_form, 'next_url':'/public', 'messages':messages, 'username': request.user.username})
 
 @login_required
-def friends(request, username='', spam_form=None):
-    spam_form = spam_form or SpamForm()
+def friends(request, username='', form=None):
+    form = form or PrivateSpamForm()
     followings = request.user.profile.follows.all
     followers = request.user.profile.followed_by.all
-    if request.method =='POST':
-        spam_form =SpamForm(data=request.POST)
-        if spam_form.is_valid():
-            spam = spam_form.save(commit=False)
-            spam.user = request.user
-            spam.save()
-            return render(request, 'followers.html',
-                    {'spam_form':spam_form, 'next_url': '/followers',
+    if request.method == "POST":
+        form = PrivateSpamForm(data=request.POST)
+        if form.is_valid():
+            ch = form.cleaned_data.get('reciever')
+            privatespam = form.save(commit=False)
+            privatespam.user = request.user
+            privatespam.save()
+            return render(request, 'friends.html',
+                    {'form':form, 'next_url': '/followers',
                     'followings':followings, 'followers':followers, 'username':request.user.username})
-    return render(request, 'followers.html',
-    {'spam_form':spam_form, 'next_url':'/followers', 'followings':followings, 'followers':followers, 'username': request.user.username})
+    return render(request, 'friends.html',
+    {'form':form, 'next_url':'/friends', 'followings':followings, 'followers':followers, 'username': request.user.username})
+
+@login_required
+def private(request, username='', form=None):
+    form = form or PrivateSpamForm()
+    username = request.user.username
+    messages = PrivateSpam.objects.filter(user = request.user)
+    if request.method == "POST":
+        form = PrivateSpamForm(data=request.POST)
+        if form.is_valid():
+            ch = form.cleaned_data.get('reciever')
+            privatespam = form.save(commit=False)
+            privatespam.user = request.user
+            privatespam.save()
+            return render(request, 'private.html',
+                    {'form':form, 'next_url': '/followers', 'messages': messages,
+                     'username':request.user.username})
+    return render(request, 'private.html',
+    {'form':form, 'next_url':'/private',  'messages': messages, 'username': request.user.username})

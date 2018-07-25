@@ -37,6 +37,8 @@ urlpatterns = [
     url(r'^savelocation$', 'locator.views.savelocation'),
     url(r'^usermap$', 'locator.views.usermap'),
     url(r'^friends$', 'chats.views.friends'),
+    url(r'^private$', 'chats.views.private'),
+
 
 ]
 if settings.DEBUG:

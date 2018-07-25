@@ -19,6 +19,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User,related_name="profile", verbose_name="User", on_delete=models.CASCADE)
     image = models.FileField(null=True, blank=True, default=None)
 
+    def __str__(self):
+        return self.username
     @receiver(post_save, sender=User)
     def create_profile_for_new_user(sender, created, instance, **kwargs):
         if created:
@@ -31,11 +33,25 @@ class Spam(models.Model):
     content = models.CharField(max_length=140, verbose_name="Message")
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.user
+
     class Meta:
         ordering = ['-timestamp']
 
-    def gravatar_url(self):
-        return "http://www.gravatar.com/avatar/%s?s=50" % hashlib.md5(self.user.email).hexdigest()
 
 
 User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
+
+
+class PrivateSpam(models.Model):
+     user = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
+     username = models.ForeignKey(User, null=True, related_name="reciever")
+     subject = models.CharField(max_length=50)
+     content = content = models.CharField(max_length=140)
+     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+
+     class Meta:
+         ordering = ['-timestamp']

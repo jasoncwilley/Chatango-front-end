@@ -143,9 +143,9 @@
       text-decoration: underline;
       }
       .wrapper {
-      width: 1000px;
+      width: 1200px;
       color: white;
-      background-color: #002B36;
+          background-color: #002B36;
       }
       header {
       color: white;
@@ -223,9 +223,27 @@
       margin-left: 25px;
       font-size: 14px;
       }
+      #content div.wrapper div.panel.right1 {
+      width: 500px;
+      min-height: 100px;
+      float: right;
+      margin-left: 25px;
+      margin-right:100px;
+      padding-right: 550px;
+      color: #2AA198;
+    background-color: #004d60;
+    border: 2px solid #B58900;
+
+      }
+      #content div.wrapper div.panel.right1 #btnCardRight {
+        margin-left: 50px;
+
+        margin-bottom: 10px;
+      }
+
       #content div.wrapper div.panel.right {
       width: 400px;
-      min-height: 350px;
+      min-height: 200px;
       float: right;
       margin-right: 50px;
       margin-left:5px;
@@ -233,14 +251,14 @@
       background-color: #002B36;
       border: 2px solid #B58900;
       }
-      #content div.wrapper div.card.right {
-      width: 400px;
-      min-height: 350px;
-      float: right;
-      margin-right: 50px;
-      margin-left:5px;
+      #content div.wrapper div.panel.right1 div.card.right {
+      width: 450px;
+      height: 125px;
+      padding-right: 50px;
+
+      margin-left:50px;
       color: white;
-      background-color: red;
+      background-color: #002B36;
       border: 2px solid #B58900;
       }
       #content div.wrapper div.panel.right label {
@@ -266,20 +284,50 @@
       #content div.wrapper div.panel.left {
       margin-left: 50px;
       max-width: 400px;
-
+      }
+      #content div.panel.left1 {
+      margin-left: 50px;
+      width: 450px;
+      border: 2px solid #073642;
       }
       #content div.wrapper div.panel.left h1 {
       color: #2AA198;
       background-color: #002B36;
+
+      }
+      #content div.wrapper div.card.right {
+          background-color: #002B36;
+      color: #2AA198;
+      margin-left: 150px;
+      margin-bottom: 20px;
+      margin-right: 25px;
+      min-height: 150px;
+      width: 250px;
       }
       #content div.wrapper div.card {
-      background-color: #002B36;
+          background-color: #002B36;
       color: #2AA198;
       margin-left: 50px;
       margin-bottom: 20px;
       margin-right: 25px;
       min-height: 125px;
       width: 450px;
+      }
+      #content div.wrapper div.panel.left div.card {
+          background-color: #002B36;
+      color: #2AA198;
+
+
+      margin-right: 25px;
+      min-height: 160px;
+      width: 450px;
+      }
+      #content div.wrapper div.panel.right1 div.card-header.right {
+      max-width: 550px;
+      background-color:  #002B36;
+      border: 2px solid #B58900;
+      min-width: 200px;
+      margin-right: 500px
       }
       #content div.wrapper div.card-header {
       max-width: 550px;
@@ -291,6 +339,23 @@
       background-color: #2AA198;
       margin-right: 25px;
       border: 2px solid #B58900;
+      }
+      #content div.wrapper div.card-header img.robohash {
+      background-color: #2AA198;
+      margin-right: 25px;
+      border: 2px solid #B58900;
+      height: 100px;
+      width: 100px;
+      }
+      #content div.wrapper div.panel.right1 div.card.right img.avatar {
+      background-color: #2AA198;
+      margin-top: 19px;
+      margin-left: 20px;
+      margin-right: 25px;
+      border: 2px solid #B58900;
+      float: left;
+      height: 100px;
+      width: 100px;
       }
       #content div.wrapper div.panel.left div.messageWrapper {
       padding: 15px 0;
@@ -378,10 +443,12 @@
             {% if request.user.is_authenticated %}
             <input type="button" class="btn btn-rounded" value="Home" onclick="location.href = '/';">
             <input type="button" class="btn btn-rounded" value="MyProfile" onclick="location.href = '/users/{{ username }}';">
-            <input type="button" class="btn btn-rounded" value="MyLocation" onclick="location.href = '/userloc';">
             <input type="button" class="btn btn-rounded" value="UserProfiles" onclick="location.href = '/users/';">
-            <input type="button" class="btn btn-rounded" value="Friends" onclick="location.href = '/friends';">
             <input type="button" class="btn btn-rounded" value="UserMap" onclick="location.href = '/usermap';">
+            <input type="button" class="btn btn-rounded" value="MyLocation" onclick="location.href = '/userloc';">
+            <input type="button" class="btn btn-rounded" value="Friends" onclick="location.href = '/friends';">
+            <input type="button" class="btn btn-rounded" value="Private" onclick="location.href = '/private';">
+
             <form action="/logout">
                <input id="btnLogOut"class="btn btn-rounded" value="Logout" type="submit" href="/logout">
             </form>
