@@ -1,12 +1,8 @@
 {% extends "base.html" %}
-{% block login %}
-{% with user.username as username %}
-{{ block.super }}
-{% endwith %}
-{% endblock %}
+
 {% block content %}
 <div class="panel left">
-   <div id="map" style="width: 950px; height: 600px;"></div>
+   <div id="map" style="width: 1025px; height: 600px;"></div>
 </div>
 <input type="button" class="btn btn-rounded" value="Update {{user.username}}'s Location" onclick="location.href = '/userloc';"><br>
 {% for point in points %}
@@ -49,7 +45,9 @@
     for (i = 0; i < locations.length; i++) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-        map: map
+        map: map,
+        html: locations[i][0],
+        id: locations[i][3],
       });
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {

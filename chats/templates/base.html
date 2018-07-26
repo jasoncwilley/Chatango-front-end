@@ -5,7 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdcU4TPWW718-gnUuSs5X_yP-mhy5c6MA&callback=initMap" async defer></script>
     <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -212,20 +212,27 @@
         margin: 0 0 0 14px;
     }
     header div.wrapper #btnDropDown {
-        margin-top: 0px;
+        margin-left:15px;
+        margin-right: 15px;
+        font-size: 20px;
         background-color: #2AA198;
         color: white;
         border: 1px solid #B58900;
+        min-width: 225px;
     }
     header div.wrapper div.dropdown #menuDropDown {
       background-color: #002B36;
       border: 2px solid #B58900;
+        font-size: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
     header div.wrapper #btnLogOut {
-        margin-top: 0px;
-        margin-right: 100px;
+
         background-color: #2AA198;
         border: 1px solid #B58900;
+        font-size: 20px;
+        float:left;
     }
 
     header div.wrapper #btnLogIn {
@@ -418,6 +425,7 @@ margin-left:30px;
 
     #content div.wrapper div.panel.left div.messageWrapper {
         padding: 15px 0;
+      }
         #content div.wrapper div.panel.left div.messageWrapper:last-child {
             border: 1px solid #D2D2D2;
         }
@@ -467,6 +475,11 @@ margin-left:30px;
             padding: 0 24px;
             margin: 18px 0;
         }
+          #content div.wrapper div.panel.left #map {
+            font-size: 18px;
+            background-color: #002B36;
+            color: #6610f2;
+          }
         footer {
             height: 251px;
             font-size: 14px;
@@ -497,41 +510,66 @@ margin-left:30px;
         <div class="wrapper">
 
             {% block login %} {% if request.user.is_authenticated %}
-                        <div class="dropdown">
-            <input type="button" class="btn btn-rounded" value="Home" onclick="location.href = '/';">
+            <div class="btn-group dropdown">
+
+
+
+    <button id="btnDropDown" class="btn btn-rounded dropdown-toggle" type="button" data-toggle="dropdown">
+        Public Chats <span class="caret"></span>
+    </button>
+<div id="menuDropDown" class="dropdown-menu">
+         <li><a href="">Post a Public Message</a></li>
+        <li><a href="">View All Public Messages</a></li>
+        <li><a href="">View Recent Public Messages</a></li>
+
+    </div>
+
+
+
+
+                        <div class="btn-group dropdown">
 
 
 
                 <button id="btnDropDown" class="btn btn-rounded dropdown-toggle" type="button" data-toggle="dropdown">
-                    Private Messages <span class="caret"></span>
+                    Private Chats <span class="caret"></span>
                 </button>
-                <ul id="menuDropDown" class="dropdown-menu">
-                    <li><a href="/check">Check Messages</li></a>
-                        <li><a href="/send">Send Message</li></a>
-                </ul>
+            <div id="menuDropDown" class="dropdown-menu">
+                    <li><a href="/check">Check Private Messages</a></li>
+                    <li><a href="/send">Send Private Message</a></li>
+                </div>
 
+  <div class="btn-group dropdown">
                 <button id="btnDropDown" class="btn btn-rounded dropdown-toggle" type="button" data-toggle="dropdown">
                     Profiles <span class="caret"></span>
                 </button>
-                <ul id="menuDropDown" class="dropdown-menu">
+                <div id="menuDropDown" class="dropdown-menu">
                     <li><a href="/users/{{ username }}">My Profile</li></a>
                         <li><a href="/users/">Public Profiles</li></a>
-                </ul>
-
+                </div>
+                <div class="btn-group dropdown">
+                              <button id="btnDropDown" class="btn btn-rounded dropdown-toggle" type="button" data-toggle="dropdown">
+                                  Friends <span class="caret"></span>
+                              </button>
+                              <div id="menuDropDown" class="dropdown-menu">
+                                  <li><a href="/followers">Followers</li></a>
+                                      <li><a href="/following">Following</li></a>
+                              </div>
+  <div class="btn-group dropdown">
                 <button id="btnDropDown"class="btn btn-rounded dropdown-toggle" type="button" data-toggle="dropdown">
                     User Map <span class="caret"></span>
                 </button>
-                <ul id="menuDropDown" class="dropdown-menu">
+                <div id="menuDropDown" class="dropdown-menu">
                     <li><a href="/usermap">My Location</li></a>
                         <li><a href="/userloc">User Map</li></a>
-                </ul>
+         </div>
 </div>
             <form action="/logout">
                 <input id="btnLogOut" class="btn btn-rounded" value="Logout" type="submit" href="/logout">
             </form>
             {% else %}
             <form action="/logout">
-                <input id="btnLogOut" class="btn btn-rounded" value="Logout" type="submit" href="">Logout</a>
+                <input id="btnLogOut" class="btn btn-rounded" value="Logout" type="submit" href="">
             </form>
             {% endif %} {% endblock %}
           </div>

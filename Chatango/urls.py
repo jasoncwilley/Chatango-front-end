@@ -36,13 +36,14 @@ urlpatterns = [
     url(r'^userloc$', 'locator.views.userloc'),
     url(r'^savelocation$', 'locator.views.savelocation'),
     url(r'^usermap$', 'locator.views.usermap'),
-    url(r'^friends$', 'chats.views.friends'),
     url(r'^private$', 'chats.views.private'),
     url(r'^send$', 'chats.views.send_private'),
     url(r'^check$', 'chats.views.check_private'),
     url(r'^following$', 'chats.views.following'),
     url(r'^followers$', 'chats.views.followers'),
+    url(r'^friends$', 'chats.views.friends'),
 ]
+
 if settings.DEBUG:
    urlpatterns +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 #urlpatterns += patterns('django.contrib.staticfiles.views',

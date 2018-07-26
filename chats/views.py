@@ -198,7 +198,7 @@ def send_private(request, form=None):
             privatespam = form.save(commit=False)
             privatespam.user = request.user
             privatespam.save()
-            return render(request, '/send',
+            return render(request, 'send.html',
                     {'form':form, 'next_url': '/followers', 'messages': messages,
                      'username':request.user.username})
     return render(request, 'send.html',
@@ -208,3 +208,22 @@ def check_private(request):
     user=request.user
     messages = user.reciever.all()
     return render(request,"check.html",{'messages':messages})
+
+@login_required
+def friends(request, username='', form=None):
+    form = form or PrivateSpamForm()
+    user = request.user
+    followings = request.user.profile.follows.all
+    followers = request.user.profile.followed_by.all
+    if request.method == "POST":
+        form = PrivateSpamForm(data=request.POST)
+        if form.is_valid():
+            ch = form.cleaned_data.get('reciever')
+            privatespam = form.save(commit=False)
+            privatespam.user = request.user
+            privatespam.save()
+            return render(request, 'friends.html',
+                    {'form':form, 'next_url': '/followers',
+                    'followings':followings, 'followers':followers, 'username':request.user.username})
+    return render(request, 'friends.html',
+    {'form':form, 'next_url':'/friends', 'followings':followings, 'followers':followers, 'username': request.user.username})
