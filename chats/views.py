@@ -227,3 +227,25 @@ def friends(request, username='', form=None):
                     'followings':followings, 'followers':followers, 'username':request.user.username})
     return render(request, 'friends.html',
     {'form':form, 'next_url':'/friends', 'followings':followings, 'followers':followers, 'username': request.user.username})
+
+def unfollow(request, username=""):
+    user = request.user
+    username = request.user.username
+    follows = user.profile.follows.filter(username=username)
+    profile = Profile.objects.all
+
+    username = request.user.username
+    followed_by = Profile.objects.get(user__username=username)
+    user = request.user
+    if request.method=="POST":
+        Profile.objects.get(follows)
+        follows.remove(followed_by)
+        follows_count = follows.all().count()
+        user.save()
+        followed_by.remove(user)
+        otheruser.follow_by_count = otheruser.followed_by.all().count()
+        otheruser.save()
+        return render(request, 'following.html',
+                {'username':request.user.username })
+    else:
+        return HttpResponse("unfollow did not save")

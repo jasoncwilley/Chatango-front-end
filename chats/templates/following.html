@@ -20,7 +20,12 @@
 
               <p class="card-text">@{{ following.user.username }} &nbsp wrote: &nbsp{{ message.content }}<br><br>
               </p>
-
+              {% if following %}
+              <form action="/unfollow" method="post">
+                 {% csrf_token %}<br>
+                 <input type="hidden" name="unfollow" value="{{ following.user.username }}">
+                 <input type="submit" value="unFollow">
+                   {% endif %}
 </div>
 
 
