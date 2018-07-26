@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="panel right1">
+
+<h2>Following</h2>
+{% for following in followings %}
+
+
+
+<a>
+<input id="btnCardRight" type="button" class="btn" value="View {{ following.username }}'s Profile" onclick="location.href ='/users/{{ user.username }}';">
+</a>
+
+
+
+     <div class="card right flex-row flex-wrap">
+       <img class="avatar" src='http://www.robohash.org/{{ following.user.username }}?size=65x65'>
+
+           <h5>Subject: &nbsp{{ following.user.username }}</h5>
+
+              <p class="card-text">@{{ following.user.username }} &nbsp wrote: &nbsp{{ message.content }}<br><br>
+              </p>
+
+</div>
+
+
+  {% endfor %}
+
+</div>
+{% endblock %}

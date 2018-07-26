@@ -1,497 +1,567 @@
-<!DOCTYPE html>
-{% load staticfiles %}
+<!DOCTYPE html> {% load staticfiles %}
 <html>
-   <head>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-     <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-     <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet"integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-   </head>
-   <style>
-      {
-      font-family: Helvetica, Arial, sans-serif;
-      background-color: #002B36;
-      color: #2AA198;
-      max-width: 800px;
-      }
-      body {
-      background-color: #002B36;
-      margin: 0;
-      padding: 0;
-      border-color: #B58900
-      color: #002B36;
-      }
-      .flash {
-      padding: 10px;
-      margin: 20px 0;
-      }
-      .flash.error {
-      background: #3F3E3D;
-      color: #6610f2;
-      border: 1px solid #6610f2;
-      }
-      .flash.warning {
-      background: #dee2e6;
-      color: #79420d;
-      border: 1px solid #79420d;
-      }
-      .flash.notice {
-      background: #dee2e6;
-      color: #007bff;
-      border: 1px solid #007bff;
-      }
-      input {
-      width: 325px;
-      height: 38px;
-      border: 1px solid #B58900;
-      padding: 0 10px;
-      outline: none;
-      font-size: 17px;
-      color:#2AA198;
-      background-color:  #002B36;
-      }
-      input:focus {
-      background: #073642;
-      color: #2AA198;
-      }
-      input.error {
-      background: #dee2e6;
-      color: #79420d;
-      border: 1px solid #79420d;
-      }
-      input[type="login"] {
-      height: 36px;
-      width: auto;
-      border: 1px solid #B58900;
-      border-radius: 1px;
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
-      margin-left: 20px;
-      padding: 0 20px;
-      cursor: pointer;
-      background: #2AA198;
-      }
-      input:focus[type="login"] {
-      height: 36px;
-      width: auto;
-      border: 1px solid #002B36;
-      border-radius: 1px;
-      color: white;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 0 20px;
-      cursor: pointer;
-      background: #B58900;
-      }
-      input[type="submit"] {
-      height: 36px;
-      width: auto;
-      border: 1px solid #B58900;
-      border-radius: 1px;
-      color: white;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 0 20px;
-      cursor: pointer;
-      background: #2AA198;
-      float:right;
-      }
-      input:focus[type="login"] {
-      height: 36px;
-      width: auto;
-      border: 1px solid #002B36;
-      border-radius: 1px;
-      color: white;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 0 20px;
-      cursor: pointer;
-      background: #B58900;
-      }
-      input[type="button"] {
-      height: 36px;
-      width: auto;
-      border: 1px solid #B58900;
-      border-radius: 1px;
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
-      margin-left: 20px;
-      padding: 0 20px;
-      cursor: pointer;
-      background: #2AA198;
-      }
-      input:focus[type="button"] {
-      height: 36px;
-      width: auto;
-      border: 1px solid #002B36;
-      border-radius: 1px;
-      color: white;
-      font-size: 12px;
-      font-weight: bold;
-      padding: 0 20px;
-      cursor: pointer;
-      background: #B58900;
-      }
-      a {
-      text-decoration: none;
-      color: white;
-      text-shadow: #6610f2 0 0 1px;
-      }
-      a:hover {
-      text-decoration: underline;
-      }
-      .wrapper {
-      width: 1200px;
-      color: white;
-          background-color: #002B36;
-      }
-      header {
-      color: white;
-      background-color: #002B36;
-      height: 200px;
-      width: 100%;
-      }
-      header div.chatango {
-      font-size: 60px;
-      padding-left: 40px;
-      }
-      header div.chatango span {
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+        {
+        font-family: Helvetica, Arial, sans-serif;
+        background-color: #002B36;
+        color: #2AA198;
+        max-width: 800px;
+    }
+
+    body {
+        background-color: #002B36;
+        padding: 0;
+        border-color: #B58900;
+        color: #002B36;
+    }
+
+    .flash {
+        padding: 10px;
+        margin: 20px 0;
+    }
+
+    .flash.error {
+        background: #3F3E3D;
+        color: #6610f2;
+        border: 1px solid #6610f2;
+    }
+
+    .flash.warning {
+        background: #dee2e6;
+        color: #79420d;
+        border: 1px solid #79420d;
+    }
+
+    .flash.notice {
+        background: #dee2e6;
+        color: #007bff;
+        border: 1px solid #007bff;
+    }
+
+    input {
+        width: 325px;
+        height: 38px;
+        border: 1px solid #B58900;
+        padding: 0 10px;
+        outline: none;
+        font-size: 17px;
+        color: #2AA198;
+        background-color: #002B36;
+    }
+
+    input:focus {
+        background: #073642;
+        color: #2AA198;
+    }
+
+    input.error {
+        background: #dee2e6;
+        color: #79420d;
+        border: 1px solid #79420d;
+    }
+
+    input[type="login"] {
+        height: 36px;
+        width: auto;
+        border: 1px solid #B58900;
+        border-radius: 1px;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        margin-left: 20px;
+        padding: 0 20px;
+        cursor: pointer;
+        background: #2AA198;
+    }
+
+    input:focus[type="login"] {
+        height: 36px;
+        width: auto;
+        border: 1px solid #002B36;
+        border-radius: 1px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 0 20px;
+        cursor: pointer;
+        background: #B58900;
+    }
+
+    input[type="submit"] {
+        height: 36px;
+        width: auto;
+        border: 1px solid #B58900;
+        border-radius: 1px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 0 20px;
+        cursor: pointer;
+        background: #2AA198;
+        float: right;
+    }
+
+    input:focus[type="login"] {
+        height: 36px;
+        width: auto;
+        border: 1px solid #002B36;
+        border-radius: 1px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 0 20px;
+        cursor: pointer;
+        background: #B58900;
+    }
+
+    input[type="button"] {
+        height: 36px;
+        width: auto;
+        border: 1px solid #B58900;
+        border-radius: 1px;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        margin-left: 20px;
+        padding: 0 20px;
+        cursor: pointer;
+        background: #2AA198;
+    }
+
+    input:focus[type="button"] {
+        height: 36px;
+        width: auto;
+        border: 1px solid #002B36;
+        border-radius: 1px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 0 20px;
+        cursor: pointer;
+        background: #B58900;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+        text-shadow: #6610f2 0 0 1px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .wrapper {
+        width: 1200px;
+        color: white;
+        background-color: #002B36;
+    }
+
+    header {
+        color: white;
+        background-color: #002B36;
+        height: 200px;
+        width: 100%;
+    }
+
+    header div.chatango {
+        font-size: 60px;
+        padding-left: 40px;
+    }
+
+    header div.chatango span {
         flot: right;
         font-size: 10px;
+    }
 
-
-      }
-      header div.chatango div.bottomheader {
+    header div.chatango div.bottomheader {
         padding-left: 50px;
         font-size: 20px;
-      }
-      header div.chatango div.bottomheader span {
+    }
+
+    header div.chatango div.bottomheader span {
         backgrond-color: blue;
-      }
-      header div.wrapper {
-      padding: 11px 0;
-      padding-left: 10px;
-      }
-      header div.wrapper span {
-      font-size: 25px;
-      margin: 0 0px 0 0;
-      padding-right: 50px;
-      }
-      header div.wrapper form {
-      background-color: #2AA198;
-      display: inline;
-      }
-      header div.wrapper form input {
-      margin: 0 0 0 14px;
-      }
-      header div.wrapper #btnLogOut {
-      margin-top: 0px;
-      margin-right: 100px;
-      background-color: #2AA198;
-      }
-      header div.wrapper #btnLogIn {
-      float: left;
-      margin-left: 200px;
-      width: 95px;
-      }
-      header div.wrapper #id_username {
-      width: 150px;
-      }
-      header div.wrapper #id_password {
-      width: 153px;
-      }
+    }
 
-      #content {
-      margin-bottom: 15px;
-      min-height: 560px;
+    header div.wrapper {
+        padding: 11px 0;
+        padding-left: 10px;
+    }
+
+    header div.wrapper span {
+        font-size: 25px;
+        margin: 0 0px 0 0;
+        padding-right: 50px;
+    }
+
+    header div.wrapper form {
+        background-color: #2AA198;
+        display: inline;
+    }
+
+    header div.wrapper form input {
+        margin: 0 0 0 14px;
+    }
+    header div.wrapper #btnDropDown {
+        margin-top: 0px;
+        background-color: #2AA198;
+        color: white;
+        border: 1px solid #B58900;
+    }
+    header div.wrapper div.dropdown #menuDropDown {
       background-color: #002B36;
-      color: #2AA198;
-      padding-top: 50px;
-      }
-      #content div.wrapper {
-      }
-      #content div.wrapper img {
-      border-radius: 1px;
-      float: left;
-      }
-      #content div.wrapper div.panel {
-      background-color:#002B36;
-      margin: 0;
-      margin-bottom: 29px;
-      margin-left: 25px;
-      font-size: 14px;
-      }
-      #content div.wrapper div.panel.right1 {
-      width: 500px;
-      min-height: 100px;
-      float: right;
-      margin-left: 25px;
-      margin-right:100px;
-      padding-right: 550px;
-      color: #2AA198;
-    background-color: #004d60;
-    border: 2px solid #B58900;
+      border: 2px solid #B58900;
+    }
+    header div.wrapper #btnLogOut {
+        margin-top: 0px;
+        margin-right: 100px;
+        background-color: #2AA198;
+        border: 1px solid #B58900;
+    }
 
-      }
-      #content div.wrapper div.panel.right1 #btnCardRight {
+    header div.wrapper #btnLogIn {
+        float: left;
+        margin-left: 200px;
+        width: 95px;
+    }
+
+    header div.wrapper #id_username {
+        width: 150px;
+    }
+
+    header div.wrapper #id_password {
+        width: 153px;
+    }
+
+    #content {
+        margin-bottom: 15px;
+        min-height: 560px;
+        background-color: #002B36;
+        color: #2AA198;
+        padding-top: 50px;
+    }
+
+    #content div.wrapper {
+border: 1px solid #B58900;
+margin-top: 30px;
+padding-top:50px;
+margin-left:30px;
+}
+    #content div.wrapper img {
+        border-radius: 1px;
+        float: left;
+    }
+
+    #content div.wrapper div.panel {
+        background-color: #002B36;
+        margin: 0;
+        margin-bottom: 29px;
+        margin-left: 25px;
+        font-size: 14px;
+    }
+
+    #content div.wrapper div.panel.right1 {
+        width: 500px;
+        min-height: 100px;
+        float: right;
+        margin-left: 25px;
+        margin-right: 100px;
+        padding-right: 550px;
+        color: #2AA198;
+        background-color: #004d60;
+        border: 2px solid #B58900;
+    }
+
+    #content div.wrapper div.panel.right1 #btnCardRight {
         margin-left: 50px;
-
         margin-bottom: 10px;
-      }
+    }
 
-      #content div.wrapper div.panel.right {
-      width: 400px;
-      min-height: 200px;
-      float: right;
-      margin-right: 50px;
-      margin-left:5px;
-      color: white;
-      background-color: #002B36;
-      border: 2px solid #B58900;
-      }
-      #content div.wrapper div.panel.right1 div.card.right {
-      width: 450px;
-      height: 125px;
-      padding-right: 50px;
+    #content div.wrapper div.panel.right {
+        width: 400px;
+        min-height: 200px;
+        float: right;
+        margin-right: 50px;
+        margin-left: 5px;
+        color: white;
+        background-color: #002B36;
+        border: 2px solid #B58900;
+    }
 
-      margin-left:50px;
-      color: white;
-      background-color: #002B36;
-      border: 2px solid #B58900;
-      }
-      #content div.wrapper div.panel.right label {
-      color:  #002B36;
-      }
-      #content div.wrapper div.panel.right div.search {
-      color:  #002B36;
-      }
-      #content div.wrapper div.panel.right h1 {
-      font-size: 23px;
-      background-color: #002B36;
-      text-align: center;
-      color: #2AA198;
-      }
-      #content div.wrapper div.panel.right textarea.messageText {
-      width: 100px!;
-      height: 40px;
-      border: 1px solid #073642;
-      }
-      #content div.wrapper div.panel.right textarea.messageText.error {
-      border: 1px solid #073642;
-      }
-      #content div.wrapper div.panel.left {
-      margin-left: 50px;
-      max-width: 400px;
-      }
-      #content div.panel.left1 {
-      margin-left: 50px;
-      width: 450px;
-      border: 2px solid #073642;
-      }
-      #content div.wrapper div.panel.left h1 {
-      color: #2AA198;
-      background-color: #002B36;
+    #content div.wrapper div.panel.right1 div.card.right {
+        width: 450px;
+        height: 125px;
+        padding-right: 50px;
+        margin-left: 50px;
+        color: white;
+        background-color: #002B36;
+        border: 2px solid #B58900;
+    }
 
-      }
-      #content div.wrapper div.card.right {
-          background-color: #002B36;
-      color: #2AA198;
-      margin-left: 150px;
-      margin-bottom: 20px;
-      margin-right: 25px;
-      min-height: 150px;
-      width: 250px;
-      }
-      #content div.wrapper div.card {
-          background-color: #002B36;
-      color: #2AA198;
-      margin-left: 50px;
-      margin-bottom: 20px;
-      margin-right: 25px;
-      min-height: 125px;
-      width: 450px;
-      }
-      #content div.wrapper div.panel.left div.card {
-          background-color: #002B36;
-      color: #2AA198;
+    #content div.wrapper div.panel.right label {
+        color: #002B36;
+    }
 
+    #content div.wrapper div.panel.right div.search {
+        color: #002B36;
+    }
 
-      margin-right: 25px;
-      min-height: 160px;
-      width: 450px;
-      }
-      #content div.wrapper div.panel.right1 div.card-header.right {
-      max-width: 550px;
-      background-color:  #002B36;
-      border: 2px solid #B58900;
-      min-width: 200px;
-      margin-right: 500px
-      }
-      #content div.wrapper div.card-header {
-      max-width: 550px;
-      background-color:  #002B36;
-      border: 2px solid #B58900;
-      min-width: 450px;
-      }
-      #content div.wrapper div.card-header img.avatar {
-      background-color: #2AA198;
-      margin-right: 25px;
-      border: 2px solid #B58900;
-      }
-      #content div.wrapper div.card-header img.robohash {
-      background-color: #2AA198;
-      margin-right: 25px;
-      border: 2px solid #B58900;
-      height: 100px;
-      width: 100px;
-      }
-      #content div.wrapper div.panel.right1 div.card.right img.avatar {
-      background-color: #2AA198;
-      margin-top: 19px;
-      margin-left: 20px;
-      margin-right: 25px;
-      border: 2px solid #B58900;
-      float: left;
-      height: 100px;
-      width: 100px;
-      }
-      #content div.wrapper div.panel.left div.messageWrapper {
-      padding: 15px 0;
-      border-bottom: 1px solid #B58900;
-      }
-      #content div.wrapper div.panel.left div.messageWrapper:last-child {
-      border: 1px solid #D2D2D2;
-      }
-      #content div.wrapper div.panel.left div.messageWrapper span.name {
-      font-size: 18px;
-      background-color: #002B36;
-      color: #6610f2;
-      }
-      #content div.wrapper div.panel.left div.messageWrapper span.time {
-      font-size: 12px;
-      color: #CCC;
-      }
-      #content div.wrapper div.panel.left div.messageWrapper img.avatar {
-      margin: 0 19px 0 20px;
-      float: left;
-      background-color: #002B36;
-      }
-      #content div.wrapper div.panel.left div.messageWrapper p {
-      margin: 5px 50px 0 90px;
-      padding: 0;
-      text-align: justify;
-      line-height: 1.5;
-      color: #3F3E3D;
-      text-shadow: #3F3E3D 0 0 1px;
-      }
-      #content div.wrapper div.panel.left div.messageWrapper p span.spacing {
-      padding-left: 9px;
-      margin-left: 9px;
-      height: 10px;
-      border-left: 1px solid #D2D2D2;
-      }
-      #content div.wrapper div.panel * {
-      margin: 6px 0;
-      }
-      #content div.wrapper div.panel form {
-      padding: 0 23px;
-      }
-      #content div.wrapper div.panel h1 {
-      border: 1px solid #B58900;
-      margin: 0px 0;
-      font-weight: normal;
-      font-size: 18px;
-      padding: 13px 23px;
-      height: 40px;
-      }
-      #content div.wrapper div.panel p {
-      padding: 0 24px;
-      margin: 18px 0;
-      }
-      footer {
-      height: 251px;
-      font-size: 14px;
-      clear: both;
-      }
-      footer div.wrapper {
-      padding: 15px;
-      }
-      footer div.wrapper img {
-      float: right;
-      margin-right: 5px;
-      }
-      footer div.mb-5.flex-center div.icons {
-      background-color: white;
-      }
-   </style>
-   <body>
-      <header>
+    #content div.wrapper div.panel.right h1 {
+        font-size: 23px;
+        background-color: #002B36;
+        text-align: center;
+        color: #2AA198;
+    }
+
+    #content div.wrapper div.panel.right textarea.messageText {
+        width: 100px!;
+        height: 40px;
+        border: 1px solid #073642;
+    }
+
+    #content div.wrapper div.panel.right textarea.messageText.error {
+        border: 1px solid #073642;
+    }
+
+    #content div.wrapper div.panel.left {
+        margin-left: 50px;
+        max-width: 400px;
+    }
+
+    #content div.panel.left1 {
+        margin-left: 50px;
+        width: 450px;
+        border: 2px solid #073642;
+    }
+
+    #content div.wrapper div.panel.left h1 {
+        color: #2AA198;
+        background-color: #002B36;
+    }
+
+    #content div.wrapper div.card.right {
+        background-color: #002B36;
+        color: #2AA198;
+        margin-left: 150px;
+        margin-bottom: 20px;
+        margin-right: 25px;
+        min-height: 150px;
+        width: 250px;
+    }
+
+    #content div.wrapper div.card {
+        background-color: #002B36;
+        color: #2AA198;
+        margin-left: 50px;
+        margin-bottom: 20px;
+        margin-right: 25px;
+        min-height: 125px;
+        width: 450px;
+    }
+
+    #content div.wrapper div.panel.left div.card {
+        background-color: #002B36;
+        color: #2AA198;
+        margin-right: 25px;
+        min-height: 160px;
+        width: 450px;
+    }
+
+    #content div.wrapper div.panel.right1 div.card-header.right {
+        max-width: 550px;
+        background-color: #002B36;
+        border: 2px solid #B58900;
+        min-width: 200px;
+        margin-right: 500px
+    }
+
+    #content div.wrapper div.card-header {
+        max-width: 550px;
+        background-color: #002B36;
+        border: 2px solid #B58900;
+        min-width: 450px;
+    }
+
+    #content div.wrapper div.card-header img.avatar {
+        background-color: #2AA198;
+        margin-right: 25px;
+        border: 2px solid #B58900;
+    }
+
+    #content div.wrapper div.card-header img.robohash {
+        background-color: #2AA198;
+        margin-right: 25px;
+        border: 2px solid #B58900;
+        height: 100px;
+        width: 100px;
+    }
+
+    #content div.wrapper div.panel.right1 div.card.right img.avatar {
+        background-color: #2AA198;
+        margin-top: 19px;
+        margin-left: 20px;
+        margin-right: 25px;
+        border: 2px solid #B58900;
+        float: left;
+        height: 100px;
+        width: 100px;
+    }
+
+    #content div.wrapper div.panel.left div.messageWrapper {
+        padding: 15px 0;
+        #content div.wrapper div.panel.left div.messageWrapper:last-child {
+            border: 1px solid #D2D2D2;
+        }
+        #content div.wrapper div.panel.left div.messageWrapper span.name {
+            font-size: 18px;
+            background-color: #002B36;
+            color: #6610f2;
+        }
+        #content div.wrapper div.panel.left div.messageWrapper span.time {
+            font-size: 12px;
+            color: #CCC;
+        }
+        #content div.wrapper div.panel.left div.messageWrapper img.avatar {
+            margin: 0 19px 0 20px;
+            float: left;
+            background-color: #002B36;
+        }
+        #content div.wrapper div.panel.left div.messageWrapper p {
+            margin: 5px 50px 0 90px;
+            padding: 0;
+            text-align: justify;
+            line-height: 1.5;
+            color: #3F3E3D;
+            text-shadow: #3F3E3D 0 0 1px;
+        }
+        #content div.wrapper div.panel.left div.messageWrapper p span.spacing {
+            padding-left: 9px;
+            margin-left: 9px;
+            height: 10px;
+            border-left: 1px solid #D2D2D2;
+        }
+        #content div.wrapper div.panel * {
+            margin: 6px 0;
+        }
+        #content div.wrapper div.panel form {
+            padding: 0 23px;
+        }
+        #content div.wrapper div.panel h1 {
+            border: 1px solid #B58900;
+            margin: 0px 0;
+            font-weight: normal;
+            font-size: 18px;
+            padding: 13px 23px;
+            height: 40px;
+        }
+        #content div.wrapper div.panel p {
+            padding: 0 24px;
+            margin: 18px 0;
+        }
+        footer {
+            height: 251px;
+            font-size: 14px;
+            clear: both;
+        }
+        footer div.wrapper {
+            padding: 15px;
+        }
+        footer div.wrapper img {
+            float: right;
+            margin-right: 5px;
+        }
+        footer div.mb-5.flex-center div.icons {
+            background-color: white;
+        }
+</style>
+
+<body>
+    <header>
         <div class="chatango">
-           <a href=""> Chatango</a><img class="robohash"  src='http://www.robohash.org/3.14422222224144414411444134233443433331331222111121?size=75x60'>
+            <a href=""> Chatango</a><img class="robohash" src='http://www.robohash.org/3.14422222224144414411444134233443433331331222111121?size=75x60'>
 
+            <div class="bottomheader">
+                <p>JustAnotherTwitterClone <span>Made with Django</span></p>
 
-           <div class="bottomheader">
-          <p>JustAnotherTwitterClone <span>Made with Django</span></p>
-
+            </div>
         </div>
-         </div>
-         <div class="wrapper">
+        <div class="wrapper">
 
-            {% block login %}
-            {% if request.user.is_authenticated %}
+            {% block login %} {% if request.user.is_authenticated %}
+                        <div class="dropdown">
             <input type="button" class="btn btn-rounded" value="Home" onclick="location.href = '/';">
-            <input type="button" class="btn btn-rounded" value="MyProfile" onclick="location.href = '/users/{{ username }}';">
-            <input type="button" class="btn btn-rounded" value="UserProfiles" onclick="location.href = '/users/';">
-            <input type="button" class="btn btn-rounded" value="UserMap" onclick="location.href = '/usermap';">
-            <input type="button" class="btn btn-rounded" value="MyLocation" onclick="location.href = '/userloc';">
-            <input type="button" class="btn btn-rounded" value="Friends" onclick="location.href = '/friends';">
-            <input type="button" class="btn btn-rounded" value="Private" onclick="location.href = '/private';">
 
+
+
+                <button id="btnDropDown" class="btn btn-rounded dropdown-toggle" type="button" data-toggle="dropdown">
+                    Private Messages <span class="caret"></span>
+                </button>
+                <ul id="menuDropDown" class="dropdown-menu">
+                    <li><a href="/check">Check Messages</li></a>
+                        <li><a href="/send">Send Message</li></a>
+                </ul>
+
+                <button id="btnDropDown" class="btn btn-rounded dropdown-toggle" type="button" data-toggle="dropdown">
+                    Profiles <span class="caret"></span>
+                </button>
+                <ul id="menuDropDown" class="dropdown-menu">
+                    <li><a href="/users/{{ username }}">My Profile</li></a>
+                        <li><a href="/users/">Public Profiles</li></a>
+                </ul>
+
+                <button id="btnDropDown"class="btn btn-rounded dropdown-toggle" type="button" data-toggle="dropdown">
+                    User Map <span class="caret"></span>
+                </button>
+                <ul id="menuDropDown" class="dropdown-menu">
+                    <li><a href="/usermap">My Location</li></a>
+                        <li><a href="/userloc">User Map</li></a>
+                </ul>
+</div>
             <form action="/logout">
-               <input id="btnLogOut"class="btn btn-rounded" value="Logout" type="submit" href="/logout">
+                <input id="btnLogOut" class="btn btn-rounded" value="Logout" type="submit" href="/logout">
             </form>
             {% else %}
             <form action="/logout">
-               <input id="btnLogOut" class="btn btn-rounded"  value="Logout" type="submit" href="">Logout</a>
+                <input id="btnLogOut" class="btn btn-rounded" value="Logout" type="submit" href="">Logout</a>
             </form>
-            {% endif %}
-            {% endblock %}
-
+            {% endif %} {% endblock %}
           </div>
-      </header>
-      <div id="content">
-         <div class="wrapper">
-            {% block flash %}
-            {% if form_errors or login_form.non_field_errors or reg_form.non_field_errors or spam_form.errors %}
+    </header>
+    <div id="content">
+        <div class="wrapper">
+            {% block flash %} {% if form_errors or login_form.non_field_errors or reg_form.non_field_errors or spam_form.errors %}
             <div class="flash error">
-               {{ login_form.non_field_errors }}
-               {{ reg_form.non_field_errors }}
-               {{ spam_form.content.errors }}
-               {{ form.content.errors }}
+                {{ login_form.non_field_errors }} {{ reg_form.non_field_errors }} {{ spam_form.content.errors }} {{ form.content.errors }}
             </div>
-            {% endif %}
-            {% if notice %}
+            {% endif %} {% if notice %}
             <div class="flash notice">
-               {{ notice }}
+                {{ notice }}
             </div>
-            {% endif %}
-            {% endblock %}
-            {% block content %}
-            {% endblock %}
-         </div>
-      </div>
-      <footer class="page-footer font-small cyan darken-3">
-         <!-- Footer Elements -->
+            {% endif %} {% endblock %} {% block content %} {% endblock %}
+        </div>
+    </div>
+    <footer class="page-footer font-small cyan darken-3">
+        <!-- Footer Elements -->
 
-         <div class="footer-copyright text-center py-3">
+        <div class="footer-copyright text-center py-3">
             <a href=""> **Chatango - JustAnotherTwitterClone was  </a><a href="https://www.djangoproject.com/">Made with Django 1.8.14**</a>
-         <br><a href="https://www.robohash.org"> ***Ingredients include: RoboHash,  </a><a href="https://www.maxmind.com/en/geoip2-databases">GeoIP2, </a><a href="https://cloud.google.com/maps-platform/"> and GoogleMapsApi***</a>
-          <br>  <a href=""> ****Created by Jason Willey****</a><br>
-<a><img class="robohash"  src='http://www.robohash.org/set_set4/1337?size=75x60'></a>
-</div>
-         <!-- Copyright -->
-      </footer>
-   </body>
+            <br><a href="https://www.robohash.org"> ***Ingredients include: RoboHash,  </a><a href="https://www.maxmind.com/en/geoip2-databases">GeoIP2, </a><a href="https://cloud.google.com/maps-platform/"> and GoogleMapsApi***</a>
+            <br> <a href=""> ****Created by Jason Willey****</a>
+            <br>
+            <a><img class="robohash" src='http://www.robohash.org/set_set4/1337?size=75x60'></a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
 </html>

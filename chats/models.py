@@ -46,12 +46,9 @@ User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
 
 class PrivateSpam(models.Model):
      user = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
-     username = models.ForeignKey(User, null=True, related_name="reciever")
+     username = models.ForeignKey(User, null=True, related_name="reciever", on_delete=models.CASCADE)
      subject = models.CharField(max_length=50)
      content = content = models.CharField(max_length=140)
      timestamp = models.DateTimeField(auto_now_add=True)
-
-
-
      class Meta:
-         ordering = ['-timestamp']
+        ordering = ['-timestamp']

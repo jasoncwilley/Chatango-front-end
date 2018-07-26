@@ -1,9 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="panel right">
+
+{% for message in messages %}
+<div class="textWrapper">
+   <div class="card flex-row flex-wrap">
+      <div class="card-header">
+        <h5>To: &nbsp{{ message.username }}</h5>
+         <h5>Subject: &nbsp{{ message.subject }}</h5>
+         <img class="avatar" src='http://www.robohash.org/{{ message.username }}?size=65x65'>
+         <div class="card-block px-2">
+            <p class="card-text">@{{ message.user.username }} &nbsp wrote: &nbsp{{ message.content }}<br><br>
+               sent &nbsp{{ message.timestamp|timesince }}&nbsp ago
+            </p>
+         </div>
+      </div>
+   </div>
+</div>
+{% endfor %}
+</div>
+
+<div class="panel right">
    <h1>Post a New Messege</h1>
    <p>
-   <form action="/friends" method="post">
+   <form action="/private" method="post">
       {% csrf_token %}
       {{ form.as_p}}
       <input type="hidden" value="{{ next_url }}" name="next_url">

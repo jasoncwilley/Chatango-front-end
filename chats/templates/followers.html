@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="panel left">
+  <h2>Followers</h2>
+{% for follower in followers %}
+   <a>
+   <input type="button" class="btn" value="View {{ follower.username }}'s Profile" onclick="location.href ='/users/{{ user.username }}';">
+   </a>
+
+      <div class="card flex-row flex-wrap">
+         <div class="card-header">
+           <img class="robohash" src='http://www.robohash.org/{{ follower.user.username }}?size=65x65'>
+
+            <span class="card-text">{{ user.spam_count}}  &nbsp Messages &nbsp &nbsp</span>
+            <span class="card-text"> &nbsp{{ user.profile.follows.all.count }}   &nbsp Following &nbsp &nbsp</span>
+            <span class="card-text">&nbsp{{ user.profile.followed_by.all.count }} &nbsp Followers</span>
+         </div>
+      </div>
+
+
+ {% endfor %}
+
+</div>
+
+{% endblock %}
