@@ -1,7 +1,7 @@
 
 # Chatango [![N|Solid](http://www.robohash.org/set_set4/1337?size=75x60)]
 
-[Check out Chatango Before Installing](https://git.heroku.com/chat-ango.git)
+[Check out Chatango Before Installing](https://chat-jango.herokuapp.com/)
 
 
 ##### JustAntoherTwitterClone ingredients:
