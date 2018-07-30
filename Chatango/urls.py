@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^followers$', 'chats.views.followers'),
     url(r'^friends$', 'chats.views.friends'),
     url(r'^unfollow$', 'chats.views.unfollow'),
+    url(r'^all$', 'chats.views.all'),
 ]
 
 if settings.DEBUG:

@@ -26,10 +26,11 @@ class Profile(models.Model):
         if created:
             profile = Profile(user=instance)
             profile.save()
+    User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
 
 class Spam(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=50)
+    subject = models.CharField(max_length=25)
     content = models.CharField(max_length=140, verbose_name="Message")
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -41,7 +42,6 @@ class Spam(models.Model):
 
 
 
-User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
 
 
 class PrivateSpam(models.Model):
@@ -49,6 +49,6 @@ class PrivateSpam(models.Model):
      username = models.ForeignKey(User, null=True, related_name="reciever", on_delete=models.CASCADE)
      subject = models.CharField(max_length=50)
      content = content = models.CharField(max_length=140)
-     timestamp = models.DateTimeField(auto_now_add=True)
+     timestamp = models.DateTimeField(auto_now_add=True, max_length=25)
      class Meta:
         ordering = ['-timestamp']

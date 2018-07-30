@@ -1,56 +1,46 @@
-{% extends "base.html" %}
+followings{% extends "base.html" %}
 {% block content %}
-<div class="panel right1">
+<div class="panel left">
 
 <h2>Following</h2>
 {% for following in followings %}
-
-
-
 <a>
-<input id="btnCardRight" type="button" class="btn" value="View {{ following.username }}'s Profile" onclick="location.href ='/users/{{ user.username }}';">
+<input type="button" class="btn" value="View {{ following.username }}'s Profile" onclick="location.href ='/users/{{ user.username }}';">
 </a>
 
+   <div class="card flex-row flex-wrap">
+      <div class="card-header">
+        <img class="robohash" src='http://www.robohash.org/{{ following.user.username }}?size=65x65'>
+
+         <span class="card-text">{{ user.spam_count}}  &nbsp Messages &nbsp &nbsp</span>
+         <span class="card-text"> &nbsp{{ user.profile.follows.all.count }}   &nbsp Following &nbsp &nbsp</span>
+         <span class="card-text">&nbsp{{ user.profile.followed_by.all.count }} &nbsp followings</span>
+      </div>
+   </div>
 
 
-     <div class="card right flex-row flex-wrap">
-       <img class="avatar" src='http://www.robohash.org/{{ following.user.username }}?size=65x65'>
-
-           <h5>Subject: &nbsp{{ following.user.username }}</h5>
-
-              <p class="card-text">@{{ following.user.username }} &nbsp wrote: &nbsp{{ message.content }}<br><br>
-              </p>
-              {% if following %}
-              <form action="/unfollow" method="post">
-                 {% csrf_token %}<br>
-                 <input type="hidden" name="unfollow" value="{{ following.user.username }}">
-                 <input type="submit" value="unFollow">
-                   {% endif %}
-</div>
-
-
-  {% endfor %}
+{% endfor %}
 
 </div>
 {% if followings.has_other_pages %}
-<ul class="pagination">
-  {% if followings.has_previous %}
-    <li><a href="?page={{ followings.previous_page_number }}">&laquo;</a></li>
-  {% else %}
-    <li class="disabled"><span>&laquo;</span></li>
-  {% endif %}
-  {% for i in followings.paginator.page_range %}
-    {% if followings.number == i %}
-      <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-    {% else %}
-      <li><a href="?page={{ i }}">{{ i }}</a></li>
-    {% endif %}
-  {% endfor %}
-  {% if followings.has_next %}
-    <li><a href="?page={{ followings.next_page_number }}">&raquo;</a></li>
-  {% else %}
-    <li class="disabled"><span>&raquo;</span></li>
-  {% endif %}
+  <ul class="pagination" style="font-size:50px; margin-left:500px;">
+    {% if followings.has_previous %}
+ <li><a href="?page={{ followings.previous_page_number }}">&laquo;&nbsp&nbsp</a></li>
+{% else %}
+ <li class="disabled"><span>&laquo;&nbsp&nbsp</span></li>
+{% endif %}
+{% for i in followings.paginator.page_range %}
+ {% if followings.number == i %}
+ <li class="active"><span>&nbsp&nbsp{{ i }}&nbsp&nbsp<span class="sr-only">(current)</span></span></li>
+{% else %}
+ <li><a href="?page={{ i }}">&nbsp&nbsp{{ i }}</a></li>
+ {% endif %}
+{% endfor %}
+{% if followings.has_next %}
+ <li><a href="?page={{ followings.next_page_number }}">&nbsp&nbsp&raquo;</a></li>
+{% else %}
+   <li class="disabled"><span>&nbsp&nbsp&raquo;</span></li>
+{% endif %}
 </ul>
-  {% endif %}
+{% endif %}
 {% endblock %}

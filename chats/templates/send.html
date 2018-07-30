@@ -21,9 +21,9 @@
         <h5>From: &nbsp{{ message.user.username }}</h5>
         <img class="avatar" src='http://www.robohash.org/{{ message.username }}?size=65x65'>
 
-         <h5>Subject: &nbsp{{ message.subject }}</h5>
-         <div class="card-block px-2">
-            <p class="card-text">{{ message.content }}<br><br>
+         <h5>&nbspSubject: &nbsp&nbsp{{ message.subject }}</h5>
+         <div class="card-block px-2"><br>
+            <p><h5 class="card-text">{{ message.content }}</h5><br><br>
                sent &nbsp{{ message.timestamp|timesince }}&nbsp ago
             </p>
          </div>
@@ -33,23 +33,23 @@
 {% endfor %}
 </div>
 {% if messages.has_other_pages %}
-<ul class="pagination">
-  {% if messages.has_previous %}
-    <li><a href="?page={{ messages.previous_page_number }}">&laquo;</a></li>
+  <ul class="pagination" style="font-size:50px; margin-left:500px;">
+      {% if messages.has_previous %}
+    <li><a href="?page={{ messages.previous_page_number }}">&laquo;&nbsp&nbsp</a></li>
   {% else %}
-    <li class="disabled"><span>&laquo;</span></li>
+    <li class="disabled"><span>&laquo;&nbsp&nbsp</span></li>
   {% endif %}
   {% for i in messages.paginator.page_range %}
     {% if messages.number == i %}
-      <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      <li class="active"><span>&nbsp&nbsp{{ i }} &nbsp&nbsp<span class="sr-only">(current)</span></span></li>
     {% else %}
-      <li><a href="?page={{ i }}">{{ i }}</a></li>
+      <li><a href="?page={{ i }}">&nbsp&nbsp{{ i }}</a></li>
     {% endif %}
   {% endfor %}
   {% if messages.has_next %}
-    <li><a href="?page={{ messages.next_page_number }}">&raquo;</a></li>
+    <li><a href="?page={{ messages.next_page_number }}">&nbsp&nbsp&raquo;</a></li>
   {% else %}
-    <li class="disabled"><span>&raquo;</span></li>
+    <li class="disabled"><span>&nbsp&nbsp&raquo;</span></li>
   {% endif %}
 </ul>
 {% endif %}

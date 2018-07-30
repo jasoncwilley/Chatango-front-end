@@ -97,7 +97,7 @@ def profiles(request):
 
 def get_latest(user):
     try:
-        return Spam.objects.all()[:3]
+        return Spam.objects.all()[:5]
     except IndexError:
         return ""
 
@@ -141,10 +141,10 @@ def follow(request):
 
 @login_required
 def public(request, spam_form=None):
-    messages = Spam.objects.order_by('-timestamp')
+    messages = Spam.objects.order_by('-timestamp')[:10]
     spam_form = spam_form or SpamForm()
     page = request.GET.get('page', 1)
-    paginator = Paginator(messages, 4)
+    paginator = Paginator(messages, 5)
     try:
         messages = paginator.page(page)
     except PageNotAnInteger:
@@ -164,11 +164,36 @@ def public(request, spam_form=None):
 {'spam_form':spam_form, 'next_url':'/public', 'messages':messages, 'username': request.user.username})
 
 @login_required
+def all(request, spam_form=None):
+    messages = Spam.objects.order_by('-timestamp')
+    spam_form = spam_form or SpamForm()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(messages, 5)
+    try:
+        messages = paginator.page(page)
+    except PageNotAnInteger:
+        messages = paginator.page(1)
+    except EmptyPage:
+        messages = paginator.page(paginator.num_pages)
+    if request.method =='POST':
+        spam_form =SpamForm(data=request.POST)
+        if spam_form.is_valid():
+            spam = spam_form.save(commit=False)
+            spam.user = request.user
+            spam.save()
+            return render(request, 'all.html',
+                    {'spam_form':spam_form, 'next_url': '/all',
+                    'messages':messages, 'username':request.user.username})
+    return render(request, 'all.html',
+{'spam_form':spam_form, 'next_url':'/all', 'messages':messages, 'username': request.user.username})
+
+
+@login_required
 def followers(request, username=''):
     followers = request.user.profile.follows.all()
     page = request.GET.get('page', 1)
 
-    paginator = Paginator(followers, 4)
+    paginator = Paginator(followers, 5)
     try:
         followers = paginator.page(page)
     except PageNotAnInteger:
@@ -184,7 +209,7 @@ def following(request, username='', form=None):
     followings = request.user.profile.followed_by.all()
     page = request.GET.get('page', 1)
 
-    paginator = Paginator(followings, 4)
+    paginator = Paginator(followings, 5)
     try:
         followings = paginator.page(page)
     except PageNotAnInteger:
@@ -218,7 +243,7 @@ def send_private(request, form=None):
     user=request.user
     messages = PrivateSpam.objects.filter(user_id=user.id)
     page = request.GET.get('page', 1)
-    paginator = Paginator(messages, 4)
+    paginator = Paginator(messages, 5)
     try:
         messages = paginator.page(page)
     except PageNotAnInteger:
@@ -243,7 +268,7 @@ def check_private(request):
     user=request.user
     messages = user.reciever.all()
     page = request.GET.get('page', 1)
-    paginator = Paginator(messages, 4)
+    paginator = Paginator(messages, 5)
     try:
         messages = paginator.page(page)
     except PageNotAnInteger:
