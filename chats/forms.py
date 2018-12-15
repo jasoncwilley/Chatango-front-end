@@ -1,7 +1,7 @@
 
 from django.contrib.auth.forms import User
 from django import forms
-from chats.models import Spam, Profile
+from chats.models import Spam, Profile, PrivateSpam
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 class UserCreateForm(UserCreationForm):
@@ -69,6 +69,25 @@ class SpamForm(forms.ModelForm):
         exclude = ('user','timestamp',)
 
 
+
+class PrivateSpamForm(forms.ModelForm):
+    username = forms.ModelChoiceField(queryset=User.objects.all(),
+                              empty_label="(Select Private Message Recipent)")
+    subject = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Insert Subject Here'}))
+    content = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Enter Messege 140 Characters Max ','class': 'messageText', 'size':'50'}))
+
+    class Meta:
+        model = PrivateSpam
+        exclude = ('user','timestamp',)
+
+    def save(self, commit=True):
+        user = super(PrivateSpamForm, self).save(commit=False)
+        user.follows = self.cleaned_data['username']
+        user.subject = self.cleaned_data['subject']
+        user.content = self.cleaned_data['content']
+        if commit:
+            user.save()
+        return user
 
 class ProfileForm(forms.ModelForm):
     fname = forms.CharField(max_length=50, required=False)

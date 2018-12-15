@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block login %}
+{% with user.username as username %}
+{{ block.super }}
+{% endwith %}
+{% endblock %}
+{% block content %}
+<div class="panel right">
+   <h1>Complete Form to Update Your Location</h1>
+   <p>
+   <form action="/userloc" method="post">
+      {%csrf_token%}
+      {{ locator_form.as_p }}
+      <input type="hidden" value="{{ next_url }}" name="next_url">
+      <input type="submit" value="Post It!">
+   </form>
+   </p>
+</div>
+<div class="panel left">
+   <h1>Previous Saved Location Information</h1>
+   <p>
+   <ul>
+      <li>City-{{location.city}}</li>
+      <li>IP Address-{{location.ip_address}}</li>
+      <li>longitude-{{location.longitude}}</li>
+      <li>Latitude-{{location.latitude}}</li>
+   </ul>
+   </p>
+</div>
+{% endblock %}

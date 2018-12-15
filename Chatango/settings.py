@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['0.0.0.0']
 INSTALLED_APPS = (
 'chats',
 'accounts',
+'locator',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -102,7 +103,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 MEDIA_ROOT = os.path.join(BASE_DIR, "Chatango", "media")
-STATIC_ROOT = os.path.join(BASE_DIR, "Chatango", "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR,  "staticfiles")
 STATICFILES_DIRS = (
 os.path.join(BASE_DIR, "Chatango", "static"),
 )

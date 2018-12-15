@@ -1,32 +1,21 @@
 {% extends "base.html" %}
-
 {% block login %}
-    <form action="/login" method="post">
-
-      {% csrf_token %}
-      {{ login_form.as_p }}
-
-      <input class="btn" id="btnLogIn" type="submit" value="Login">
-            </form>
+<form action="/login" method="post">
+   {% csrf_token %}
+   {{ login_form.as_p }}
+   <input class="btn" id="btnLogIn" type="submit" value="Login">
+</form>
 {% endblock %}
-
-
 {% block content %}
-
 <div class="panel right">
-    <h1>First Time Here?</h1>
-    <p>
-
-
-
-<form action="/register" method="post">
-{% csrf_token %}
-{{ reg_form }}
-
-
-
-  <input class="btn btn-danger btn-sm"  type="submit" value="Create an Account Today!!!">
-        </form>
-    </p>
+   <h1>Don't have an account?</h1>
+   <h1>Regsiter today, it's free!</h1>
+   <p>
+   <form action="/register" method="post">
+      {% csrf_token %}
+      {{ reg_form.as_p }}
+      <input class="btn btn-danger btn-sm"  type="submit" value="Create an Account Today!!!">
+   </form>
+   </p>
 </div>
 {% endblock %}

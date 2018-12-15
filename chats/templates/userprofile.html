@@ -1,58 +1,46 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="panel right">
-    <h1>Post a New Message</h1>
-    <p>
-          <form action="/userprofile" method="post">
-        {% csrf_token %}
-          {{ form.as_p }}
-<br>
-          <input type="hidden" value="{{ next_url }}" name="next_url">
-          <input type="submit" value="Submit!">
-          </form>
-      </p>
+   <h1>Post a New Message</h1>
+   <p>
+   <form action="/userprofile" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <br>
+      <input type="hidden" value="{{ next_url }}" name="next_url">
+      <input type="submit" value="Submit!">
+   </form>
+   </p>
 </div>
-    <div class="panel left">
-        <h1>{{user.profile.user}}'s Profile</h1>
 <div class="panel left">
-  <a href="/users/{{user.profile.username}}">
-    <img class="avatar" src='http://www.robohash.org/{{user.profile.username}}?size=75x75'>
-
-
-  </a><br><br><br>
-        <div class="textWrapper">
-
-
-        <ul>
-          <li>
-              <span class ="name">{{user.profile.fname}} {{user.profile.lname}}</span>
-
-            </li>
-            <li>
-              <span class="time">{{user.profile.phone}}</span>
-</li>
-  <li>
-            <span class ="name">"{{user.profile.email}}</span>
-</li>
-    <li>
-    <span class="time">{{user.profile.dateofbirth}}</span>
-  </li>
-
-    <li>
-<span class="time">{{user.profile.follows}}</span>
-    </li>
-
-<li>
-  <span class ="name">"{{user.profile.datecreated}}</span>
-</li>
-    <li>
-  <span class="time">{{user.profile.last_connection}}</span>
-    </li>
-
-
-
-        </div>
-
-    </div>
+<h1>{{user.profile.user}}'s Profile</h1>
+<div class="panel left">
+   <a href="/users/{{user.profile.username}}">
+   <img class="avatar" src='http://www.robohash.org/{{user.profile.username}}?size=75x75'>
+   </a><br><br><br>
+   <div class="textWrapper">
+      <ul>
+      <li>
+         <span class ="name">{{user.profile.fname}} {{user.profile.lname}}</span>
+      </li>
+      <li>
+         <span class="time">{{user.profile.phone}}</span>
+      </li>
+      <li>
+         <span class ="name">"{{user.profile.email}}</span>
+      </li>
+      <li>
+         <span class="time">{{user.profile.dateofbirth}}</span>
+      </li>
+      <li>
+         <span class="time">{{user.profile.follows}}</span>
+      </li>
+      <li>
+         <span class ="name">"{{user.profile.datecreated}}</span>
+      </li>
+      <li>
+         <span class="time">{{user.profile.last_connection}}</span>
+      </li>
+   </div>
+</div>
 {% endblock %}

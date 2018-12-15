@@ -15,7 +15,6 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from chats import views
 from django.conf.urls.static import static
 
 
@@ -34,8 +33,19 @@ urlpatterns = [
     url(r'^public$', 'chats.views.public'),
     url(r'^submit$', 'chats.views.submit'),
     url(r'^follow$', 'chats.views.follow'),
-
+    url(r'^userloc$', 'locator.views.userloc'),
+    url(r'^savelocation$', 'locator.views.savelocation'),
+    url(r'^usermap$', 'locator.views.usermap'),
+    url(r'^private$', 'chats.views.private'),
+    url(r'^send$', 'chats.views.send_private'),
+    url(r'^check$', 'chats.views.check_private'),
+    url(r'^following$', 'chats.views.following'),
+    url(r'^followers$', 'chats.views.followers'),
+    url(r'^friends$', 'chats.views.friends'),
+    url(r'^unfollow$', 'chats.views.unfollow'),
+    url(r'^all$', 'chats.views.all'),
 ]
+
 if settings.DEBUG:
    urlpatterns +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 #urlpatterns += patterns('django.contrib.staticfiles.views',
