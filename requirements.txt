@@ -7,7 +7,7 @@ psycopg2==2.7.5
 six==1.10.0
 sqlparse==0.2.2
 virtualenv==15.0.3
-django-widget-tweaks-1.4.3
+django-widget-tweaks==1.4.3
 
 djangorestframework==3.8.2
 djangorestframework-gis==0.13
