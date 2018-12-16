@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^public$', 'chats.views.public'),
     url(r'^submit$', 'chats.views.submit'),
     url(r'^follow$', 'chats.views.follow'),
+    url(r'^updateprofile$', 'chats.views.updateprofile'),
     
 ]

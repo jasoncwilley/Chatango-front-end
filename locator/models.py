@@ -7,7 +7,6 @@ from django.conf import settings
 class Location(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     city = models.CharField(max_length=50, blank=True, null=True)
-    ip_address = models.GenericIPAddressField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
 

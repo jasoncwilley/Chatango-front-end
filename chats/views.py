@@ -9,7 +9,7 @@ from chats.forms import PrivateSpamForm, SpamForm, RegistrationForm, ProfileForm
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 
 
@@ -97,11 +97,22 @@ def profiles(request):
 
 def get_latest(user):
     try:
-        return Spam.objects.all()[:5]
+        return Spam.objects.all()[:3]
     except IndexError:
         return ""
 
+@login_required
+def updateprofile(request):
+    if request.method=='POST':
+        reg_form = RegistrationForm(data=request.POST)
+        if profile_form.is_valid():
+            reg_form.save()
+            return HttpResponseRedirect('/')
+    else:
+        reg_form = RegistrationForm()
 
+    args = {'reg_form':reg_form }
+    return render(request, 'register.html', args)
 @login_required
 def users(request,  username="", spam_form=None):
     if username:
@@ -112,8 +123,21 @@ def users(request,  username="", spam_form=None):
             raise Http404
         messages = Spam.objects.filter(user=user.id)
         users = User.objects.all().annotate(spam_count=Count('spam'))
+        profile_form = ProfileForm()
         if username == request.user.username or request.user.profile.follows.filter(username=username):
-            return render(request, 'user.html', {'user': user, 'messages': messages, })
+            try:
+                profile = request.user.profile
+            except Profile.DoesNotExist:
+                raise Http404
+                profile = Profile(user=request.user)
+
+            if request.method == "POST":
+                profile_form = ProfileForm(request.POST, instance=profile)
+                if profile_form.is_valid():
+                    profile_form.save()
+                    profile_form = ProfileForm()
+                    return render(request, 'user.html', {'user':user, 'messages': messages, 'profile_form': profile_form})
+            return render(request, 'user.html', {'user': user, 'messages': messages, 'profile_form': profile_form,})
         return render(request, 'user.html', {'user': user, 'messages': messages, 'follow': True, })
 
 
@@ -141,16 +165,8 @@ def follow(request):
 
 @login_required
 def public(request, spam_form=None):
-    messages = Spam.objects.order_by('-timestamp')[:10]
+    messages = Spam.objects.order_by('-timestamp')
     spam_form = spam_form or SpamForm()
-    page = request.GET.get('page', 1)
-    paginator = Paginator(messages, 5)
-    try:
-        messages = paginator.page(page)
-    except PageNotAnInteger:
-        messages = paginator.page(1)
-    except EmptyPage:
-        messages = paginator.page(paginator.num_pages)
     if request.method =='POST':
         spam_form =SpamForm(data=request.POST)
         if spam_form.is_valid():
@@ -164,60 +180,17 @@ def public(request, spam_form=None):
 {'spam_form':spam_form, 'next_url':'/public', 'messages':messages, 'username': request.user.username})
 
 @login_required
-def all(request, spam_form=None):
-    messages = Spam.objects.order_by('-timestamp')
-    spam_form = spam_form or SpamForm()
-    page = request.GET.get('page', 1)
-    paginator = Paginator(messages, 5)
-    try:
-        messages = paginator.page(page)
-    except PageNotAnInteger:
-        messages = paginator.page(1)
-    except EmptyPage:
-        messages = paginator.page(paginator.num_pages)
-    if request.method =='POST':
-        spam_form =SpamForm(data=request.POST)
-        if spam_form.is_valid():
-            spam = spam_form.save(commit=False)
-            spam.user = request.user
-            spam.save()
-            return render(request, 'all.html',
-                    {'spam_form':spam_form, 'next_url': '/all',
-                    'messages':messages, 'username':request.user.username})
-    return render(request, 'all.html',
-{'spam_form':spam_form, 'next_url':'/all', 'messages':messages, 'username': request.user.username})
-
-
-@login_required
-def followers(request, username=''):
-    followers = request.user.profile.follows.all()
-    page = request.GET.get('page', 1)
-
-    paginator = Paginator(followers, 5)
-    try:
-        followers = paginator.page(page)
-    except PageNotAnInteger:
-        followers = paginator.page(1)
-    except EmptyPage:
-        followers = paginator.page(paginator.num_pages)
+def followers(request, username='', form=None):
+    followers = request.user.profile.follows.all
     return render(request, 'followers.html',
                 {'followers':followers, 'username':request.user.username})
 
 
 @login_required
 def following(request, username='', form=None):
-    followings = request.user.profile.followed_by.all()
-    page = request.GET.get('page', 1)
-
-    paginator = Paginator(followings, 5)
-    try:
-        followings = paginator.page(page)
-    except PageNotAnInteger:
-        followings = paginator.page(1)
-    except EmptyPage:
-        followings = paginator.page(paginator.num_pages)
+    followings = request.user.profile.followed_by.all
     return render(request, 'following.html',
-    {'followings':followings, 'username': request.user.username, 'users':users})
+    {'followings':followings, 'username': request.user.username})
 
 @login_required
 def private(request, username='', form=None):
@@ -231,9 +204,11 @@ def private(request, username='', form=None):
             privatespam = form.save(commit=False)
             privatespam.user = request.user
             privatespam.save()
+            form = PrivateSpamForm()
             return render(request, 'private.html',
                     {'form':form, 'next_url': '/followers', 'messages': messages,
                      'username':request.user.username})
+    form = PrivateSpamForm()
     return render(request, 'private.html',
     {'form':form, 'next_url':'/private',  'messages': messages, 'username': request.user.username})
 
@@ -242,15 +217,6 @@ def send_private(request, form=None):
     form = form or PrivateSpamForm()
     user=request.user
     messages = PrivateSpam.objects.filter(user_id=user.id)
-    page = request.GET.get('page', 1)
-    paginator = Paginator(messages, 5)
-    try:
-        messages = paginator.page(page)
-    except PageNotAnInteger:
-        messages = paginator.page(1)
-    except EmptyPage:
-        messages = paginator.page(paginator.num_pages)
-
     if request.method == "POST":
         form = PrivateSpamForm(data=request.POST)
         if form.is_valid():
@@ -258,25 +224,18 @@ def send_private(request, form=None):
             privatespam = form.save(commit=False)
             privatespam.user = request.user
             privatespam.save()
+            form =PrivateSpamForm()
             return render(request, 'send.html',
                     {'form':form, 'next_url': '/followers', 'messages': messages,
                      'username':request.user.username})
+    form = PrivateSpamForm()
     return render(request, 'send.html',
     {'form':form, 'next_url':'/send',  'messages': messages, 'username': request.user.username})
 @login_required
 def check_private(request):
     user=request.user
     messages = user.reciever.all()
-    page = request.GET.get('page', 1)
-    paginator = Paginator(messages, 5)
-    try:
-        messages = paginator.page(page)
-    except PageNotAnInteger:
-        messages = paginator.page(1)
-    except EmptyPage:
-        messages = paginator.page(paginator.num_pages)
     return render(request,"check.html",{'messages':messages})
-
 
 @login_required
 def friends(request, username='', form=None):

@@ -7,7 +7,8 @@ psycopg2==2.7.5
 six==1.10.0
 sqlparse==0.2.2
 virtualenv==15.0.3
-whitenoise==3.2.2
+django-widget-tweaks-1.4.3
+
 djangorestframework==3.8.2
 djangorestframework-gis==0.13
 factory-boy==2.4.1
@@ -16,7 +17,7 @@ idna==2.7
 ipaddress==1.0.22
 maxminddb==1.4.1
 Pillow==5.2.0
-requests==2.19.1
+requests==2.20
 urllib3==1.23
 certifi==2018.4.16
 chardet==3.0.4
@@ -24,4 +25,3 @@ django-bootstrap-form==3.1
 
 django-leaflet==0.14.1
 pytz==2018.5
-

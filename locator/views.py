@@ -12,7 +12,7 @@ def userloc(request):
     user = request.user
     instance  = Location.objects.get(user=user.id)
     locator_form = LocatorForm()
-    ip = '74.136.205.106'
+    ip = "74.136.205.106"
     print(ip)
     p = staticfiles_storage.path('GeoLite2-City.mmdb')
     reader = geoip2.database.Reader(p)
@@ -24,10 +24,13 @@ def userloc(request):
         locator_form =LocatorForm(data=request.POST or None, instance=instance)
         if locator_form.is_valid():
             locator_form.save()
+            locator_form = LocatorForm()
             return render(request, 'userloc.html',
-                    {'city':city, 'latitude':latitude, 'longitude':longitude, 'ip':ip, 'locator_form':locator_form, 'next_url': '/userloc',
-                    'instance':instance, 'username':request.user.username})
-    return render(request, 'userloc.html', {'city':city, 'latitude':latitude, 'longitude':longitude, 'ip':ip, 'locator_form':locator_form, 'next_url':'/userloc', 'instance':instance, 'username': request.user.username})
+                    {'city':city, 'latitude':latitude, 'longitude':longitude, 'locator_form':locator_form, 'next_url': '/userloc',
+                'instance':instance, 'username':request.user.username})
+    else:
+        locator_form = LocatorForm()
+        return render(request, 'userloc.html', {'city':city, 'latitude':latitude, 'longitude':longitude, 'locator_form':locator_form, 'next_url':'/userloc', 'instance':instance, 'username': request.user.username})
 
 
 def get_client_ip(request):

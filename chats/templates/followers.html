@@ -6,14 +6,13 @@
   <h2>Followers</h2>
 {% for follower in followers %}
    <a>
-   <input type="button" class="btn" value="View {{ follower.username }}'s Profile" onclick="location.href ='/users/{{ user.username }}';">
+   <input type="button" class="btn" value="View {{ follower.user.username }}'s Profile" onclick="location.href ='/users/{{ user.username }}';">
    </a>
 
       <div class="card flex-row flex-wrap">
          <div class="card-header">
            <img class="robohash" src='http://www.robohash.org/{{ follower.user.username }}?size=65x65'>
 
-            <span class="card-text">{{ user.spam_count}}  &nbsp Messages &nbsp &nbsp</span>
             <span class="card-text"> &nbsp{{ user.profile.follows.all.count }}   &nbsp Following &nbsp &nbsp</span>
             <span class="card-text">&nbsp{{ user.profile.followed_by.all.count }} &nbsp Followers</span>
          </div>
@@ -23,25 +22,5 @@
  {% endfor %}
 
 </div>
-{% if followers.has_other_pages %}
-  <ul class="pagination" style="font-size:50px; margin-left:500px;">
-      {% if followers.has_previous %}
-    <li><a href="?page={{ followers.previous_page_number }}">&laquo;&nbsp&nbsp</a></li>
-  {% else %}
-    <li class="disabled"><span>&laquo;&nbsp&nbsp</span></li>
-  {% endif %}
-  {% for i in followers.paginator.page_range %}
-    {% if followers.number == i %}
-    <li class="active"><span>&nbsp&nbsp{{ i }} &nbsp&nbsp<span class="sr-only">(current)</span></span></li>
-  {% else %}
-    <li><a href="?page={{ i }}">&nbsp&nbsp{{ i }}</a></li>
-    {% endif %}
-  {% endfor %}
-  {% if followers.has_next %}
-    <li><a href="?page={{ followers.next_page_number }}">&nbsp&nbsp&raquo;</a></li>
-  {% else %}
-      <li class="disabled"><span>&nbsp&nbsp&raquo;</span></li>
-  {% endif %}
-</ul>
-{% endif %}
+
 {% endblock %}

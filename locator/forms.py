@@ -9,4 +9,4 @@ class LocatorForm(forms.ModelForm):
 
     class Meta:
         model = Location
-        fields = ('city', 'longitude', 'latitude')
+        fields = ('city',  'longitude', 'latitude')

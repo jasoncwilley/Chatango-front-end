@@ -34,6 +34,7 @@ INSTALLED_APPS = (
 'chats',
 'accounts',
 'locator',
+'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

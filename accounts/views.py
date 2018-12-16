@@ -35,4 +35,4 @@ def login_view(request):
             # Failure
             login_form = AuthenticationForm()
             return render(request, 'user.html', {'login_form':login_form})
-    return redirect('/')
+    

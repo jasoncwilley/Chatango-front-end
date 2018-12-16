@@ -1,4 +1,6 @@
+
 {% extends "base.html" %}
+{% load widget_tweaks %}
 {% block login %}
 {% with user.username as username %}
 {{ block.super }}
@@ -10,12 +12,27 @@
       <div class="card flex-row flex-wrap">
          <div class="card-header">
             <a>
-               <h3>{{ user.username }}'s Profile</h3>
+               <h3>{{user.profile.fname}} &nbsp{{user.profile.lname}}'s Profile</h3>
                <img class="avatar" src="http://www.robohash.org/{{ user.username }}?size=75x75">
             </a>
-            <span class="card-text">{{ user.spam_count}}  &nbsp Messages &nbsp &nbsp</span>
-            <span class="card-text"> &nbsp{{ user.profile.follows.all.count }}   &nbsp Following &nbsp &nbsp</span>
-            <span class="card-text">&nbsp{{ user.profile.followed_by.all.count }} &nbsp Followers</span>
+            <h5 style="max-height:75px;">
+            {{ user.profile.follows.all.count }}   &nbsp Following &nbsp &nbsp
+            &nbsp{{ user.profile.followed_by.all.count }} &nbsp Followers <br>
+         </h5>
+         <div class="nameaddress" style="min-width:250px; max-width:400px; min-height:75px; max-height:200px;">
+            
+            <span style="min-width:250px; max-width:300px; min-height:100px; max-height:150x; padding-left:75px; padding-bottom: 100px">
+<br>            {{user.profile.address1}}
+            {{user.profile.address2}}
+           {{user.profile.city}},&nbsp {{user.profile.state}} &nbsp {{user.profile.zipcode}}</span><br>
+           </div>
+
+           <span class="bio">{{user.profile.bio}}</span> <br>  
+           <span class="email">{{user.profile.email}}</span> <br>
+            <span class="phone">({{user.profile.phone1}}}{{user.profile.phone2}}-{{user.profile.phone3}}</span> <br>
+            
+           <span class="datecreated">{{user.profile.datecreated}}</span> <br>
+           <span class="last_connected">{{user.profile.last_connected}}</span>   
             {% if follow %}
             <form action="/follow" method="post">
                {% csrf_token %}<br>
@@ -43,6 +60,110 @@
          </div>
       </div>
    </div>
-</div>
 {% endfor %}
+
+
+   <h1>Update {{user.username}}'s Profile Information</h1>
+   <p>
+         <form method="post" novalidate>
+               {% csrf_token %}
+           
+               {% for hidden_field in form.hidden_fields %}
+                 {{ hidden_field }}
+               {% endfor %}
+           
+               {% if form.non_field_errors %}
+                 <div class="alert alert-danger" role="alert">
+                   {% for error in form.non_field_errors %}
+                     {{ error }}
+                   {% endfor %}
+                 </div>
+               {% endif %}
+           
+           
+                 <div class="form-group">
+                   <table border="1">
+           
+                   <tr>
+           
+                     <td style='display:inline; width:20px;'>
+                       {{ form.first_name.errors }}{{ form.last_name.errors }}
+                       {{ form.first_name }} {%render_field first_name %} {{ form.last_name }} {%render_field last_name %}
+           
+                     </td>
+                   </tr>
+                   <table border="1">
+           
+                 <tr>
+           
+                   <td>
+                     {{ form.address1.errors }}
+                     {{ form.address1 }}
+                   </td>
+                 </tr>
+                 <table border="1">
+           
+                 <tr>
+           
+                   <td>
+                     {{ form.address2.errors }}
+                     {{ form.address2 }}
+                   </td>
+                 </tr>
+                 <table border="1">
+           
+                 <tr>
+           
+                   <td style='display:inline; width:20px;'>
+                        {{form.city.errors }}{{ form.state.errors }}{{ form.zipcode.errors }}
+                     {{ form.city }} {%render_field city %} {{ form.state }} {%render_field state %} {{ form.zipcode }} {%render_field zipcode %}
+           
+                   </td>
+                 </tr>
+           
+           
+                 <table border="1">
+             <div class=phones style='width:20px;'>
+                 <tr>
+                 <div class=phones style='width:20px;'>
+                   <td style='display:inline; width:20px;'>
+           
+                     {{ form.email.errors }}{{ form.phone1.errors }}{{ form.phone2.errors }}{{ form.phone3.errors }}
+                     {{form.email}} {% render_field email %}{{ form.phone1 }} {%render_field field %} {{ form.phone2 }} {%render_field phone2 %} {{ form.phone3 }} {%render_field phone3 %}
+                   </td>
+                 </div>
+                 </tr>
+               </div>
+                 <table border="1">
+           
+           
+                   {% if form.is_bound %}
+                     {% if field.errors %}
+                       {% render_field field class="form-control is-invalid" %}
+                       {% for error in field.errors %}
+                         <div class="invalid-feedback">
+                           {{ error }}
+                         </div>
+                       {% endfor %}
+           
+                     {% else %}
+                       {% render_field field class="form-control is-valid" %}
+                     {% endif %}
+                   {% else %}
+                     {% render_field field class="form-control" %}
+                   {% endif %}
+           
+                   {% if field.help_text %}
+                     <small class="form-text text-muted">{{ field.help_text }}</small>
+                   {% endif %}
+           
+           
+             <br>
+               <button type="submit" class="btn btn-primary formbutton">Submit</button>
+               </button>
+           
+             </form>
+   </p>
+</div>
+
 {% endblock %}
