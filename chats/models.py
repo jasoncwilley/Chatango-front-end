@@ -38,7 +38,7 @@ class Profile(models.Model):
 class Spam(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50)
-    content = models.CharField(max_length=140, verbose_name="Message")
+    content = models.CharField(verbose_name="Message")
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
