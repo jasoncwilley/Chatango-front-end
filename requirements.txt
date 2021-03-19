@@ -9,7 +9,7 @@ sqlparse==0.2.2
 virtualenv==15.0.3
 django-widget-tweaks==1.4.3
 
-djangorestframework==3.8.2
+djangorestframework==3.11.2
 djangorestframework-gis==0.13
 factory-boy==2.4.1
 geoip2==2.9.0
