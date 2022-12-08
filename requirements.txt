@@ -19,7 +19,7 @@ maxminddb==1.4.1
 Pillow==5.2.0
 requests==2.20
 urllib3==1.23
-certifi==2018.4.16
+certifi==2022.12.7
 chardet==3.0.4
 django-bootstrap-form==3.1
 
